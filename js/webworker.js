@@ -47,6 +47,7 @@ self.onmessage = async (event) => {
         input = input_fixed
         __builtins__.input = input_fixed
         def wait_for_message():
+            return
             while True:
                 message = wait_for_js_message()
                 print(message)
