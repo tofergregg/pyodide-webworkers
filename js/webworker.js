@@ -6,13 +6,15 @@
 importScripts("https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js");
 
 async function loadPyodideAndPackages() {
-    var python_output;
+    var window.python_output;
     self.pyodide = await loadPyodide({
         stdout: text => {
             python_output += text + '\n';
+            console.log("output: " + text);
         },
         stderr: text => {
             python_output += text + '\n';
+            console.log("output: " + text);
         }
     });
     await self.pyodide.loadPackage(["numpy", "pytz"]);
@@ -38,7 +40,6 @@ self.onmessage = async (event) => {
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);
         self.postMessage({ results, id });
-        // console.log(python_output);
     } catch (error) {
         self.postMessage({ error: error.message, id });
     }
