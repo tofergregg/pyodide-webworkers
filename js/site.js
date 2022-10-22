@@ -10,8 +10,9 @@ const script = `
         a = input("hello?")
         # statistics.stdev(A_rank)
         # message = wait_for_message()
-        yield 1
-        print(f"Message received: {message}")
+        # yield 1
+        # print(f"Message received: {message}")
+        print("about to run loop")
         for i in range(10):
             time.sleep(1);
             print(f"{i}")
