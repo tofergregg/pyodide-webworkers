@@ -3,8 +3,9 @@ import { asyncRun } from "./py-worker";
 const script = `
     import statistics
     from js import A_rank
-    input("hello?")
-    statistics.stdev(A_rank)
+    a = input("hello?")
+    # statistics.stdev(A_rank)
+    return a
 `;
 
 const context = {
