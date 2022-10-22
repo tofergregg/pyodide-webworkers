@@ -22,11 +22,20 @@ self.onmessage = async (event) => {
     }
     // Now is the easy part, the one that is similar to working in the main thread:
     try {
-        console.log(python);
+        await self.pyodide.runPythonAsync(`
+        from js import input_fixed
+        input = input_fixed
+        __builtins__.input = input_fixed
+        `);
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);
         self.postMessage({ results, id });
     } catch (error) {
         self.postMessage({ error: error.message, id });
     }
+};
+
+function input_fixed(text) {
+    console.log("input requested: " + text)
+    return 42;
 };
