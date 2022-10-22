@@ -23,7 +23,7 @@ let pyodideReadyPromise = loadPyodideAndPackages();
 
 self.onmessage = async (event) => {
     console.log("Message from main thread: ");
-    console.log(event);
+    console.log(event.data);
     if (event.data.control !== undefined) {
         console.log("Control event");
         return;
