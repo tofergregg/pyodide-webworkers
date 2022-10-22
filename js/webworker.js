@@ -53,7 +53,6 @@ self.onmessage = async (event) => {
         input = input_fixed
         __builtins__.input = input_fixed
         def wait_for_message():
-            yield 1
             for i in range(10000):
                 message = wait_for_js_message()
                 print(message)
@@ -61,6 +60,7 @@ self.onmessage = async (event) => {
                     return message
         `);
         await self.pyodide.loadPackagesFromImports(python);
+        let results = await self.pyodide.runPythonAsync(python);
         let results = await self.pyodide.runPythonAsync(python);
         self.postMessage({ results, id });
     } catch (error) {
