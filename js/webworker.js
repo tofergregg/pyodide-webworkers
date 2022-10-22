@@ -40,7 +40,7 @@ function input_fixed(text) {
     return 42;
 };
 
-function sleep_fixed(t) {
+async function sleep_fixed(t) {
     console.log("Requested " + t + " seconds of sleep");
     await sleep(t * 1000);
     console.log("after sleeping");
