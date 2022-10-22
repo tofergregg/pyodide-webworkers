@@ -10,7 +10,7 @@ pyodideWorker.onmessage = (event) => {
 };
 
 const sendMessageToWorker = (message) => {
-    console.log("Sending " + message); 
+    console.log("Sending " + {'control': true, "message": message}); 
     pyodideWorker.postMessage(message);
 };
 
