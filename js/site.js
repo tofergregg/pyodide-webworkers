@@ -8,8 +8,8 @@ const script = `
     from js import A_rank
     a = input("hello?")
     # statistics.stdev(A_rank)
-    b = time.sleep(5);
-    print(b)
+    time.sleep(5);
+    print("Done!")
 `;
 
 const context = {
