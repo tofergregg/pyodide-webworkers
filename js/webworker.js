@@ -47,8 +47,7 @@ self.onmessage = async (event) => {
         input = input_fixed
         __builtins__.input = input_fixed
         def wait_for_message():
-            return
-            while True:
+            for i in range(100000):
                 message = wait_for_js_message()
                 print(message)
                 if message:
@@ -68,10 +67,10 @@ function input_fixed(text) {
 };
 
 function sleep_fixed(t) {
-    console.log("Requested " + t + " seconds of sleep");
+    // console.log("Requested " + t + " seconds of sleep");
     let start = Date.now();
     while (Date.now() - start < t * 1000) { }
-    console.log("after sleeping");
+    // console.log("after sleeping");
 }
 
 function wait_for_js_message() {
