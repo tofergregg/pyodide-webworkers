@@ -25,7 +25,7 @@ self.onmessage = async (event) => {
     console.log("Message from main thread: ");
     console.log(event.data);
     if (event.data.control !== undefined) {
-        console.log("Control event");
+        console.lg("Control event");
         return;
     }
     // make sure loading is done
