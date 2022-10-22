@@ -21,7 +21,7 @@ const sendMessageToWorker = (message) => {
     pyodideWorker.postMessage({'control': true, "message": message});
 };
 
-const passSharedBuffer(buf) {
+const passSharedBuffer = (buf) => {
     pyodideWorker.postMessage({'buffer': buf}); 
 }
 
