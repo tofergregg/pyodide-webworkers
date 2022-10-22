@@ -26,6 +26,7 @@ self.onmessage = async (event) => {
         from js import input_fixed
         input = input_fixed
         __builtins__.input = input_fixed
+        import time
         `);
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);
