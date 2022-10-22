@@ -22,9 +22,11 @@ async function loadPyodideAndPackages() {
 let pyodideReadyPromise = loadPyodideAndPackages();
 
 self.onmessage = async (event) => {
-    console.log("Message from main thread: ");
-    console.log(event);
-    return;
+    if (event.data.control !== undefined) {
+        console.log("Message from main thread: ");
+        console.log(event);
+        return;
+    }
     // make sure loading is done
     await pyodideReadyPromise;
     // Don't bother yet with this line, suppose our API is built in such a way:
