@@ -47,6 +47,7 @@ function sleep_fixed(t) {
         console.log("done sleeping!");
     }
     sleeper();
+    console.log("after sleeper");
 }
 
 function sleep(ms) {
