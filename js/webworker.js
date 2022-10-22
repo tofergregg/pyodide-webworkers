@@ -42,12 +42,11 @@ function input_fixed(text) {
 
 function sleep_fixed(t) {
     console.log("Requested " + t + " seconds of sleep");
-    const sleeper = async () => {
-        await sleep(t * 1000);
-        console.log("done sleeping!");
-    }
-    sleeper();
-    console.log("after sleeper");
+    let done = false;
+    sleep(Time in ms).then(() => {
+        done = true;
+    })
+    while (!done) {};
 }
 
 function sleep(ms) {
