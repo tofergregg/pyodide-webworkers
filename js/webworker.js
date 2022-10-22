@@ -91,6 +91,6 @@ async function waiting_for_message() {
 }
 
 function yieldToMacrotasks() {
-  return new Promise((resolve) => setTimeout(resolve));
+  return new Promise((resolve) => setTimeout(resolve, 50));
 }
 
