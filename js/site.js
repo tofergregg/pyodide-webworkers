@@ -5,7 +5,7 @@ const script = `
     from js import A_rank
     a = input("hello?")
     # statistics.stdev(A_rank)
-    return a
+    a
 `;
 
 const context = {
