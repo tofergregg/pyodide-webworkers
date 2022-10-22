@@ -25,7 +25,7 @@ self.onmessage = async (event) => {
     console.log("Message from main thread: ");
     console.log(event.data);
     if (event.data.control !== undefined) {
-        console.lg("Control event");
+        console.log("Control event");
         return;
     }
     // make sure loading is done
@@ -42,6 +42,8 @@ self.onmessage = async (event) => {
         from js import input_fixed
         input = input_fixed
         __builtins__.input = input_fixed
+        def wait_for_js():
+            print("waiting...")
         `);
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);

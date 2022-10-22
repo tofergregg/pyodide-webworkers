@@ -8,6 +8,7 @@ const script = `
     from js import A_rank
     a = input("hello?")
     # statistics.stdev(A_rank)
+    wait_for_js()
     for i in range(10):
         time.sleep(1);
         print(f"{i}")
