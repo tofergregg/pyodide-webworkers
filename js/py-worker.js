@@ -21,6 +21,10 @@ const sendMessageToWorker = (message) => {
     pyodideWorker.postMessage({'control': true, "message": message});
 };
 
+const passSharedBuffer(buf) {
+    pyodideWorker.postMessage({'buffer': buf}); 
+}
+
 const asyncRun = (() => {
     let id = 0; // identify a Promise
     return (script, context) => {
@@ -37,4 +41,4 @@ const asyncRun = (() => {
     };
 })();
 
-export { asyncRun, sendMessageToWorker };
+export { asyncRun, sendMessageToWorker, passSharedBuffer };

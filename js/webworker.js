@@ -31,6 +31,12 @@ self.onmessage = async (event) => {
         self.jsMessage = event.data.message;
         return;
     }
+    if (event.data.buffer !== undefined) {
+        // got a shared buffer
+        self.sharedBuf = new Int8Array(event.data.buffer);
+        console.log("Shared buf[0] = " + self.sharedBuf[0]);
+        return;
+    }
     // make sure loading is done
     await pyodideReadyPromise;
     // Don't bother yet with this line, suppose our API is built in such a way:
