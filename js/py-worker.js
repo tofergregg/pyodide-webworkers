@@ -10,7 +10,7 @@ pyodideWorker.onmessage = (event) => {
 };
 
 sendMessageToWorker = (message) => {
-   console.log("Sending " + message"); 
+   console.log("Sending " + message); 
 }
 
 const asyncRun = (() => {
