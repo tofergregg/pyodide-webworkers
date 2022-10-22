@@ -1,4 +1,4 @@
-import { asyncRun, passSharedBuffer } from "./py-worker";
+import { asyncRun, sendMessageToWorker } from "./py-worker";
 
 const script = `
     import time
@@ -22,10 +22,11 @@ const context = {
 const init_main = () => {
 //    window.pyodide_ready = false;
 //    start_pyodide();
-    window.sharedBuf = new SharedArrayBuffer(1024);
-    let arr = new Int8Array(window.sharedBuf);
-    arr[0] = 42;
-    passSharedBuffer(window.sharedBuf);
+    // Shared buffers are not easily allowed any more...
+    // window.sharedBuf = new SharedArrayBuffer(1024);
+    // let arr = new Int8Array(window.sharedBuf);
+    // arr[0] = 42;
+    // passSharedBuffer(window.sharedBuf);
     main();
 
 }
