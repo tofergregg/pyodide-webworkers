@@ -1,4 +1,4 @@
-import { asyncRun, sendMessageToWorker } from "./js/py-worker";
+import { asyncRun, sendMessageToWorker } from "./py-worker";
 
 const script = `
     import time
