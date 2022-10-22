@@ -16,7 +16,8 @@ pyodideWorker.onmessage = (event) => {
 };
 
 const sendMessageToWorker = (message) => {
-    console.log("Sending " + {'control': true, "message": message}); 
+    console.log("Sending ");
+    console.log({'control': true, "message": message}); 
     pyodideWorker.postMessage({'control': true, "message": message});
 };
 

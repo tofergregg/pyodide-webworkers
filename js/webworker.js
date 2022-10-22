@@ -21,11 +21,14 @@ async function loadPyodideAndPackages() {
 }
 let pyodideReadyPromise = loadPyodideAndPackages();
 
+self.jsMessage = null; 
+
 self.onmessage = async (event) => {
     console.log("Message from main thread: ");
     console.log(event.data);
     if (event.data.control !== undefined) {
         console.log("Control event");
+        self.jsMessage = event.data.message;
         return;
     }
     // make sure loading is done
@@ -40,10 +43,14 @@ self.onmessage = async (event) => {
     try {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
+        from js import wait_for_js_message
         input = input_fixed
         __builtins__.input = input_fixed
-        def wait_for_js():
-            print("waiting...")
+        def wait_for_message():
+            while True:
+                message = wait_for_js_message()
+                if message:
+                    return message
         `);
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);
@@ -63,5 +70,11 @@ function sleep_fixed(t) {
     let start = Date.now();
     while (Date.now() - start < t * 1000) { }
     console.log("after sleeping");
+}
+
+function wait_for_js_message() {
+    const temp = self.jsMessage 
+    self.jsMessage = null
+    return temp 
 }
 
