@@ -8,10 +8,7 @@ const script = `
     from js import A_rank
     def yield_loop():
         for i in range(10):
-            time.sleep(1)
-            print(f"{i}")
-            if i == 5:
-                yield i
+            yield i
 
 
     def main():
@@ -21,7 +18,8 @@ const script = `
         # yield 1
         # print(f"Message received: {message}")
         print("about to run loop")
-        yield_loop()
+        gen = yield_loop()
+        print(next(gen))
         print("all done!")
     if __name__ == "__main__":
         main()
