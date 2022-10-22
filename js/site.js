@@ -8,7 +8,8 @@ const script = `
     from js import A_rank
     a = input("hello?")
     # statistics.stdev(A_rank)
-    message = wait_for_message()
+    # message = wait_for_message()
+    yield 1
     print(f"Message received: {message}")
     for i in range(10):
         time.sleep(1);
