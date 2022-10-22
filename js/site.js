@@ -6,6 +6,12 @@ const script = `
     time.sleep = sleep_fixed
     import statistics
     from js import A_rank
+    def yield_loop():
+        for i in range(10):
+            time.sleep(1);
+            print(f"{i}")
+
+
     def main():
         a = input("hello?")
         # statistics.stdev(A_rank)
@@ -13,11 +19,8 @@ const script = `
         # yield 1
         # print(f"Message received: {message}")
         print("about to run loop")
-        for i in range(10):
-            time.sleep(1);
-            print(f"{i}")
-            if i == 5:
-                yield i
+        yield_loop()
+        print("all done!")
     if __name__ == "__main__":
         main()
 `;
