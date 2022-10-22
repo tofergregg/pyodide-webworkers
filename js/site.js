@@ -8,7 +8,7 @@ const script = `
     from js import A_rank
     def yield_loop():
         for i in range(10):
-            time.sleep(1);
+            time.sleep(1)
             print(f"{i}")
             if i == 5:
                 yield i
