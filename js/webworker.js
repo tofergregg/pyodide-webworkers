@@ -40,12 +40,10 @@ function input_fixed(text) {
     return 42;
 };
 
-async function sleep_fixed(t) {
+function sleep_fixed(t) {
     console.log("Requested " + t + " seconds of sleep");
-    await sleep(t * 1000);
+    let start = Date.now();
+    while (Date.now() - start < t * 1000) { }
     console.log("after sleeping");
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
