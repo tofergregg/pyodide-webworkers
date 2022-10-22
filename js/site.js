@@ -2,9 +2,11 @@ import { asyncRun } from "./py-worker";
 
 const script = `
     import statistics
+    import time
     from js import A_rank
     a = input("hello?")
     # statistics.stdev(A_rank)
+    time.sleep(5);
     a
 `;
 
