@@ -1,5 +1,6 @@
 import { asyncRun, sendMessageToWorker } from "./py-worker.js";
 
+console.log(self.crossOriginIsolated);
 const script = `
     import time
     from js import sleep_fixed
