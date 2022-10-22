@@ -9,9 +9,9 @@ pyodideWorker.onmessage = (event) => {
   onSuccess(data);
 };
 
-sendMessageToWorker = (message) => {
+const sendMessageToWorker = (message) => {
    console.log("Sending " + message); 
-}
+};
 
 const asyncRun = (() => {
   let id = 0; // identify a Promise
