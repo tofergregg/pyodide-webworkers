@@ -8,7 +8,11 @@ pyodideWorker.onmessage = (event) => {
     console.log("onSuccess:");
     console.log(onSuccess);
     delete callbacks[id];
-    onSuccess(data);
+    if (typeof(onSuccess) === 'function') {
+        onSuccess(data);
+    } else {
+        console.log("Error: " + error);
+    }
 };
 
 const sendMessageToWorker = (message) => {
