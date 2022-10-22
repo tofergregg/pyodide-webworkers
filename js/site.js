@@ -71,9 +71,9 @@ async function start_pyodide() {
 const get_input = () => {
     code = document.getElementById('code').value;
     // window.pyodide.runPython(code);
-    sendMessageToWorker("here's a message");
+    //sendMessageToWorker("here's a message");
 }
-window.get_input = get_input;
+// window.get_input = get_input;
 
 const reset_console = () => {
     document.getElementById('console-output').value = ''
