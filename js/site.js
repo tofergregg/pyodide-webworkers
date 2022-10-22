@@ -9,8 +9,7 @@ const script = `
     a = input("hello?")
     # statistics.stdev(A_rank)
     b = time.sleep(5);
-    b = 100
-    b
+    print(b)
 `;
 
 const context = {
