@@ -35,6 +35,8 @@ async function main() {
   }
 }
 
+///// 
+
 async function start_pyodide() {
     const output = document.getElementById("console-output");
     window.abc = '';
@@ -60,8 +62,6 @@ async function start_pyodide() {
     document.getElementById('click-button').disabled = false;
 }
 
-
-///// 
 const get_input = () => {
     code = document.getElementById('code').value;
     window.pyodide.runPython(code);
