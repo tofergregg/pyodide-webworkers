@@ -38,7 +38,7 @@ self.onmessage = async (event) => {
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);
         self.postMessage({ results, id });
-        console.log(python_output);
+        // console.log(python_output);
     } catch (error) {
         self.postMessage({ error: error.message, id });
     }
