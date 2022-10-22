@@ -20,6 +20,7 @@ const script = `
         print("about to run loop")
         gen = yield_loop()
         print(next(gen))
+        print(next(gen))
         print("all done!")
     if __name__ == "__main__":
         main()
