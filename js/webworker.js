@@ -47,7 +47,7 @@ self.onmessage = async (event) => {
         input = input_fixed
         __builtins__.input = input_fixed
         def wait_for_message():
-            for i in range(100000):
+            for i in range(3000):
                 message = wait_for_js_message()
                 print(message)
                 if message:
