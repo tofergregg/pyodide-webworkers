@@ -74,6 +74,7 @@ const get_input = () => {
     // window.pyodide.runPython(code);
     sendMessageToWorker("here's a message");
 }
+window.get_input = get_input;
 
 const reset_console = () => {
     document.getElementById('console-output').value = ''
