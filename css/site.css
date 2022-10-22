@@ -1,0 +1,138 @@
+// initial code from: https://gridbyexample.com/examples/
+body {
+    font-family: 'Raleway', serif;
+}
+
+.main {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-family: 'Raleway', serif;
+    font-size: 90%;
+}
+
+.header-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 20% 80%;
+    background-color: #fff;
+    color: #444;
+}
+
+.box {
+    font-family: 'Raleway', serif;
+    font-size: 100%;
+    background-color: #fff;
+    color: #000;
+    padding: 2px;
+}
+
+.image-box {
+    border: 1px solid;
+    border-radius: 4px;
+    border-color: #aaa;
+    padding: 2px;
+    position: relative;
+    margin: auto;
+}
+
+.text-box {
+    /* background-color: #7E9C54; */
+    border: 1px solid;
+    border-radius: 4px;
+    border-color: #aaa;
+    padding: 0px;
+    position: relative;
+    padding-left: 5px;
+    padding-right: 5px;
+    /* margin: auto;*/
+}
+
+.course-box {
+    /* background-color: #7E9C54; */
+    border: 1px solid;
+    border-radius: 4px;
+    border-color: #aaa;
+    padding: 0px;
+    position: relative;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 200px;
+}
+
+h2 {
+    padding: 0px;
+    /* margin-top: -5px; */
+}
+
+.header-left {
+    grid-column: 1;
+    grid-row: 1;
+}
+.header-right {
+    grid-column: 2 ;
+    grid-row: 1;
+    vertical-align: middle;
+}
+.c {
+    grid-column: 1;
+    grid-row: 2 ;
+}
+.d {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+a:link {
+  text-decoration: none;
+  color: green;
+}
+
+a:visited {
+  text-decoration: none;
+  color: green;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+}
+
+.course-container {
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+    grid-gap: 20px;
+}
+
+
+.pubs-wrapper {
+    margin-left: 0%;
+    margin-right: 0%;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 50% 50%;
+    background-color: #fff;
+    color: #444;
+}
+
+.pubs-box {
+    border: 1px solid;
+    border-radius: 4px;
+    border-color: #aaa;
+    font-family: 'Raleway', serif;
+    font-size: 100%;
+    background-color: #fff;
+    color: #000;
+    padding: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+textarea {
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+  background-color: black;
+  color: white;
+}
