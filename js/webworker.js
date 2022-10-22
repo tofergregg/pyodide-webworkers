@@ -47,6 +47,7 @@ function sleep_fixed(t) {
         done = true;
     })
     while (!done) {};
+    console.log("after sleeping");
 }
 
 function sleep(ms) {
