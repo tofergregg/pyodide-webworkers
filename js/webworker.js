@@ -42,4 +42,8 @@ function input_fixed(text) {
 
 function sleep_fixed(t) {
     console.log("Requested " + t + " seconds of sleep");
+    const sleeper = async () => {
+        await sleep(t * 1000);
+    }
+    sleeper();
 }
