@@ -17,6 +17,8 @@ const init_main = () => {
 
 }
 
+window.init_main = init_main;
+
 
 async function main() {
   try {
