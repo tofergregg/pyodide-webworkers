@@ -73,6 +73,7 @@ function sleep_fixed(t) {
 }
 
 function wait_for_js_message() {
+    console.log("in wait_for_js_message");
     const temp = self.jsMessage 
     self.jsMessage = null
     return temp 
