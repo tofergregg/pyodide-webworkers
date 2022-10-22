@@ -26,7 +26,6 @@ self.onmessage = async (event) => {
         from js import input_fixed
         input = input_fixed
         __builtins__.input = input_fixed
-        import time
         `);
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);
@@ -40,3 +39,7 @@ function input_fixed(text) {
     console.log("input requested: " + text)
     return 42;
 };
+
+function sleep_fixed(t) {
+    console.log("Requested " + t + " seconds of sleep");
+}

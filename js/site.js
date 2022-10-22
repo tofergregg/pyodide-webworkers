@@ -1,6 +1,9 @@
 import { asyncRun } from "./py-worker";
 
 const script = `
+    import time
+    from js import sleep_fixed
+    time.sleep = sleep_fixed
     import statistics
     from js import A_rank
     a = input("hello?")
