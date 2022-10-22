@@ -1,6 +1,6 @@
-<!DOCTYPE html>
 <?php header("Cross-Origin-Embedder-Policy: require-corp"); ?>
 <?php header("Cross-Origin-Opener-Policy: same-origin"); ?>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Python Graphics Example</title>
