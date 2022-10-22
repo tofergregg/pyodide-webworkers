@@ -6,14 +6,17 @@ const script = `
     time.sleep = sleep_fixed
     import statistics
     from js import A_rank
-    a = input("hello?")
-    # statistics.stdev(A_rank)
-    # message = wait_for_message()
-    yield 1
-    print(f"Message received: {message}")
-    for i in range(10):
-        time.sleep(1);
-        print(f"{i}")
+    def main():
+        a = input("hello?")
+        # statistics.stdev(A_rank)
+        # message = wait_for_message()
+        yield 1
+        print(f"Message received: {message}")
+        for i in range(10):
+            time.sleep(1);
+            print(f"{i}")
+    if __name__ == "__main__":
+        main()
 `;
 
 const context = {
