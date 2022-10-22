@@ -79,11 +79,15 @@ function sleep_fixed(t) {
     // console.log("after sleeping");
 }
 
-async function wait_for_js_message() {
-    await yieldToMacrotasks();
+function wait_for_js_message() {
+    waiting_for_message();
     const temp = self.jsMessage 
     self.jsMessage = null
     return temp 
+}
+
+async function waiting_for_message() {
+    await yieldToMacrotasks();
 }
 
 function yieldToMacrotasks() {
