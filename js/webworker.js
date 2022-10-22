@@ -87,6 +87,7 @@ function wait_for_js_message() {
 }
 
 async function waiting_for_message() {
+    console.log("waiting...");
     await yieldToMacrotasks();
 }
 
