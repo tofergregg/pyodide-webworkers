@@ -79,10 +79,14 @@ function sleep_fixed(t) {
     // console.log("after sleeping");
 }
 
-function* wait_for_js_message() {
+async function wait_for_js_message() {
+    await yieldToMacrotasks();
     const temp = self.jsMessage 
     self.jsMessage = null
-    yield 1;
     return temp 
+}
+
+function yieldToMacrotasks() {
+  return new Promise((resolve) => setTimeout(resolve));
 }
 
