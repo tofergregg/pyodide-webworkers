@@ -43,7 +43,7 @@ function input_fixed(text) {
 function sleep_fixed(t) {
     console.log("Requested " + t + " seconds of sleep");
     let done = false;
-    sleep(Time in ms).then(() => {
+    sleep(t * 1000).then(() => {
         done = true;
     })
     while (!done) {};
