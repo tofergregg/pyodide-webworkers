@@ -44,6 +44,7 @@ function sleep_fixed(t) {
     console.log("Requested " + t + " seconds of sleep");
     const sleeper = async () => {
         await sleep(t * 1000);
+        console.log("done sleeping!");
     }
     sleeper();
 }
