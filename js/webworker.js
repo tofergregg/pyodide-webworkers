@@ -7,14 +7,14 @@ importScripts("https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js");
 
 async function loadPyodideAndPackages() {
     var python_output;
-    self.pyodide = await loadPyodide(
+    self.pyodide = await loadPyodide({
         stdout: text => {
             python_output += text + '\n';
         },
         stderr: text => {
             python_output += text + '\n';
         }
-    );
+    });
     await self.pyodide.loadPackage(["numpy", "pytz"]);
 }
 let pyodideReadyPromise = loadPyodideAndPackages();
