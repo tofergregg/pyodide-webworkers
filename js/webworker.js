@@ -46,7 +46,6 @@ function sleep_fixed(t) {
     sleep(t * 1000).then(() => {
         done = true;
     })
-    while (!done) {};
     console.log("after sleeping");
 }
 
