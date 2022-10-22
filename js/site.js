@@ -3,6 +3,7 @@ import { asyncRun } from "./py-worker";
 const script = `
     import statistics
     from js import A_rank
+    input("hello?")
     statistics.stdev(A_rank)
 `;
 
@@ -104,8 +105,3 @@ if __name__ == '__main__':
     console.value = snippets[value]; 
 }
 
-function input_fixed(text) {
-    const output = document.getElementById("console-output");
-    output.value += text;
-    return prompt(text);
-};
