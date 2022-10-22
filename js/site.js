@@ -16,6 +16,8 @@ const script = `
         for i in range(10):
             time.sleep(1);
             print(f"{i}")
+            if i == 5:
+                yield i
     if __name__ == "__main__":
         main()
 `;
