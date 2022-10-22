@@ -49,6 +49,7 @@ self.onmessage = async (event) => {
         def wait_for_message():
             while True:
                 message = wait_for_js_message()
+                print(message)
                 if message:
                     return message
         `);
@@ -74,6 +75,8 @@ function sleep_fixed(t) {
 
 function wait_for_js_message() {
     console.log("in wait_for_js_message");
+    console.log("message:");
+    console.log(self.jsMessage);
     const temp = self.jsMessage 
     self.jsMessage = null
     return temp 
