@@ -73,6 +73,7 @@ function input_fixed(text) {
     self.sharedBuf[0] = 0;
 
     const result = self.sharedBuf[1];
+    console.log(result);
     return result;
 };
 
