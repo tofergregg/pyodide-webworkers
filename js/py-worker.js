@@ -10,6 +10,7 @@ pyodideWorker.onmessage = (event) => {
         terminal.value += event.data.outputText;
 
         if (event.data.getInput !== undefined && event.data.getInput) {
+            getInputFromTerminal();
             // use atomics to guarantee values are propogated
             // Atomics.store(window.sharedArr, 1, 100);
             // Atomics.store(window.sharedArr, 0, 1);
@@ -50,5 +51,14 @@ const asyncRun = ((script, context) => {
         });
     };
 })();
+
+const getInputFromTerminal = () => {
+    const terminal = document.getElementById('console-output');
+    const end = terminal.value.length;
+
+    terminal.setSelectionRange(end, end);
+    terminal.focus();
+
+}
 
 export { asyncRun, sendMessageToWorker, passSharedBuffer };
