@@ -63,6 +63,26 @@ const getInputFromTerminal = () => {
         } else if (currentVal.endsWith('\n')) {
             console.log("Full input: " + userInput);
             terminal.removeEventListener('input', consoleListener);
+            // we need to populate the shared buffer with the input
+            // the first byte is going to be changed to 1 to indicate
+            // that we have input (do this last)
+            // The second and third bytes are going to be a little-endian
+            // 2-byte number that represents the length of the input
+            // The remaining bytes will represent the input characters
+            // We can hold up to 65536-3 = 65535 bytes of data
+            
+            const inputLen = Math.max(userInput.length, 65535);
+
+            // set the length
+            Atomics.store(window.sharedArr, 1, inputLen % 256); 
+            Atomics.store(window.sharedArr, 2, Math.floor(inputLen / 256)); 
+            // copy the data
+            for (let i = 0; i < inputLen; i++) {
+                Atomics.store(window.sharedArr, i + 3, userInput.charCodeAt(i));
+            }
+
+            // alert the webworker
+            Atomics.store(window.sharedArr, 0, 1);
         }
         else{
             userInput = currentVal.substring(originalText.length);

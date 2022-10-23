@@ -69,11 +69,16 @@ function input_fixed(text) {
     // console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
     while (Atomics.load(self.sharedBuf, 0) == 0) {} // spin
-    const temp = Atomics.load(self.sharedBuf, 0);
-    const result = Atomics.load(self.sharedBuf, 1);
-
+    // reset trigger
     Atomics.store(self.sharedBuf, 0, 0);
-    return result;
+
+    const dataLen = Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
+    let data = '';
+    for (let i = 0; i < dataLen; i++) {
+        data += String.fromCharCode(Atomics.load(self.sharedBuf, i + 3));
+    }
+
+    return data;
 };
 
 function sleep_fixed(t) {
