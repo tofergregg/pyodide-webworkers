@@ -6,15 +6,12 @@
 importScripts("https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js");
 
 async function loadPyodideAndPackages() {
-    let python_output;
     self.pyodide = await loadPyodide({
         stdout: text => {
-            python_output += text + '\n';
             // console.log("output: " + text);
             self.postMessage({outputText: text + '\n'});
         },
         stderr: text => {
-            python_output += text + '\n';
             // console.log("output: " + text);
             self.postMessage({outputText: text + '\n'});
         }
