@@ -10,7 +10,10 @@ pyodideWorker.onmessage = (event) => {
         terminal.value += event.data.outputText;
 
         if (event.data.getInput !== undefined && event.data.getInput) {
-            window.sharedArr[1] = 100;
+            // set this many times so it has time to propogate
+            for (let i = 0; i < 1000; i++) {
+                window.sharedArr[1] = 100;
+            }
             window.sharedArr[0] = 1;
         }
         return;
