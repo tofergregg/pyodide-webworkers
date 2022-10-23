@@ -11,12 +11,12 @@ async function loadPyodideAndPackages() {
         stdout: text => {
             python_output += text + '\n';
             // console.log("output: " + text);
-            self.postMessage({outputText: text});
+            self.postMessage({outputText: text + '\n'});
         },
         stderr: text => {
             python_output += text + '\n';
             // console.log("output: " + text);
-            self.postMessage({outputText: text});
+            self.postMessage({outputText: text + '\n'});
         }
     });
     await self.pyodide.loadPackage(["numpy", "pytz"]);
@@ -86,7 +86,9 @@ function wait_for_js_message() {
     if (self.sharedBuf[0] != 0) {
         // console.log(sharedBuf[0]);
         waiting_for_message();
-        return self.sharedBuf[0];
+        const sharedVal = self.sharedBuf[0];
+        self.sharedBuf[0] = 0;
+        return sharedVal;
     } else {
         return null;
     }
