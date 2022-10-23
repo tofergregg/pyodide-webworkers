@@ -53,17 +53,6 @@ const asyncRun = ((script, context) => {
 })();
 
 const getInputFromTerminal = () => {
-    const terminal = document.getElementById('console-output');
-    const end = terminal.value.length;
-
-    terminal.setSelectionRange(end, end);
-    terminal.focus();
-    // we need to configure the textarea so that we can control how the user
-    // changes it. I.e., only allow text after the current text
-    // get the current text in the textarea so we have it when there are changes
-    let originalText = terminal.value;
-    let userInput = '';
-    terminal.addEventListener('input', consoleListener, false);
     const consoleListener = () => {
         console.log("got input");
         // first, check to see that the original text is still
@@ -80,6 +69,17 @@ const getInputFromTerminal = () => {
             console.log("User input so far: " + userInput);
         }
     }
+    const terminal = document.getElementById('console-output');
+    const end = terminal.value.length;
+
+    terminal.setSelectionRange(end, end);
+    terminal.focus();
+    // we need to configure the textarea so that we can control how the user
+    // changes it. I.e., only allow text after the current text
+    // get the current text in the textarea so we have it when there are changes
+    let originalText = terminal.value;
+    let userInput = '';
+    terminal.addEventListener('input', consoleListener, false);
 }
 
 
