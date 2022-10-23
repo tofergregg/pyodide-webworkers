@@ -68,7 +68,11 @@ self.onmessage = async (event) => {
 function input_fixed(text) {
     // console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
-    return 42;
+    while (self.sharedBuf[0] != 0) {} // spin
+    const temp = self.sharedBuf[0];
+    self.sharedBuf[0] = 0;
+
+    return self.sharedBuf[1];
 };
 
 function sleep_fixed(t) {

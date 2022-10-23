@@ -8,6 +8,11 @@ pyodideWorker.onmessage = (event) => {
         // console.log(event.data.outputText);
         const terminal = document.getElementById('console-output');
         terminal.value += event.data.outputText;
+
+        if (event.data.getInput !== undefined && event.data.getInput) {
+            window.sharedArr[1] = 100;
+            window.sharedArr[0] = 1;
+        }
         return;
     }
     const onSuccess = callbacks[id];
