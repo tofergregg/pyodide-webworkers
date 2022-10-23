@@ -58,7 +58,13 @@ const getInputFromTerminal = () => {
 
     terminal.setSelectionRange(end, end);
     terminal.focus();
-
+    terminal.addEventListener(
+     'change',
+     function() { 
+        console.log("got change in textarea");
+     },
+     false
+  );
 }
 
 export { asyncRun, sendMessageToWorker, passSharedBuffer };
