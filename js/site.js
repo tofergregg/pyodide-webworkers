@@ -1,6 +1,5 @@
 import { asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
 
-console.log(self.crossOriginIsolated);
 const script = `
     import time
     from js import sleep_fixed
@@ -27,6 +26,7 @@ const init_main = () => {
 //    window.pyodide_ready = false;
 //    start_pyodide();
     // Shared buffers are not easily allowed any more...
+    // Must have correct headers (see .htaccess)
     window.sharedBuf = new SharedArrayBuffer(1024);
     window.sharedArr = new Int8Array(window.sharedBuf);
     // initialize
@@ -83,7 +83,7 @@ async function start_pyodide() {
 }
 
 const get_input = () => {
-    // code = document.getElementById('code').value;
+    code = document.getElementById('code').value;
     // window.pyodide.runPython(code);
     // sendMessageToWorker("here's a message");
     window.sharedArr[0] = 42; 

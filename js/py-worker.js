@@ -25,7 +25,7 @@ const passSharedBuffer = (buf) => {
     pyodideWorker.postMessage({'buffer': buf}); 
 }
 
-const asyncRun = (() => {
+const asyncRun = ((script) => {
     let id = 0; // identify a Promise
     return (script, context) => {
         // the id could be generated more carefully
