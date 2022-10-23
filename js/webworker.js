@@ -55,6 +55,7 @@ self.onmessage = async (event) => {
         def wait_for_message():
             for i in range(10000):
                 message = wait_for_js_message()
+                print(f"msg: {message}")
                 if message:
                     return message
         `);
