@@ -54,7 +54,6 @@ const asyncRun = ((script, context) => {
 
 const getInputFromTerminal = () => {
     const consoleListener = () => {
-        console.log("got input");
         // first, check to see that the original text is still
         // present (otherwise, change back)
         const currentVal = terminal.value;
