@@ -37,7 +37,7 @@ self.onmessage = async (event) => {
     // make sure loading is done
     await pyodideReadyPromise;
     // Don't bother yet with this line, suppose our API is built in such a way:
-    const { id, python, ...context } = event.data;
+    let { id, python, ...context } = event.data;
     // The worker copies the context in its own "memory" (an object mapping name to values)
     for (const key of Object.keys(context)) {
         self[key] = context[key];
