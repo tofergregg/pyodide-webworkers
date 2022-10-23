@@ -98,7 +98,6 @@ print(f"The sum of {first_number} + {second_number} = {result}")`,
 
         `def main():
     size = int(input("Size of triangle (5-21)? "))
-    print(size)
     triangle(size)
 
 def triangle(n):
@@ -111,6 +110,10 @@ def triangle(n):
 
 if __name__ == '__main__':
     main()`,
+        `import time
+for i in range(20):
+    print(i)
+    time.sleep(1)`,
     ]
 
     const value = document.getElementById('examples').value;
