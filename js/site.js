@@ -27,13 +27,13 @@ const init_main = () => {
 //    window.pyodide_ready = false;
 //    start_pyodide();
     // Shared buffers are not easily allowed any more...
-    let sharedBuf = new SharedArrayBuffer(1024);
+    window.sharedBuf = new SharedArrayBuffer(1024);
     window.sharedArr = new Int8Array(window.sharedBuf);
     // initialize
     for (let i = 0; i < 1024; i++) {
         window.sharedArr[i] = 0;
     }
-    passSharedBuffer(sharedBuf);
+    passSharedBuffer(window.sharedBuf);
     main();
 
 }
