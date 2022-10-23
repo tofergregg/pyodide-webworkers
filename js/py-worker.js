@@ -58,9 +58,19 @@ const getInputFromTerminal = () => {
 
     terminal.setSelectionRange(end, end);
     terminal.focus();
-    console.log("about to add listener");
+    // we need to configure the textarea so that we can control how the user
+    // changes it. I.e., only allow text after the current text
+    // get the current text in the textarea so we have it when there are changes
+    let originalText = terminal.value;
+    let userInput = '';
     terminal.addEventListener('input', function() {
         console.log("got input");
+        // first, check to see that the original text is still
+        // present (otherwise, change back)
+        const currentVal = terminal.value;
+        if (!currentVal.startsWith(originalText)) {
+            terminal.value = originalText;
+        }
   }, false);
 }
 
