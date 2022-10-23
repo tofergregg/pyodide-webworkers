@@ -18,10 +18,6 @@ const script = `
         main()
 `;
 
-const context = {
-  A_rank: [0.8, 0.4, 1.2, 3.7, 2.6, 5.8],
-};
-
 const init_main = () => {
 //    window.pyodide_ready = false;
 //    start_pyodide();
@@ -34,13 +30,11 @@ const init_main = () => {
         window.sharedArr[i] = 0;
     }
     passSharedBuffer(window.sharedBuf);
-    main();
-
 }
 
 window.init_main = init_main;
 
-async function main() {
+async function python_runner(script, context) {
   try {
     const { results, error } = await asyncRun(script, context);
     if (results) {
@@ -83,10 +77,10 @@ async function start_pyodide() {
 }
 
 const get_input = () => {
+    const context = {}; // we might use this to pass parameters to a program,
+    // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
     code = document.getElementById('code').value;
-    // window.pyodide.runPython(code);
-    // sendMessageToWorker("here's a message");
-    window.sharedArr[0] = 42; 
+    python_runner(code, context);
 }
 
 window.get_input = get_input;
