@@ -58,12 +58,11 @@ const getInputFromTerminal = () => {
 
     terminal.setSelectionRange(end, end);
     terminal.focus();
-    terminal.addEventListener(
-     'onchange',
-     function(event) { 
-        console.log("got change in textarea");
-     },
-     false
+    console.log("about to add listener");
+    terminal.setAttribute("onchange", function(event) {
+        console.log("got change");
+    });
+
   );
 }
 
