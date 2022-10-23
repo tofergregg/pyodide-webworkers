@@ -8,12 +8,11 @@ pyodideWorker.onmessage = (event) => {
         // console.log(event.data.outputText);
         const terminal = document.getElementById('console-output');
         terminal.value += event.data.outputText;
+        terminal.blur();
+        terminal.focus();
 
         if (event.data.getInput !== undefined && event.data.getInput) {
             getInputFromTerminal();
-            // use atomics to guarantee values are propogated
-            // Atomics.store(window.sharedArr, 1, 100);
-            // Atomics.store(window.sharedArr, 0, 1);
         }
         return;
     }
