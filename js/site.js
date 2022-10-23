@@ -115,8 +115,8 @@ if __name__ == '__main__':
     main()`,
     ]
 
-    value = document.getElementById('examples').value;
-    console = document.getElementById('code');
+    const value = document.getElementById('examples').value;
+    const console = document.getElementById('code');
     console.value = snippets[value]; 
 }
 
