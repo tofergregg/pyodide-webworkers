@@ -29,7 +29,10 @@ const init_main = () => {
     // Shared buffers are not easily allowed any more...
     window.sharedBuf = new SharedArrayBuffer(1024);
     let arr = new Int8Array(window.sharedBuf);
-    arr[0] = 42;
+    // initialize
+    for (let i = 0; i < 1024; i++) {
+        arr[i] = 0;
+    }
     passSharedBuffer(window.sharedBuf);
     main();
 
