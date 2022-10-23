@@ -41,4 +41,4 @@ const asyncRun = (() => {
     };
 })();
 
-export { asyncRun, sendMessageToWorker };
+export { asyncRun, sendMessageToWorker, passSharedBuffer };
