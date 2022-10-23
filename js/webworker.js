@@ -68,11 +68,11 @@ self.onmessage = async (event) => {
 function input_fixed(text) {
     // console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
-    while (self.sharedBuf[0] != 0) {} // spin
-    const temp = self.sharedBuf[0];
-    const result = self.sharedBuf[1];
+    while (Atomics.load(self.sharedBuf, 0) != 0) {} // spin
+    const temp = Atomics.load(self.sharedBuf, 0);
+    const result = Atomics.load(self.sharedBuf, 1);
 
-    self.sharedBuf[0] = 0;
+    Atomics.store(self.sharedBuf, 0, 0);
     return result;
 };
 
