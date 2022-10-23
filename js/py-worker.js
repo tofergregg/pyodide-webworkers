@@ -59,7 +59,7 @@ const getInputFromTerminal = () => {
     terminal.setSelectionRange(end, end);
     terminal.focus();
     console.log("about to add listener");
-    terminal.setAttribute("onchange", function(event) {
+    terminal.setAttribute("onchange", (event) => {
         console.log("got change");
     });
 }
