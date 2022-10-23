@@ -111,7 +111,7 @@ if __name__ == '__main__':
         `import time
 from js import sleep_fixed
 time.sleep = sleep_fixed
-for i in range(20):
+for i in range(10):
     print(i)
     time.sleep(1)`,
     ]
