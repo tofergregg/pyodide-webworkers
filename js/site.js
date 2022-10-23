@@ -86,7 +86,7 @@ const get_input = () => {
     // code = document.getElementById('code').value;
     // window.pyodide.runPython(code);
     // sendMessageToWorker("here's a message");
-    window.sharedBuffer[0] = 42; 
+    window.sharedBuf[0] = 42; 
 }
 
 window.get_input = get_input;
