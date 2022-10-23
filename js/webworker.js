@@ -11,12 +11,12 @@ async function loadPyodideAndPackages() {
         stdout: text => {
             python_output += text + '\n';
             // console.log("output: " + text);
-            self.postMessage(outputText: text);
+            self.postMessage({outputText: text});
         },
         stderr: text => {
             python_output += text + '\n';
             // console.log("output: " + text);
-            self.postMessage(outputText: text);
+            self.postMessage({outputText: text});
         }
     });
     await self.pyodide.loadPackage(["numpy", "pytz"]);
