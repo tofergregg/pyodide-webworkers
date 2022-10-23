@@ -1,4 +1,4 @@
-import { asyncRun, sendMessageToWorker } from "./py-worker.js";
+import { asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
 
 console.log(self.crossOriginIsolated);
 const script = `
