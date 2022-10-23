@@ -11,8 +11,8 @@ pyodideWorker.onmessage = (event) => {
 
         if (event.data.getInput !== undefined && event.data.getInput) {
             // use atomics to guarantee values are propogated
-            Atomics.store(window.sharedArr, 1, 100);
-            Atomics.store(window.sharedArr, 0, 1);
+            // Atomics.store(window.sharedArr, 1, 100);
+            // Atomics.store(window.sharedArr, 0, 1);
         }
         return;
     }
