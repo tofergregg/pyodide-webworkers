@@ -5,8 +5,9 @@ const callbacks = {};
 pyodideWorker.onmessage = (event) => {
     const { id, ...data } = event.data;
     if (event.data.outputText !== undefined) {
-        console.log("received output:");
-        console.log(event.data.outputText);
+        // console.log(event.data.outputText);
+        const terminal = document.getElementById('console-output');
+        terminal.value += event.data.outputText;
         return;
     }
     const onSuccess = callbacks[id];
