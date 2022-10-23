@@ -70,7 +70,10 @@ const getInputFromTerminal = () => {
         const currentVal = terminal.value;
         if (!currentVal.startsWith(originalText)) {
             terminal.value = originalText + userInput;
-        } else {
+        } else if (currentVal.endsWith('\n')) {
+            console.log("Full input: " + userInput);
+        }
+        else{
             userInput = currentVal.substring(originalText.length);
             console.log("User input so far: " + userInput);
         }
