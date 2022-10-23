@@ -70,10 +70,9 @@ function input_fixed(text) {
     self.postMessage({outputText: text, getInput: true});
     while (self.sharedBuf[0] != 0) {} // spin
     const temp = self.sharedBuf[0];
-    self.sharedBuf[0] = 0;
-
     const result = self.sharedBuf[1];
-    console.log(result);
+
+    self.sharedBuf[0] = 0;
     return result;
 };
 
