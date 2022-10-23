@@ -33,7 +33,7 @@ const init_main = () => {
     for (let i = 0; i < 1024; i++) {
         window.sharedArr[i] = 0;
     }
-    passSharedBuffer(window.sharedBuf);
+    passSharedBuffer(sharedBuf);
     main();
 
 }
