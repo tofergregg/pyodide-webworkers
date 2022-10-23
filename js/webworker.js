@@ -81,7 +81,10 @@ function sleep_fixed(t) {
 
 function wait_for_js_message() {
     waiting_for_message();
-    console.log(self.sharedBuf[0]);
+    // console.log(self.sharedBuf[0]);
+    if (self.sharedBuf[0] != 0) {
+        return self.sharedBuf[0];
+    }
     const temp = self.jsMessage 
     self.jsMessage = null
     return temp 
