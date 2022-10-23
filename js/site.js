@@ -92,9 +92,7 @@ window.update_terminal = () => {
     const snippets = [`print('Hello, World!')`,
 
         `first_number = int(input("Please type a number: "))
-print(f"{first_number}")
 second_number = int(input("Please type another number: "))
-print(f"{second_number}")
 result = first_number + second_number
 print(f"The sum of {first_number} + {second_number} = {result}")`,
 
