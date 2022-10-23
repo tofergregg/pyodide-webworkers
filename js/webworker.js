@@ -10,11 +10,13 @@ async function loadPyodideAndPackages() {
     self.pyodide = await loadPyodide({
         stdout: text => {
             python_output += text + '\n';
-            console.log("output: " + text);
+            // console.log("output: " + text);
+            self.postMessage(outputText: text);
         },
         stderr: text => {
             python_output += text + '\n';
-            console.log("output: " + text);
+            // console.log("output: " + text);
+            self.postMessage(outputText: text);
         }
     });
     await self.pyodide.loadPackage(["numpy", "pytz"]);
@@ -32,6 +34,12 @@ self.onmessage = async (event) => {
     if (event.data.buffer !== undefined) {
         // got a shared buffer
         self.sharedBuf = new Int8Array(event.data.buffer);
+        return;
+    }
+
+    if (event.data.outputMessage !== undefined) {
+        console.log("received output:");
+        console.log(event.data.outputMessage);
         return;
     }
     // make sure loading is done
