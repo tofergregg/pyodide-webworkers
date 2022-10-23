@@ -24,7 +24,7 @@ const init_main = () => {
     // Shared buffers are not easily allowed any more...
     // Must have correct headers (see .htaccess)
     window.sharedBuf = new SharedArrayBuffer(65536);
-    window.sharedArr = new UInt8Array(window.sharedBuf);
+    window.sharedArr = new Uint8Array(window.sharedBuf);
     // initialize
     for (let i = 0; i < 65536; i++) {
         Atomics.store(window.sharedArr, i, 0);

@@ -30,7 +30,7 @@ self.onmessage = async (event) => {
     }
     if (event.data.buffer !== undefined) {
         // got a shared buffer
-        self.sharedBuf = new UInt8Array(event.data.buffer);
+        self.sharedBuf = new Uint8Array(event.data.buffer);
         return;
     }
 
