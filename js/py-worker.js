@@ -5,8 +5,6 @@ const callbacks = {};
 pyodideWorker.onmessage = (event) => {
     const { id, ...data } = event.data;
     const onSuccess = callbacks[id];
-    console.log("onSuccess:");
-    console.log(onSuccess);
     delete callbacks[id];
     if (typeof(onSuccess) === 'function') {
         onSuccess(data);
