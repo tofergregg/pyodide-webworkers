@@ -69,7 +69,8 @@ self.onmessage = async (event) => {
 };
 
 function input_fixed(text) {
-    console.log("input requested: " + text)
+    // console.log("input requested: " + text)
+    self.postMessage({outputText: text});
     return 42;
 };
 
