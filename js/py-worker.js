@@ -72,6 +72,7 @@ const getInputFromTerminal = () => {
             terminal.value = originalText + userInput;
         } else if (currentVal.endsWith('\n')) {
             console.log("Full input: " + userInput);
+            terminal.removeEventListener('input');
         }
         else{
             userInput = currentVal.substring(originalText.length);
