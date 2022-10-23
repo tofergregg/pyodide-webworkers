@@ -46,16 +46,8 @@ self.onmessage = async (event) => {
     try {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
-        from js import wait_for_js_message
         input = input_fixed
         __builtins__.input = input_fixed
-        def wait_for_message():
-            # for i in range(10000):
-            while True:
-                message = wait_for_js_message()
-                # print(f"msg: {message}")
-                if message:
-                    return message
         `);
         await self.pyodide.loadPackagesFromImports(python);
         let results = await self.pyodide.runPythonAsync(python);
@@ -86,31 +78,5 @@ function sleep_fixed(t) {
     let start = Date.now();
     while (Date.now() - start < t * 1000) { }
     // console.log("after sleeping");
-}
-
-function wait_for_js_message() {
-    // console.log(self.sharedBuf[0]);
-    if (self.sharedBuf[0] != 0) {
-        // console.log(sharedBuf[0]);
-        waiting_for_message();
-        const sharedVal = self.sharedBuf[0];
-        self.sharedBuf[0] = 0;
-        return sharedVal;
-    } else {
-        return null;
-    }
-    const temp = self.jsMessage 
-    self.jsMessage = null
-    return temp 
-}
-
-async function waiting_for_message() {
-    // console.log("waiting...");
-    await yieldToMacrotasks();
-}
-
-function yieldToMacrotasks() {
-  // return new Promise((resolve) => setTimeout(resolve, 50));
-    return new Promise((ok,fail) => setTimeout(ok,0));
 }
 

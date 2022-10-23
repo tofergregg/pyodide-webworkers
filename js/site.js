@@ -10,9 +10,7 @@ const script = `
     def main():
         a = input("hello?")
         # statistics.stdev(A_rank)
-        message = wait_for_message()
-        print(f"Message received: {message}")
-
+        
         print("all done!")
     if __name__ == "__main__":
         main()
