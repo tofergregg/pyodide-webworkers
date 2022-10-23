@@ -71,9 +71,6 @@ function input_fixed(text) {
     while (self.sharedBuf[0] != 0) {} // spin
     const temp = self.sharedBuf[0];
     self.sharedBuf[0] = 0;
-    console.log("shared buf[1]:");
-    console.log(self.sharedBuf[1]);
-
 
     return self.sharedBuf[1];
 };
