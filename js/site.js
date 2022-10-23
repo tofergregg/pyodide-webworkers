@@ -79,7 +79,7 @@ async function start_pyodide() {
 const get_input = () => {
     const context = {}; // we might use this to pass parameters to a program,
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
-    code = document.getElementById('code').value;
+    const code = document.getElementById('code').value;
     python_runner(code, context);
 }
 
