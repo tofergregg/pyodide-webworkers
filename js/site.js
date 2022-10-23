@@ -27,7 +27,7 @@ const init_main = () => {
     window.sharedArr = new Int8Array(window.sharedBuf);
     // initialize
     for (let i = 0; i < 1024; i++) {
-        window.sharedArr[i] = 0;
+        Atomics.store(window.sharedArr, i, 0);
     }
     passSharedBuffer(window.sharedBuf);
 }
