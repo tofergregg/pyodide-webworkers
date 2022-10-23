@@ -64,23 +64,23 @@ const getInputFromTerminal = () => {
     let originalText = terminal.value;
     let userInput = '';
     terminal.addEventListener('input', consoleListener, false);
+    const consoleListener = () => {
+        console.log("got input");
+        // first, check to see that the original text is still
+        // present (otherwise, change back)
+        const currentVal = terminal.value;
+        if (!currentVal.startsWith(originalText)) {
+            terminal.value = originalText + userInput;
+        } else if (currentVal.endsWith('\n')) {
+            console.log("Full input: " + userInput);
+            terminal.removeEventListener('input', consoleListener);
+        }
+        else{
+            userInput = currentVal.substring(originalText.length);
+            console.log("User input so far: " + userInput);
+        }
+    }
 }
 
-const consoleListener = () => {
-    console.log("got input");
-    // first, check to see that the original text is still
-    // present (otherwise, change back)
-    const currentVal = terminal.value;
-    if (!currentVal.startsWith(originalText)) {
-        terminal.value = originalText + userInput;
-    } else if (currentVal.endsWith('\n')) {
-        console.log("Full input: " + userInput);
-        terminal.removeEventListener('input', consoleListener);
-    }
-    else{
-        userInput = currentVal.substring(originalText.length);
-        console.log("User input so far: " + userInput);
-    }
-}
 
 export { asyncRun, sendMessageToWorker, passSharedBuffer };
