@@ -62,8 +62,6 @@ const getInputFromTerminal = () => {
     terminal.setAttribute("onchange", function(event) {
         console.log("got change");
     });
-
-  );
 }
 
 export { asyncRun, sendMessageToWorker, passSharedBuffer };
