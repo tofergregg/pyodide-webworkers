@@ -69,7 +69,10 @@ const getInputFromTerminal = () => {
         // present (otherwise, change back)
         const currentVal = terminal.value;
         if (!currentVal.startsWith(originalText)) {
-            terminal.value = originalText;
+            terminal.value = originalText + userInput;
+        } else {
+            userInput = currentVal.substring(currentVal.length);
+            console.log("User input so far: " + userInput);
         }
   }, false);
 }
