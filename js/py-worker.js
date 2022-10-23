@@ -69,9 +69,9 @@ const getInputFromTerminal = () => {
             // The second and third bytes are going to be a little-endian
             // 2-byte number that represents the length of the input
             // The remaining bytes will represent the input characters
-            // We can hold up to 65536-3 = 65535 bytes of data
+            // We can hold up to 65536-3 = 65533 bytes of data
             
-            const inputLen = Math.max(userInput.length, 65535);
+            const inputLen = Math.min(userInput.length, 65533);
 
             // set the length
             Atomics.store(window.sharedArr, 1, inputLen % 256); 
