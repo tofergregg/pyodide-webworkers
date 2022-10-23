@@ -76,21 +76,19 @@ async function start_pyodide() {
     document.getElementById('click-button').disabled = false;
 }
 
-const get_input = () => {
+window.get_input = () => {
     const context = {}; // we might use this to pass parameters to a program,
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
     const code = document.getElementById('code').value;
     python_runner(code, context);
 }
 
-window.get_input = get_input;
-
-const reset_console = () => {
+window.reset_console = () => {
     document.getElementById('console-output').value = ''
     
 }
 
-const update_terminal = () => {
+window.update_terminal = () => {
     const snippets = [`print('Hello, World!')`,
 
         `first_number = int(input("Please type a number: "))
