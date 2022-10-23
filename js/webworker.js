@@ -72,7 +72,8 @@ function input_fixed(text) {
     const temp = self.sharedBuf[0];
     self.sharedBuf[0] = 0;
 
-    return self.sharedBuf[1];
+    // return self.sharedBuf[1];
+    return 42;
 };
 
 function sleep_fixed(t) {
