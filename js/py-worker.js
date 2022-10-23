@@ -4,6 +4,11 @@ const callbacks = {};
 
 pyodideWorker.onmessage = (event) => {
     const { id, ...data } = event.data;
+    if (event.data.outputMessage !== undefined) {
+        console.log("received output:");
+        console.log(event.data.outputMessage);
+        return;
+    }
     const onSuccess = callbacks[id];
     delete callbacks[id];
     if (typeof(onSuccess) === 'function') {

@@ -37,11 +37,6 @@ self.onmessage = async (event) => {
         return;
     }
 
-    if (event.data.outputMessage !== undefined) {
-        console.log("received output:");
-        console.log(event.data.outputMessage);
-        return;
-    }
     // make sure loading is done
     await pyodideReadyPromise;
     // Don't bother yet with this line, suppose our API is built in such a way:
