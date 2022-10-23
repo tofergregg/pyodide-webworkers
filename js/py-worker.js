@@ -61,7 +61,6 @@ const getInputFromTerminal = () => {
         if (!currentVal.startsWith(originalText)) {
             terminal.value = originalText + userInput;
         } else if (currentVal.endsWith('\n')) {
-            console.log("Full input: " + userInput);
             terminal.removeEventListener('input', consoleListener);
             // we need to populate the shared buffer with the input
             // the first byte is going to be changed to 1 to indicate
@@ -86,7 +85,6 @@ const getInputFromTerminal = () => {
         }
         else{
             userInput = currentVal.substring(originalText.length);
-            console.log("User input so far: " + userInput);
         }
     }
     const terminal = document.getElementById('console-output');
