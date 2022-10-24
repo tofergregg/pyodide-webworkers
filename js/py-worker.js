@@ -1,5 +1,39 @@
 import { drawShape } from "./drawing.js";
 
+let pyodideWorker;
+const callbacks = {};
+
+const setupWorker = () => {
+    pyodideWorker = new Worker("./js/webworker.js");
+
+    pyodideWorker.onmessage = (event) => {
+        const { id, ...data } = event.data;
+        if (event.data.outputText !== undefined) {
+            // console.log(event.data.outputText);
+            const terminal = document.getElementById('console-output');
+            terminal.value += event.data.outputText;
+            terminal.blur();
+            terminal.focus();
+
+            if (event.data.getInput !== undefined && event.data.getInput) {
+                getInputFromTerminal();
+            }
+            return;
+        }
+        if (event.data.drawShape !== undefined) {
+            drawShape(...event.data.shapeArgs);
+            return;
+        }
+        const onSuccess = callbacks[id];
+        delete callbacks[id];
+        if (typeof(onSuccess) === 'function') {
+            onSuccess(data);
+        } else {
+            console.log("Error: " + error);
+        }
+    };
+}
+
 const sendMessageToWorker = (message) => {
     // console.log("Sending ");
     // console.log({'control': true, "message": message}); 
@@ -11,36 +45,6 @@ const passSharedBuffer = (buf) => {
 }
 
 const asyncRun = ((script, context) => {
-const pyodideWorker = new Worker("./js/webworker.js");
-
-const callbacks = {};
-
-pyodideWorker.onmessage = (event) => {
-    const { id, ...data } = event.data;
-    if (event.data.outputText !== undefined) {
-        // console.log(event.data.outputText);
-        const terminal = document.getElementById('console-output');
-        terminal.value += event.data.outputText;
-        terminal.blur();
-        terminal.focus();
-
-        if (event.data.getInput !== undefined && event.data.getInput) {
-            getInputFromTerminal();
-        }
-        return;
-    }
-    if (event.data.drawShape !== undefined) {
-        drawShape(...event.data.shapeArgs);
-        return;
-    }
-    const onSuccess = callbacks[id];
-    delete callbacks[id];
-    if (typeof(onSuccess) === 'function') {
-        onSuccess(data);
-    } else {
-        console.log("Error: " + error);
-    }
-};
     let id = 0; // identify a Promise
     return (script, context) => {
         // the id could be generated more carefully
@@ -104,4 +108,4 @@ const getInputFromTerminal = () => {
 }
 
 
-export { asyncRun, sendMessageToWorker, passSharedBuffer };
+export { setupWorker, asyncRun, sendMessageToWorker, passSharedBuffer };

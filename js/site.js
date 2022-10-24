@@ -1,6 +1,12 @@
-import { asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
+import { setupWorker, asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
 
 const init_main = () => {
+}
+
+window.init_main = init_main;
+
+async function python_runner(script, context) {
+    setupWorker();
     // Shared buffers are not easily allowed any more...
     // Must have correct headers (see .htaccess)
     window.sharedBuf = new SharedArrayBuffer(65536);
@@ -10,11 +16,6 @@ const init_main = () => {
         Atomics.store(window.sharedArr, i, 0);
     }
     passSharedBuffer(window.sharedBuf);
-}
-
-window.init_main = init_main;
-
-async function python_runner(script, context) {
     try {
         const { results, error } = await asyncRun(script, context);
         if (results) {
