@@ -137,7 +137,7 @@ if __name__ == "__main__":
     console.value = snippets[value]; 
 }
 
-window.drawShape = (shape, a, b, c, d, fill=false, color='red') => {
+window.drawShape = (shape, a, b, c, d, stroke=true, fill=false, color='red') => {
     const canvas = document.getElementById('theCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -145,12 +145,18 @@ window.drawShape = (shape, a, b, c, d, fill=false, color='red') => {
 
     if (shape == 'oval') {
         ctx.ellipse(a, b, c, d, 0, 0, Math.PI * 2);
+    } else if (shape == 'rectangle') {
+        ctx.rect(a, b, c, d);
+    } else if (shape == 'line') {
+        ctx.moveTo(a, b);
+        ctx.lineTo(c, d);
     }
 
     if (fill) {
         ctx.fillStyle = color;
         ctx.fill();
-    } else {
+    }
+    if (stroke) {
         ctx.strokeStyle = color;
         ctx.stroke();
     }
