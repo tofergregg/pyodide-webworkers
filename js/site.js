@@ -137,3 +137,10 @@ if __name__ == "__main__":
     console.value = snippets[value]; 
 }
 
+const draw = (shape, a, b, c, d) => {
+    const canvas = document.getElementById('theCanvas');
+    if (shape == 'oval') {
+        const ctx = canvas.getContext('2d');
+        drawEllipse(ctx, a, b, c, d);
+    }
+}
