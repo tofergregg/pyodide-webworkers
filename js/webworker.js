@@ -11,7 +11,7 @@ def draw_line(x1, y1, x2, y2, color='black'):
     passDrawShape(['line', x1, y1, x2, y2, color]) 
 
 def draw_rect(x, y, width, height, color='black'):
-    passDrawShape('rect', x, y, width, height, color) 
+    passDrawShape(['rect', x, y, width, height, color]) 
 
 def fill_rect(x, y, width, height, color='black'):
     passDrawShape(['rect', x, y, width, height, color, False, True]) 
@@ -121,6 +121,6 @@ const fixTimeImport = (code) => {
 }
 
 function passDrawShape(argArray) {
-    self.postMessage({drawShape: true, shapeArgs: argArray});
+    self.postMessage({drawShape: true, shapeArgs: argArray.toJs()});
 }
 
