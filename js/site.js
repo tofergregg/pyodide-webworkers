@@ -132,6 +132,31 @@ def nextFunc():
 
 if __name__ == "__main__":
     main()`,
+        `import time
+
+def main():
+    radius = 10
+    canvas_width = 285
+    canvas_height = 244
+    color = 'purple'
+    x = canvas_width / 2 - radius
+    y = canvas_height / 2 - radius
+    dx = 3
+    dy = 2
+    while True:
+        erase_canvas()
+        fill_oval(x, y, radius * 2, radius * 2, color)
+        x += dx
+        y += dy
+        if x > canvas_width - radius * 2 or x < 0:
+            dx *= -1
+        if y > canvas_height - radius * 2 or y < 0:
+            dy *= -1
+        print(f"x: {x}, y: {y}")
+        time.sleep(0.01)
+
+if __name__ == "__main__":
+    main()`,
     ]
 
     const value = document.getElementById('examples').value;
