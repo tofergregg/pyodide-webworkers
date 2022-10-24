@@ -17,6 +17,10 @@ async function loadPyodideAndPackages() {
             self.postMessage({outputText: text + '\n'});
         },
         stderr: text => {
+            if (text == "Python initialization complete" && first) {
+                first = false;
+                return;
+            }
             // console.log("output: " + text);
             self.postMessage({outputText: text + '\n'});
         }
