@@ -121,11 +121,11 @@ for i in range(10):
     print(i)
     time.sleep(1)`,
         `def main():
-    print('Hello, World!')
+    print('in main()')
     nextFunc()
 
 def nextFunc():
-    print("hi")
+    print("about to divide by zero...")
     a = 1 / 0
 
 if __name__ == "__main__":
