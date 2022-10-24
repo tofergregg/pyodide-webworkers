@@ -89,8 +89,10 @@ window.get_input = () => {
 }
 
 window.reset_console = () => {
-    document.getElementById('console-output').value = ''
-
+    document.getElementById('console-output').value = '';
+    const canvas = document.getElementById('theCanvas');
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 window.update_terminal = () => {
