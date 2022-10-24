@@ -141,6 +141,6 @@ window.drawShape = (shape, a, b, c, d) => {
     const canvas = document.getElementById('theCanvas');
     if (shape == 'oval') {
         const ctx = canvas.getContext('2d');
-        ellipse(ctx, a, b, c, d, 0, 0, Math.PI * 2);
+        ctx.ellipse(a, b, c, d, 0, 0, Math.PI * 2);
     }
 }
