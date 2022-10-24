@@ -1,4 +1,5 @@
 import { asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
+importScripts("./drawing");
 
 const script = `
     import time
