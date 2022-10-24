@@ -120,6 +120,16 @@ if __name__ == '__main__':
 for i in range(10):
     print(i)
     time.sleep(1)`,
+        `def main():
+    print('Hello, World!')
+    nextFunc()
+
+def nextFunc():
+    print("hi")
+    a = 1 / 0
+
+if __name__ == "__main__":
+    main()`,
     ]
 
     const value = document.getElementById('examples').value;
