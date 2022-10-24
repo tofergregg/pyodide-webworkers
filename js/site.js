@@ -1,23 +1,6 @@
 import { asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
-const script = `
-    import time
-    from js import sleep_fixed
-    time.sleep = sleep_fixed
-    import statistics
-    from js import A_rank
-
-    def main():
-        a = input("hello?")
-        # statistics.stdev(A_rank)
-
-        print("all done!")
-    if __name__ == "__main__":
-        main()
-`;
 
 const init_main = () => {
-    //    window.pyodide_ready = false;
-    //    start_pyodide();
     // Shared buffers are not easily allowed any more...
     // Must have correct headers (see .htaccess)
     window.sharedBuf = new SharedArrayBuffer(65536);
@@ -55,31 +38,6 @@ async function python_runner(script, context) {
 }
 
 ///// 
-
-async function start_pyodide() {
-    const output = document.getElementById("console-output");
-    window.abc = '';
-    window.pyodide = await loadPyodide({
-        indexURL : "https://cdn.jsdelivr.net/pyodide/v0.21.3/full/",
-        stdout: text => {
-            output.value += text + '\n';
-        },
-        stderr: text => {
-            output.value += text + '\n';
-        }
-    });
-    // fix for input with prompt:
-    pyodide.runPython(`
-    from js import input_fixed
-    input = input_fixed
-    __builtins__.input = input_fixed
-    `);
-
-    // Pyodide is now ready to use...
-    window.pyodide_ready = true;
-    output.value = "";
-    document.getElementById('click-button').disabled = false;
-}
 
 window.get_input = () => {
     window.reset_console();

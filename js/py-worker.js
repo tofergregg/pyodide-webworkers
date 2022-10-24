@@ -1,4 +1,16 @@
 import { drawShape } from "./drawing.js";
+
+const sendMessageToWorker = (message) => {
+    // console.log("Sending ");
+    // console.log({'control': true, "message": message}); 
+    pyodideWorker.postMessage({'control': true, "message": message});
+};
+
+const passSharedBuffer = (buf) => {
+    pyodideWorker.postMessage({'buffer': buf}); 
+}
+
+const asyncRun = ((script, context) => {
 const pyodideWorker = new Worker("./js/webworker.js");
 
 const callbacks = {};
@@ -29,18 +41,6 @@ pyodideWorker.onmessage = (event) => {
         console.log("Error: " + error);
     }
 };
-
-const sendMessageToWorker = (message) => {
-    // console.log("Sending ");
-    // console.log({'control': true, "message": message}); 
-    pyodideWorker.postMessage({'control': true, "message": message});
-};
-
-const passSharedBuffer = (buf) => {
-    pyodideWorker.postMessage({'buffer': buf}); 
-}
-
-const asyncRun = ((script, context) => {
     let id = 0; // identify a Promise
     return (script, context) => {
         // the id could be generated more carefully
