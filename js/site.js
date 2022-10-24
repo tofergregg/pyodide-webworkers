@@ -49,6 +49,9 @@ window.get_input = () => {
 }
 
 window.reset_console = () => {
+    if (window.pyodideWorker) {
+        window.pyodideWorker.terminate();
+    }
     document.getElementById('console-output').value = '';
     const canvas = document.getElementById('theCanvas');
     const context = canvas.getContext('2d');

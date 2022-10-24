@@ -5,6 +5,7 @@ const callbacks = {};
 
 const setupWorker = () => {
     pyodideWorker = new Worker("./js/webworker.js");
+    window.pyodideWorker = pyodideWorker;
 
     pyodideWorker.onmessage = (event) => {
         const { id, ...data } = event.data;
