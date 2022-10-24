@@ -40,7 +40,7 @@ async function python_runner(script, context) {
         } else if (error) {
             console.log("pyodideWorker error: ", error);
             // put partial error in the terminal
-            if (error.startsWith('Traceback') {
+            if (error.startsWith('Traceback')) {
                 const firstNewline = error.indexOf('\n');
                 const firstUsefulError = error.indexOf('  File "<exec>"');
                 const terminal = document.getElementById("console-output");
