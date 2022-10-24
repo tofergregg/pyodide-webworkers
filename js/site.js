@@ -152,11 +152,18 @@ window.drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) =
         const radiusX = c / 2;
         const radiusY = d / 2;
         ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
-    } else if (shape == 'rectangle') {
+    } else if (shape == 'rect') {
+        // (x, y, width, height)
         ctx.rect(a, b, c, d);
     } else if (shape == 'line') {
+        // (x1, y1, x2, y2)
         ctx.moveTo(a, b);
         ctx.lineTo(c, d);
+    } else if (shape == 'text') {
+        // (x, y, text)
+        ctx.font = '24px serif';
+        ctx.fillText(a, b, c);
+        return;
     }
 
     if (fill) {
