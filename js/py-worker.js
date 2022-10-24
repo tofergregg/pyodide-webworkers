@@ -17,6 +17,9 @@ pyodideWorker.onmessage = (event) => {
         }
         return;
     }
+    if (event.data.drawShape !== undefined) {
+        drawShape(...event.data.shapeArgs);
+    }
     const onSuccess = callbacks[id];
     delete callbacks[id];
     if (typeof(onSuccess) === 'function') {
