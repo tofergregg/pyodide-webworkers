@@ -143,5 +143,6 @@ window.drawShape = (shape, a, b, c, d) => {
         const ctx = canvas.getContext('2d');
         ctx.ellipse(a, b, c, d, 0, 0, Math.PI * 2);
         ctx.stroke();
+        ctx.moveTo(0, 0);
     }
 }
