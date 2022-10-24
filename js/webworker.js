@@ -117,8 +117,6 @@ const fixTimeImport = (code) => {
     const insertCode2 = 'from time import sleep; from js import sleep_fixed; sleep = sleep_fixed\n';
     code = code.replace('import time\n', insertCode1);
     code = code.replace('from time import sleep\n', insertCode2);
-    // testing
-    passDrawShape(['oval', 100, 100, 20, 30]);
     return code;
 }
 
