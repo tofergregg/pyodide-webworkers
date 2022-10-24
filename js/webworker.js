@@ -90,8 +90,10 @@ const fixTimeImport = (code) => {
     // this function finds `import time` and on the next line
     // it inserts code to fix the time.sleep function to work with pyodide
     // Notes: 
-    // 1. this does not fix "from time import sleep" constructs
-    // 2. it does not fix "import time, sys" constructs
-    const insertCode = 'import time; from js import sleep_fixed; time.sleep = sleep_fixed\n';
-    return code.replace('import time\n', insertCode);
+    // 1. it does not fix "import time, sys" constructs
+    const insertCode1 = 'import time; from js import sleep_fixed; time.sleep = sleep_fixed\n';
+    const insertCode2 = 'from time import sleep; from js import sleep_fixed; sleep = sleep_fixed\n';
+    code = code.replace('import time\n', insertCode1);
+    code = code.replace('from time import sleep\n', insertCode2);
+    return code;
 }
