@@ -137,12 +137,18 @@ if __name__ == "__main__":
     console.value = snippets[value]; 
 }
 
-window.drawShape = (shape, a, b, c, d) => {
+window.drawShape = (shape, a, b, c, d, fill=false, color='red') => {
     const canvas = document.getElementById('theCanvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+
     if (shape == 'oval') {
-        const ctx = canvas.getContext('2d');
-        ctx.beginPath();
         ctx.ellipse(a, b, c, d, 0, 0, Math.PI * 2);
-        ctx.stroke();
+        if (fill) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
     }
 }
