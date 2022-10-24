@@ -1,3 +1,4 @@
+import { drawShape } from "./drawing.js";
 const pyodideWorker = new Worker("./js/webworker.js");
 
 const callbacks = {};

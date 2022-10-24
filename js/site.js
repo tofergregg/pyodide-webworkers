@@ -1,5 +1,4 @@
 import { asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
-import { drawShape } from "./drawing.js";
 const script = `
     import time
     from js import sleep_fixed
