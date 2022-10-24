@@ -122,8 +122,7 @@ const fixTimeImport = (code) => {
     return code;
 }
 
-const passDrawShape = (argArray) => {
+function passDrawShape(argArray) {
     self.postMessage({drawShape: true, shapeArgs: argArray});
 }
-
 
