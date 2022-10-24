@@ -1,4 +1,4 @@
-window.drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) => {
+const drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) => {
     const canvas = document.getElementById('theCanvas');
     const ctx = canvas.getContext('2d');
 
