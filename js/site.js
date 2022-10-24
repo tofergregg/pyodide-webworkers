@@ -137,14 +137,21 @@ if __name__ == "__main__":
     console.value = snippets[value]; 
 }
 
-window.drawShape = (shape, a, b, c, d, stroke=true, fill=false, color='red') => {
+window.drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) => {
     const canvas = document.getElementById('theCanvas');
     const ctx = canvas.getContext('2d');
 
     ctx.beginPath();
 
     if (shape == 'oval') {
-        ctx.ellipse(a, b, c, d, 0, 0, Math.PI * 2);
+        // we need to translate from (x, y, width, height) to:
+        // ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise)
+        // For ellipse, x, y are center coordinates
+        const centerX = a + c / 2;
+        const centerY = b + d / 2;
+        const radiusX = c / 2;
+        const radiusY = d / 2;
+        ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
     } else if (shape == 'rectangle') {
         ctx.rect(a, b, c, d);
     } else if (shape == 'line') {
