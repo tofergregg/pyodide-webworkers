@@ -10,15 +10,15 @@ const script = `
     def main():
         a = input("hello?")
         # statistics.stdev(A_rank)
-        
+
         print("all done!")
     if __name__ == "__main__":
         main()
 `;
 
 const init_main = () => {
-//    window.pyodide_ready = false;
-//    start_pyodide();
+    //    window.pyodide_ready = false;
+    //    start_pyodide();
     // Shared buffers are not easily allowed any more...
     // Must have correct headers (see .htaccess)
     window.sharedBuf = new SharedArrayBuffer(65536);
@@ -33,18 +33,20 @@ const init_main = () => {
 window.init_main = init_main;
 
 async function python_runner(script, context) {
-  try {
-    const { results, error } = await asyncRun(script, context);
-    if (results) {
-      console.log("pyodideWorker return results: ", results);
-    } else if (error) {
-      console.log("pyodideWorker error: ", error);
+    try {
+        const { results, error } = await asyncRun(script, context);
+        if (results) {
+            console.log("pyodideWorker return results: ", results);
+        } else if (error) {
+            console.log("pyodideWorker error: ", error);
+            terminal = document.getElementById("console-output");
+            terminal.value += '\n' + error;
+        }
+    } catch (e) {
+        console.log(
+            `Error in pyodideWorker at ${e.filename}, Line: ${e.lineno}, ${e.message}`
+        );
     }
-  } catch (e) {
-    console.log(
-      `Error in pyodideWorker at ${e.filename}, Line: ${e.lineno}, ${e.message}`
-    );
-  }
 }
 
 ///// 
@@ -60,7 +62,7 @@ async function start_pyodide() {
         stderr: text => {
             output.value += text + '\n';
         }
-  });
+    });
     // fix for input with prompt:
     pyodide.runPython(`
     from js import input_fixed
@@ -83,7 +85,7 @@ window.get_input = () => {
 
 window.reset_console = () => {
     document.getElementById('console-output').value = ''
-    
+
 }
 
 window.update_terminal = () => {
