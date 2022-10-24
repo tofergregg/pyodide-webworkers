@@ -145,10 +145,13 @@ window.drawShape = (shape, a, b, c, d, fill=false, color='red') => {
 
     if (shape == 'oval') {
         ctx.ellipse(a, b, c, d, 0, 0, Math.PI * 2);
-        if (fill) {
-            ctx.fill();
-        } else {
-            ctx.stroke();
-        }
+    }
+
+    if (fill) {
+        ctx.fillStyle = color;
+        ctx.fill();
+    } else {
+        ctx.strokeStyle = color;
+        ctx.stroke();
     }
 }
