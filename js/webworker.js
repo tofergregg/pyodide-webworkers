@@ -6,8 +6,13 @@
 importScripts("https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js");
 
 async function loadPyodideAndPackages() {
+    let first = true;
     self.pyodide = await loadPyodide({
         stdout: text => {
+            if (text == "Python initialization complete" && first) {
+                first = false;
+                return;
+            }
             // console.log("output: " + text);
             self.postMessage({outputText: text + '\n'});
         },
