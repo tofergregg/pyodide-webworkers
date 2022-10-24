@@ -39,8 +39,14 @@ async function python_runner(script, context) {
             console.log("pyodideWorker return results: ", results);
         } else if (error) {
             console.log("pyodideWorker error: ", error);
-            const terminal = document.getElementById("console-output");
-            terminal.value += '\n' + error;
+            // put partial error in the terminal
+            if (error.startsWith('Traceback') {
+                const firstNewline = error.indexOf('\n');
+                const firstUsefulError = error.indexOf('  File "<exec>"');
+                const terminal = document.getElementById("console-output");
+                terminal.value += '\n' + error.substring(0, firstNewline + 1) 
+                    + error.substring(firstUsefulError);
+            }
         }
     } catch (e) {
         console.log(
