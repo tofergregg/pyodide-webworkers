@@ -17,4 +17,7 @@ def fill_oval(x, y, width, height, color='black'):
 
 def draw_string(x, y, text, color='black'):
     passDrawShape(['text', x, y, text, color]) 
+
+def erase_canvas():
+    passDrawShape(['erase'])
 `

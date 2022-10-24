@@ -25,6 +25,9 @@ const drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) =>
         ctx.font = '18px serif';
         ctx.fillText(a, b, c);
         return;
+    } else if (shape == 'erase') {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        return;
     }
 
     if (fill) {
