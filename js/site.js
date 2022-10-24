@@ -39,7 +39,7 @@ async function python_runner(script, context) {
             console.log("pyodideWorker return results: ", results);
         } else if (error) {
             console.log("pyodideWorker error: ", error);
-            terminal = document.getElementById("console-output");
+            const terminal = document.getElementById("console-output");
             terminal.value += '\n' + error;
         }
     } catch (e) {
