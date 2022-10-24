@@ -37,4 +37,4 @@ const drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) =>
     }
 }
 
-export { drawing };
+export { drawShape };
