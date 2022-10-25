@@ -1,7 +1,6 @@
 import { drawShape } from "./drawing.js";
 
 let pyodideWorker;
-let window.interruptBuffer;
 const callbacks = {};
 
 const interruptExecution = () => {
