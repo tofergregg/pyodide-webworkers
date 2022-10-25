@@ -5,9 +5,9 @@ const callbacks = {};
 
 const interruptExecution = () => {
     Atomics.store(window.interruptBuffer, 0, 2);
-    console.log(Atomics.load(window.interruptBuffer, 0));
-    console.log("value:");
-    console.log(Atomics.load(window.interruptBuffer, 0));
+    for (let i = 0; i < 100; i++) {
+        console.log(Atomics.load(window.interruptBuffer, 0));
+    }
 }
 
 const clearInterruptBuffer = () => {
