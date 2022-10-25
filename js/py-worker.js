@@ -73,7 +73,7 @@ const asyncRun = ((script, context) => {
             });
         });
     };
-})();
+});
 
 const getInputFromTerminal = () => {
     const consoleListener = () => {
