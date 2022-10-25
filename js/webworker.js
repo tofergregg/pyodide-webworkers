@@ -30,7 +30,7 @@ self.jsMessage = null;
 
 self.onmessage = async (event) => {
     if (event.data.cmd === "setInterruptBuffer") {
-        pyodide.setInterruptBuffer(msg.data.interruptBuffer);
+        self.setInterruptBuffer(msg.data.interruptBuffer);
         return;
     }
     if (event.data.control !== undefined) {
