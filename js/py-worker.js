@@ -4,11 +4,11 @@ let pyodideWorker;
 let interruptBuffer;
 const callbacks = {};
 
-const interruptExecution() {
+const interruptExecution = () => {
     Atomics.store(interruptBuffer, 0, 2);
 }
 
-const clearInterruptBuffer() {
+const clearInterruptBuffer = () => {
     Atomics.store(interruptBuffer, 0, 0);
 }
 
