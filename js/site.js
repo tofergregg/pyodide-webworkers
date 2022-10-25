@@ -56,17 +56,17 @@ window.get_input = () => {
 }
 
 window.reset_console = () => {
-    if (window.pyodideWorker) {
-        // window.pyodideWorker.terminate();
-        interruptExecution();
-    }
+    interruptExecution();
     document.getElementById('console-output').value = '';
     const canvas = document.getElementById('theCanvas');
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-window.interruptExecution = interruptExecution;
+window.interruptExecution = () => {
+    interruptExecution;
+    console.log("stopping program");
+}
 
 window.update_terminal = () => {
     const snippets = [`print('Hello, World!')`,
