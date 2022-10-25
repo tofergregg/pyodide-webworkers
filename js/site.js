@@ -65,6 +65,8 @@ window.reset_console = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+window.interruptExecution = interruptExecution;
+
 window.update_terminal = () => {
     const snippets = [`print('Hello, World!')`,
 
