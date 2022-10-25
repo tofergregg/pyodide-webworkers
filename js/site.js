@@ -7,12 +7,12 @@ import { setupWorker,
 } from "./py-worker.js";
 
 const init_main = () => {
+    setupWorker();
 }
 
 window.init_main = init_main;
 
 async function python_runner(script, context) {
-    setupWorker();
     // Shared buffers are not easily allowed any more...
     // Must have correct headers (see .htaccess)
     window.sharedBuf = new SharedArrayBuffer(65536);
