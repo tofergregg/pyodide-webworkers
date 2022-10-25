@@ -64,7 +64,7 @@ window.reset_console = () => {
 }
 
 window.interruptExecution = () => {
-    interruptExecution;
+    interruptExecution();
     console.log("stopping program");
 }
 
