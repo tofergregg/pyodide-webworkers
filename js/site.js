@@ -58,7 +58,7 @@ window.reset_console = () => {
     if (window.pyodideWorker) {
         // window.pyodideWorker.terminate();
         interruptExecution();
-        clearInterruptBuffer(); 
+        setTimeout(() => clearInterruptBuffer(), 200); 
     }
     document.getElementById('console-output').value = '';
     const canvas = document.getElementById('theCanvas');
