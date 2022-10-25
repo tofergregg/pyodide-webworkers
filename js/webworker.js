@@ -52,7 +52,6 @@ self.onmessage = async (event) => {
     for (const key of Object.keys(context)) {
         self[key] = context[key];
     }
-    clearInterruptBuffer();
     // Now is the easy part, the one that is similar to working in the main thread:
     try {
         await self.pyodide.runPythonAsync(`
