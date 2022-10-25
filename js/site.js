@@ -36,6 +36,7 @@ async function python_runner(script, context) {
                 terminal.value += '\n' + error.substring(0, firstNewline + 1) 
                     + error.substring(firstUsefulError);
             }
+            clearInterruptBuffer();
         }
     } catch (e) {
         console.log(
