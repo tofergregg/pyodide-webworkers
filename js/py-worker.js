@@ -1,10 +1,21 @@
 import { drawShape } from "./drawing.js";
 
 let pyodideWorker;
+let interruptBuffer;
 const callbacks = {};
+
+const interruptExecution() {
+    Atomics.store(interruptBuffer, 0, 2);
+}
+
+const clearInterruptBuffer() {
+    Atomics.store(interruptBuffer, 0, 0);
+}
 
 const setupWorker = () => {
     pyodideWorker = new Worker("./js/webworker.js");
+    interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+
     window.pyodideWorker = pyodideWorker;
 
     pyodideWorker.onmessage = (event) => {
@@ -109,4 +120,4 @@ const getInputFromTerminal = () => {
 }
 
 
-export { setupWorker, asyncRun, sendMessageToWorker, passSharedBuffer };
+export { setupWorker, asyncRun, sendMessageToWorker, passSharedBuffer, interruptExecution, clearInterruptBuffer  };

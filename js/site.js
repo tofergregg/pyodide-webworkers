@@ -1,4 +1,10 @@
-import { setupWorker, asyncRun, passSharedBuffer, sendMessageToWorker } from "./py-worker.js";
+import { setupWorker, 
+    asyncRun, 
+    passSharedBuffer, 
+    sendMessageToWorker,
+    interruptExecution,
+    clearInterruptBuffer
+} from "./py-worker.js";
 
 const init_main = () => {
 }
@@ -50,7 +56,8 @@ window.get_input = () => {
 
 window.reset_console = () => {
     if (window.pyodideWorker) {
-        window.pyodideWorker.terminate();
+        // window.pyodideWorker.terminate();
+
     }
     document.getElementById('console-output').value = '';
     const canvas = document.getElementById('theCanvas');

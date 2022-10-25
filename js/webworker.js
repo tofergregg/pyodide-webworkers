@@ -29,6 +29,10 @@ let pyodideReadyPromise = loadPyodideAndPackages();
 self.jsMessage = null; 
 
 self.onmessage = async (event) => {
+    if (event.data.cmd === "setInterruptBuffer") {
+        pyodide.setInterruptBuffer(msg.data.interruptBuffer);
+        return;
+    }
     if (event.data.control !== undefined) {
         console.log("Control event");
         self.jsMessage = event.data.message;
@@ -48,6 +52,7 @@ self.onmessage = async (event) => {
     for (const key of Object.keys(context)) {
         self[key] = context[key];
     }
+    clearInterruptBuffer();
     // Now is the easy part, the one that is similar to working in the main thread:
     try {
         await self.pyodide.runPythonAsync(`
