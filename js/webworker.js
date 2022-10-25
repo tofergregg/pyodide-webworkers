@@ -30,7 +30,7 @@ self.jsMessage = null;
 
 self.onmessage = async (event) => {
     if (event.data.cmd === "setInterruptBuffer") {
-        self.pyodide.setInterruptBuffer(event.data.interruptBuffer);
+        self.interruptBuffer = event.data.interruptBuffer;
         return;
     }
     if (event.data.control !== undefined) {
@@ -46,6 +46,7 @@ self.onmessage = async (event) => {
 
     // make sure loading is done
     await pyodideReadyPromise;
+    self.pyodide.setInterruptBuffer(self.interruptBuffer);
     // Don't bother yet with this line, suppose our API is built in such a way:
     let { id, python, ...context } = event.data;
     // The worker copies the context in its own "memory" (an object mapping name to values)
