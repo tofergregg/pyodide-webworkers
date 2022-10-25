@@ -14,7 +14,8 @@ const clearInterruptBuffer = () => {
 const setupWorker = () => {
     pyodideWorker = new Worker("./js/webworker.js");
     window.interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
-    pyodideWorker.postMessage({cmd: "setInterruptBuffer", window.interruptBuffer});
+    let IB = window.interruptBuffer;
+    pyodideWorker.postMessage({cmd: "setInterruptBuffer", IB});
 
     window.pyodideWorker = pyodideWorker;
 
