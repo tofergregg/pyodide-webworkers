@@ -59,9 +59,9 @@ const passSharedBuffer = (buf) => {
 }
 
 const asyncRun = ((script, context) => {
-    clearInterruptBuffer();
     let id = 0; // identify a Promise
     return (script, context) => {
+        clearInterruptBuffer();
         // the id could be generated more carefully
         id = (id + 1) % Number.MAX_SAFE_INTEGER;
         return new Promise((onSuccess) => {
@@ -73,7 +73,7 @@ const asyncRun = ((script, context) => {
             });
         });
     };
-});
+})();
 
 const getInputFromTerminal = () => {
     const consoleListener = () => {
