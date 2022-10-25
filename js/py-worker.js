@@ -1,20 +1,20 @@
 import { drawShape } from "./drawing.js";
 
 let pyodideWorker;
-let interruptBuffer;
+let window.interruptBuffer;
 const callbacks = {};
 
 const interruptExecution = () => {
-    Atomics.store(interruptBuffer, 0, 2);
+    Atomics.store(window.interruptBuffer, 0, 2);
 }
 
 const clearInterruptBuffer = () => {
-    Atomics.store(interruptBuffer, 0, 0);
+    Atomics.store(window.interruptBuffer, 0, 0);
 }
 
 const setupWorker = () => {
     pyodideWorker = new Worker("./js/webworker.js");
-    interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+    window.interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
 
     window.pyodideWorker = pyodideWorker;
 
