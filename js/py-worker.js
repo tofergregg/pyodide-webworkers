@@ -1,24 +1,24 @@
 import { drawShape } from "./drawing.js";
 
 let pyodideWorker;
+let interruptBuffer;
 const callbacks = {};
 
 const interruptExecution = () => {
-    Atomics.store(window.interruptBuffer, 0, 2);
+    Atomics.store(interruptBuffer, 0, 2);
     for (let i = 0; i < 1000; i++) {
-        console.log(Atomics.load(window.interruptBuffer, 0));
+        console.log(Atomics.load(interruptBuffer, 0));
     }
 }
 
 const clearInterruptBuffer = () => {
-    Atomics.store(window.interruptBuffer, 0, 0);
+    Atomics.store(interruptBuffer, 0, 0);
 }
 
 const setupWorker = () => {
     pyodideWorker = new Worker("./js/webworker.js");
-    window.interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
-    let IB = window.interruptBuffer;
-    pyodideWorker.postMessage({cmd: "setInterruptBuffer", interruptBuffer: window.interruptBuffer});
+    interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+    pyodideWorker.postMessage({cmd: "setInterruptBuffer", interruptBuffer: interruptBuffer});
     clearInterruptBuffer();
 
     window.pyodideWorker = pyodideWorker;
