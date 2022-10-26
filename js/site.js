@@ -9,8 +9,8 @@ import { setupWorker,
 const init_main = () => {
     // set up for mouse movement
     const canvas = document.getElementById('theCanvas');
-    canvas.addEventListener("mousemove", () => {
-        console.log("mouse moved");
+    canvas.addEventListener("mousemove", (event) => {
+        console.log(event.pageX + ", " + event.pageY);
     }, false)
     setupWorker();
 }
