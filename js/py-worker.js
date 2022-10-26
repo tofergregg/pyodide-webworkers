@@ -67,6 +67,11 @@ const setupWorker = () => {
             Atomics.store(window.sharedArr, 0, 1);
             return;
         }
+        if (event.data.cmd === 'clearTerminal') {
+            const terminal = document.getElementById('console-output');
+            terminal.value = '';
+            return;
+        }
         window.codeRunning = false;
         const onSuccess = callbacks[id];
         delete callbacks[id];
@@ -152,6 +157,5 @@ const getInputFromTerminal = () => {
     let userInput = '';
     terminal.addEventListener('input', consoleListener, false);
 }
-
 
 export { setupWorker, asyncRun, sendMessageToWorker, passSharedBuffer, interruptExecution, clearInterruptBuffer  };

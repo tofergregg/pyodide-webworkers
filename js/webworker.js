@@ -120,3 +120,7 @@ function getMousePos(x_or_y) {
     }
 }
 
+function clearTerminal() {
+    self.postMessage({cmd: 'clearTerminal'});
+}
+
