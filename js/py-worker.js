@@ -4,8 +4,8 @@ let pyodideWorker;
 const callbacks = {};
 
 const interruptExecution = () => {
-    Atomics.store(window.interruptBuffer, 0, 2);
     for (let i = 0; i < 100; i++) {
+        Atomics.store(window.interruptBuffer, 0, 2);
         console.log(Atomics.load(window.interruptBuffer, 0));
     }
 }
