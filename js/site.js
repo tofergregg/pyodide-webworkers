@@ -158,7 +158,10 @@ def main():
         mouseX = canvas.getMouseX()
         mouseY = canvas.getMouseY()
         canvas.fill_circle(mouseX, mouseY, 20, "blue")
-        time.sleep(0.2)`,
+        time.sleep(0.2)
+
+    if __name__ == "__main__":
+        main()`,
     ]
 
     const value = document.getElementById('examples').value;
