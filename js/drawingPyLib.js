@@ -28,6 +28,6 @@ class Canvas:
     def draw_string(self, x, y, text, color='black'):
         passDrawShape(['text', x, y, text, color]) 
 
-    def erase_canvas(self):
+    def erase(self):
         passDrawShape(['erase'])
 `

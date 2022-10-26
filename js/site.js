@@ -117,7 +117,7 @@ def main():
     dx = 3
     dy = 2
     while True:
-        erase_canvas()
+        canvas.erase()
         canvas.fill_circle(x, y, radius * 2, color)
         x += dx
         y += dy
