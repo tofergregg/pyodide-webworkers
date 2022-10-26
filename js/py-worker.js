@@ -65,6 +65,7 @@ const setupWorker = () => {
 
             // alert the webworker
             Atomics.store(window.sharedArr, 0, 1);
+            return;
         }
         window.codeRunning = false;
         const onSuccess = callbacks[id];
