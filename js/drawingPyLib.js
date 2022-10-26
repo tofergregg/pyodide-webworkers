@@ -20,10 +20,10 @@ class Canvas:
         passDrawShape(['oval', x, y, width, height, color, False, True]) 
     
     def draw_circle(self, x, y, radius, color='black'):
-        passDrawShape(['oval', radius, radius, width, height, color]) 
+        passDrawShape(['oval', x, y, radius, radius, color]) 
     
     def fill_circle(self, x, y, radius, color='black'):
-        passDrawShape(['oval', radius, radius, width, height, color, False, True]) 
+        passDrawShape(['oval', x, y, radius, radius, color, False, True]) 
 
     def draw_string(self, x, y, text, color='black'):
         passDrawShape(['text', x, y, text, color]) 
