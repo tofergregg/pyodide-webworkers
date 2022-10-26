@@ -19,8 +19,15 @@ window.init_main = init_main;
 const mouseMove = (event) => {
     const canvas = document.getElementById('theCanvas');
     const rect = canvas.getBoundingClientRect();
-    window.lastMouse = {x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.width, 
-                        y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height};
+    const x = Math.round((event.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
+    if (x > canvas.width + 1) {
+        x = 0;
+    }
+    const y = Math.round((event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
+    if (y > canvas.height + 1) {
+        y = 0;
+    }
+    window.lastMouse = {x: x, y: y};
 }
 
 async function python_runner(script, context) {
@@ -46,6 +53,8 @@ async function python_runner(script, context) {
                 const terminal = document.getElementById("console-output");
                 terminal.value += '\n' + error.substring(0, firstNewline + 1) 
                     + error.substring(firstUsefulError);
+                terminal.blur();
+                terminal.focus();
             }
             clearInterruptBuffer();
         }
