@@ -7,6 +7,11 @@ import { setupWorker,
 } from "./py-worker.js";
 
 const init_main = () => {
+    // set up for mouse movement
+    canvas = document.getElementById('theCanvas');
+    canvas.addEventListener("mousemove", () => {
+        console.log("mouse moved");
+    }, false)
     setupWorker();
 }
 
