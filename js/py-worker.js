@@ -11,7 +11,7 @@ const interruptExecution = () => {
     // so, we'll just keep trying to interrupt until we 
     // get confirmation that the program has stopped
     const sendInterrupt = setInterval(() => {
-        if (codeRunning) {
+        if (!codeRunning) {
             clearInterval(sendInterrupt);
         } else {
             Atomics.store(interruptBuffer, 0, 2);
