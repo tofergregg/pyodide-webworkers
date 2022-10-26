@@ -8,6 +8,7 @@ import { setupWorker,
 
 const init_main = () => {
     // set up for mouse movement
+    window.lastMouse = [0, 0];
     const canvas = document.getElementById('theCanvas');
     canvas.addEventListener("mousemove", mouseMove, false)
     setupWorker();
