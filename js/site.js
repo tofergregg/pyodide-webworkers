@@ -56,7 +56,9 @@ window.get_input = () => {
 }
 
 window.reset_console = () => {
-    interruptExecution();
+    if (window.codeRunning) {
+        interruptExecution();
+    }
     document.getElementById('console-output').value = '';
     const canvas = document.getElementById('theCanvas');
     const context = canvas.getContext('2d');
