@@ -150,6 +150,15 @@ def main():
 
 if __name__ == "__main__":
     main()`,
+        `import time
+def main():
+    canvas = Canvas()
+    # Move your mouse around the white canvas!
+    while True:
+        mouseX = canvas.getMouseX()
+        mouseY = canvas.getMouseY()
+        canvas.fill_circle(mouseX, mouseY, 20, "blue")
+        time.sleep(0.2)`,
     ]
 
     const value = document.getElementById('examples').value;

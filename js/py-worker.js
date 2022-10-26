@@ -57,7 +57,6 @@ const setupWorker = () => {
             const lastX = window.lastMouse.x;
             const lastY = window.lastMouse.y;
 
-            console.log(window.lastMouse.x + ", " + window.lastMouse.y);
             Atomics.store(window.sharedArr, 1, window.lastMouse.x % 256);
             Atomics.store(window.sharedArr, 2, Math.floor(window.lastMouse.x / 256));
 
