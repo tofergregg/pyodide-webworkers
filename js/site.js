@@ -9,13 +9,15 @@ import { setupWorker,
 const init_main = () => {
     // set up for mouse movement
     const canvas = document.getElementById('theCanvas');
-    canvas.addEventListener("mousemove", (event) => {
-        console.log(event.pageX + ", " + event.pageY);
-    }, false)
+    canvas.addEventListener("mousemove", mouseMove, false)
     setupWorker();
 }
 
 window.init_main = init_main;
+
+const mouseMove = (event) => {
+        console.log(event.pageX + ", " + event.pageY);
+}
 
 async function python_runner(script, context) {
     // Shared buffers are not easily allowed any more...
