@@ -116,7 +116,7 @@ function getMousePos(x_or_y) {
     if (x_or_y == 'x') {
         return Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
     } else {
-        return Atomics.load(self.sharedBuf, 2) + Atomics.load(self.sharedBuf, 3) * 256;
+        return Atomics.load(self.sharedBuf, 3) + Atomics.load(self.sharedBuf, 4) * 256;
     }
 }
 
