@@ -30,7 +30,7 @@ self.jsMessage = null;
 
 self.onmessage = async (event) => {
     if (event.data.cmd === "setInterruptBuffer") {
-        self.interruptBuffer = event.data.interruptBuffer;
+        self.interruptBuffer = new UInt8Array(event.data.interruptBuffer);
         return;
     }
     if (event.data.control !== undefined) {
