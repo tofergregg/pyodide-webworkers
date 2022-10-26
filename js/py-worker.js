@@ -10,13 +10,14 @@ const interruptExecution = () => {
     // sometimes, the program does not handle the interrupt
     // so, we'll just keep trying to interrupt until we 
     // get confirmation that the program has stopped
+    // Basically, we'll keep hitting ctrl-c until we stop the program!
     const sendInterrupt = setInterval(() => {
         if (!window.codeRunning) {
             clearInterval(sendInterrupt);
         } else {
             Atomics.store(interruptBuffer, 0, 2);
         }
-    }, 100);
+    }, 10);
 }
 
 const clearInterruptBuffer = () => {
