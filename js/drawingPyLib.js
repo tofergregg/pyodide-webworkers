@@ -30,6 +30,4 @@ class Canvas:
 
     def erase_canvas(self):
         passDrawShape(['erase'])
-def test():
-    print("hi")
 `
