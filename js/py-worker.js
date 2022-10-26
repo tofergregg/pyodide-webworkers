@@ -46,9 +46,25 @@ const setupWorker = () => {
             }
             return;
         }
-        if (event.data.drawShape !== undefined) {
+        if (event.data.cmd === 'drawShape') {
             drawShape(...event.data.shapeArgs);
             return;
+        }
+
+        if (event.data.cmd === 'getMousePos') {
+            // need 2 bytes for each mouse x and y
+            // will store in little endian format
+            const lastX = window.lastMouse.x;
+            const lastY = window.lastMouse.y;
+
+            Atomics.store(window.sharedArr, 1, window.lastMouse.x % 256);
+            Atomics.store(window.sharedArr, 2, Math.floor(window.lastMouse.x / 256));
+
+            Atomics.store(window.sharedArr, 3, window.lastMouse.y % 256);
+            Atomics.store(window.sharedArr, 4, Math.floor(window.lastMouse.y / 256));
+
+            // alert the webworker
+            Atomics.store(window.sharedArr, 0, 1);
         }
         window.codeRunning = false;
         const onSuccess = callbacks[id];

@@ -106,6 +106,17 @@ const fixTimeImport = (code) => {
 }
 
 function passDrawShape(argArray) {
-    self.postMessage({drawShape: true, shapeArgs: argArray.toJs()});
+    self.postMessage({cmd: 'drawShape', shapeArgs: argArray.toJs()});
+}
+
+function getMousePos(x_or_y) {
+    Atomics.store(self.sharedBuf, 0, 0);
+    self.postMessage({cmd: 'getMousePos'});
+    while (Atomics.load(self.sharedBuf, 0) == 0) {}; // spin
+    if (x_or_y == 'x') {
+        return Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
+    } else {
+        return Atomics.load(self.sharedBuf, 2) + Atomics.load(self.sharedBuf, 3) * 256;
+    }
 }
 
