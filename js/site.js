@@ -17,7 +17,9 @@ const init_main = () => {
 window.init_main = init_main;
 
 const mouseMove = (event) => {
-    window.lastMouse = {x: event.clientX, y: event.clientY};
+    const canvas = document.getElementById('theCanvas');
+    const rect = canvas.getBoundingClientRect();
+    window.lastMouse = {x: event.clientX - rect.left, y: event.clientY - rect.top};
 }
 
 async function python_runner(script, context) {
