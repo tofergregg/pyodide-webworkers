@@ -1,8 +1,8 @@
 const drawingLib = `from js import passDrawShape
 class Canvas:
-    def __init__(self):
-        self.width = 285
-        self.height = 244
+    def __init__(self, width=285, height=244):
+        self.width = width 
+        self.height = height 
 
     def draw_line(self, x1, y1, x2, y2, color='black'):
         passDrawShape(['line', x1, y1, x2, y2, color]) 
