@@ -17,7 +17,7 @@ const init_main = () => {
 window.init_main = init_main;
 
 const mouseMove = (event) => {
-    window.lastMouse = {x: event.pageX, y: event.pageY};
+    window.lastMouse = {x: event.clientX, y: event.clientY};
 }
 
 async function python_runner(script, context) {
