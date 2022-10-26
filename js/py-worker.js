@@ -6,7 +6,6 @@ window.codeRunning = false;
 const callbacks = {};
 
 const interruptExecution = () => {
-    console.log("Code running? ", window.codeRunning);
     // sometimes, the program does not handle the interrupt
     // so, we'll just keep trying to interrupt until we 
     // get confirmation that the program has stopped
