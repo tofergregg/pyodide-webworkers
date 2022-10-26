@@ -2,13 +2,20 @@ import { drawShape } from "./drawing.js";
 
 let pyodideWorker;
 let interruptBuffer;
+let codeRunning = false;
 const callbacks = {};
 
 const interruptExecution = () => {
-    Atomics.store(interruptBuffer, 0, 2);
-    for (let i = 0; i < 1000; i++) {
-        console.log(Atomics.load(interruptBuffer, 0));
-    }
+    // sometimes, the program does not handle the interrupt
+    // so, we'll just keep trying to interrupt until we 
+    // get confirmation that the program has stopped
+    const sendInterrupt = setInterval(() => {
+        if (codeRunning) {
+            clearInterval(sendInterrupt);
+        } else {
+            Atomics.store(interruptBuffer, 0, 2);
+        }
+    }, 100);
 }
 
 const clearInterruptBuffer = () => {
@@ -42,6 +49,7 @@ const setupWorker = () => {
             drawShape(...event.data.shapeArgs);
             return;
         }
+        codeRunning = false;
         const onSuccess = callbacks[id];
         delete callbacks[id];
         if (typeof(onSuccess) === 'function') {
@@ -68,6 +76,7 @@ const asyncRun = ((script, context) => {
         clearInterruptBuffer();
         // the id could be generated more carefully
         id = (id + 1) % Number.MAX_SAFE_INTEGER;
+        codeRunning = true;
         return new Promise((onSuccess) => {
             callbacks[id] = onSuccess;
             pyodideWorker.postMessage({
