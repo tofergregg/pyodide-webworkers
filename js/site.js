@@ -7,6 +7,18 @@ import { setupWorker,
 } from "./py-worker.js";
 
 const init_main = () => {
+    // set option if url has option
+    const params = new URLSearchParams(window.location.search);
+    const example = params.get('example');
+    if (example) {
+        const examples = document.getElementById('examples');
+        for (let i = 0; i < examples.options.length; i++) {
+            if (examples.options[i].text == example) {
+                examples.value = i;
+                break;
+            }
+        }
+    }
     // set up for mouse movement
     window.lastMouse = [0, 0];
     const canvas = document.getElementById('theCanvas');
