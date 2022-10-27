@@ -168,6 +168,8 @@ import random
 import math
 
 canvas = Canvas()
+PLAY_DIFFICULTY = 5 # (0-10) lower is easier 
+                    # decrease PLAY_DIFFICULTY for a slower ball
 PADDLE_WIDTH = 10
 PADDLE_HEIGHT = 40
 PADDLE_MARGIN = 10
@@ -176,7 +178,7 @@ RIGHT_PADDLE_X = canvas.width - PADDLE_MARGIN
 PADDLE_COLOR = 'green'
 BALL_RADIUS = 10
 BALL_COLOR = 'blue'
-BALL_SPEED = 10
+BALL_VELOCITY = 10
 
 def main():
     print("Move the mouse up and down")
@@ -192,7 +194,7 @@ def setup_game():
     ball['dx'] = random.randint(5, 9)
     if random.randint(0, 1) % 2 == 0: ball['dx'] *= -1
 
-    ball['dy'] = math.sqrt(BALL_SPEED ** 2 - ball['dx'] ** 2) 
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
     if random.randint(0, 1) % 2 == 0: ball['dy'] *= -1
 
     draw_ball(ball)
@@ -256,7 +258,7 @@ def bounce_and_fuzz(ball, final_direction):
 def fix_speed(ball):
     # change dy to match dx
     dy_neg = ball['dy'] < 0
-    ball['dy'] = math.sqrt(BALL_SPEED ** 2 - ball['dx'] ** 2) 
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
     if dy_neg:
         ball['dy'] *= -1
 
@@ -288,7 +290,7 @@ def play(ball):
         bounce_off_paddles(ball, last_mouse_y, ball['y'])
         score_str = f"{score[0]} | {score[1]}" 
         canvas.draw_string(canvas.width / 2 - 20, 20, score_str, 'black')
-        time.sleep(0.03)
+        time.sleep((11 - PLAY_DIFFICULTY) * 0.005)
         move_ball(ball)
         ball = score_and_reset(ball, score)
 
