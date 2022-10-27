@@ -23,7 +23,7 @@ const drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) =>
     } else if (shape == 'text') {
         // (x, y, text)
         ctx.font = '18px serif';
-        ctx.fillText(a, b, c);
+        ctx.fillText(c, a, b);
         return;
     } else if (shape == 'erase') {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
