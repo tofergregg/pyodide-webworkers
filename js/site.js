@@ -241,10 +241,6 @@ def move_ball(ball):
     if ball['y'] > canvas.height:
         ball['dy'] = -abs(ball['dy'])
 
-    # bounce left/right
-    #if ball['x'] < BALL_RADIUS or ball['x'] > canvas.width:
-    #    ball['dx'] *= -1
-
 def bounce_off_paddles(ball, left_y, right_y):
     # if any part of the ball is touching the paddle, bounce
     # left
