@@ -15,6 +15,7 @@ const init_main = () => {
         for (let i = 0; i < examples.options.length; i++) {
             if (examples.options[i].text == example) {
                 examples.value = i;
+                window.update_terminal();
                 break;
             }
         }
