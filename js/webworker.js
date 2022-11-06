@@ -76,7 +76,7 @@ function input_fixed(text) {
     Atomics.store(self.waitBuf, 0, 0);
     self.postMessage({outputText: text, getInput: true});
     // while (Atomics.load(self.sharedBuf, 0) == 0) {} // spin
-    Atomics.wait(waitBuf, 0, 0);
+    Atomics.wait(self.waitBuf, 0, 0);
     console.log("input received"); 
 
     const dataLen = Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
@@ -115,7 +115,7 @@ function getMousePos(x_or_y) {
     Atomics.store(self.sharedBuf, 0, 0);
     self.postMessage({cmd: 'getMousePos'});
     // while (Atomics.load(self.sharedBuf, 0) == 0) {}; // spin
-    Atomics.wait(waitBuf, 0, 0);
+    Atomics.wait(self.waitBuf, 0, 0);
     if (x_or_y == 'x') {
         return Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
     } else {
