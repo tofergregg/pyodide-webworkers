@@ -40,8 +40,8 @@ self.onmessage = async (event) => {
     }
     if (event.data.buffer !== undefined) {
         // got the shared buffers
-        self.sharedBuf = new Uint8Array(event.data.buffer);
-        self.waitBuf = new Int32Array(event.data.waitBuffer);
+        self.sharedArr = new Uint8Array(event.data.buffer);
+        self.waitArr = new Int32Array(event.data.waitArrfer);
         return;
     }
 
@@ -73,16 +73,16 @@ self.onmessage = async (event) => {
 
 function input_fixed(text) {
     console.log("input requested: " + text)
-    Atomics.store(self.waitBuf, 0, 0);
+    Atomics.store(self.waitArr, 0, 0);
     self.postMessage({outputText: text, getInput: true});
-    // while (Atomics.load(self.sharedBuf, 0) == 0) {} // spin
-    Atomics.wait(self.waitBuf, 0, 0);
+    // while (Atomics.load(self.sharedArr, 0) == 0) {} // spin
+    Atomics.wait(self.waitArr, 0, 0);
     console.log("input received"); 
 
-    const dataLen = Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
+    const dataLen = Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256;
     let data = '';
     for (let i = 0; i < dataLen; i++) {
-        data += String.fromCharCode(Atomics.load(self.sharedBuf, i + 3));
+        data += String.fromCharCode(Atomics.load(self.sharedArr, i + 3));
     }
 
     return data;
@@ -112,14 +112,14 @@ function passDrawShape(argArray) {
 }
 
 function getMousePos(x_or_y) {
-    Atomics.store(self.sharedBuf, 0, 0);
+    Atomics.store(self.sharedArr, 0, 0);
     self.postMessage({cmd: 'getMousePos'});
-    // while (Atomics.load(self.sharedBuf, 0) == 0) {}; // spin
-    Atomics.wait(self.waitBuf, 0, 0);
+    // while (Atomics.load(self.sharedArr, 0) == 0) {}; // spin
+    Atomics.wait(self.waitArr, 0, 0);
     if (x_or_y == 'x') {
-        return Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
+        return Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256;
     } else {
-        return Atomics.load(self.sharedBuf, 3) + Atomics.load(self.sharedBuf, 4) * 256;
+        return Atomics.load(self.sharedArr, 3) + Atomics.load(self.sharedArr, 4) * 256;
     }
 }
 
