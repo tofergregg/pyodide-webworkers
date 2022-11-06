@@ -48,11 +48,15 @@ async function python_runner(script, context) {
     // Must have correct headers (see .htaccess)
     window.sharedBuf = new SharedArrayBuffer(65536);
     window.sharedArr = new Uint8Array(window.sharedBuf);
+
+    window.waitBuf = new SharedArrayBuffer(4);
+    window.waitArr = new Int32Array(window.waitArr);
     // initialize
     for (let i = 0; i < 65536; i++) {
         Atomics.store(window.sharedArr, i, 0);
     }
-    passSharedBuffer(window.sharedBuf);
+    Atomics.store(window.waitBuf, 0, 0);
+    passSharedBuffer(window.sharedBuf, window.waitBuf);
     try {
         const { results, error } = await asyncRun(script, context);
         if (results) {

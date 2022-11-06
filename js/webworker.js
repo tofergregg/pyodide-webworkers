@@ -39,8 +39,9 @@ self.onmessage = async (event) => {
         return;
     }
     if (event.data.buffer !== undefined) {
-        // got a shared buffer
+        // got the shared buffers
         self.sharedBuf = new Uint8Array(event.data.buffer);
+        self.waitBuf = new Int32Array(event.data.waitBuffer);
         return;
     }
 

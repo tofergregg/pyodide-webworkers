@@ -64,7 +64,7 @@ const setupWorker = () => {
             Atomics.store(window.sharedArr, 4, Math.floor(window.lastMouse.y / 256));
 
             // alert the webworker
-            Atomics.store(window.sharedArr, 0, 1);
+            Atomics.store(window.waitArr, 0, 1);
             return;
         }
         if (event.data.cmd === 'clearTerminal') {
@@ -89,8 +89,8 @@ const sendMessageToWorker = (message) => {
     pyodideWorker.postMessage({'control': true, "message": message});
 };
 
-const passSharedBuffer = (buf) => {
-    pyodideWorker.postMessage({'buffer': buf}); 
+const passSharedBuffer = (buf, waitBuf) => {
+    pyodideWorker.postMessage({'buffer': buf, 'waitBuffer': waitBuf}); 
 }
 
 const asyncRun = ((script, context) => {
@@ -139,7 +139,7 @@ const getInputFromTerminal = () => {
             }
 
             // alert the webworker
-            Atomics.store(window.sharedArr, 0, 1);
+            Atomics.store(window.waitArr, 0, 1);
         }
         else{
             userInput = currentVal.substring(originalText.length);
