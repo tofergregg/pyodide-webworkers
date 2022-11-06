@@ -50,7 +50,7 @@ async function python_runner(script, context) {
     window.sharedArr = new Uint8Array(window.sharedBuf);
 
     window.waitBuf = new SharedArrayBuffer(4);
-    window.waitArr = new Int32Array(window.waitArr);
+    window.waitArr = new Int32Array(window.waitBuf);
     // initialize
     for (let i = 0; i < 65536; i++) {
         Atomics.store(window.sharedArr, i, 0);
