@@ -73,11 +73,10 @@ self.onmessage = async (event) => {
 
 function input_fixed(text) {
     // console.log("input requested: " + text)
+    Atomics.store(self.waitBuf, 0, 0);
     self.postMessage({outputText: text, getInput: true});
     // while (Atomics.load(self.sharedBuf, 0) == 0) {} // spin
     Atomics.wait(waitBuf, 0, 0);
-    // reset trigger
-    Atomics.store(self.sharedBuf, 0, 0);
 
     const dataLen = Atomics.load(self.sharedBuf, 1) + Atomics.load(self.sharedBuf, 2) * 256;
     let data = '';
