@@ -55,7 +55,7 @@ async function python_runner(script, context) {
     for (let i = 0; i < 65536; i++) {
         Atomics.store(window.sharedArr, i, 0);
     }
-    Atomics.store(window.waitBuf, 0, 0);
+    Atomics.store(window.waitArr, 0, 0);
     passSharedBuffer(window.sharedBuf, window.waitBuf);
     try {
         const { results, error } = await asyncRun(script, context);
