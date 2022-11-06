@@ -76,9 +76,7 @@ function input_fixed(text) {
     Atomics.store(self.waitArr, 0, 0);
     self.postMessage({outputText: text, getInput: true});
     // while (Atomics.load(self.waitArr, 0) == 0) {} // spin
-    console.log("waiting on: " + Atomics.load(self.waitArr));
     Atomics.wait(self.waitArr, 0, 0);
-    console.log("input received"); 
 
     const dataLen = Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256;
     let data = '';
