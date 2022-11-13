@@ -60,7 +60,6 @@ const mouseDown = (event) => {
         y = 0;
     }
     window.lastMouseDown = {x: x, y: y};
-    console.log("mouse down at " + x + ", " + y);
 }
 
 async function python_runner(script, context) {
