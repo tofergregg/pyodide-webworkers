@@ -140,7 +140,6 @@ const getInputFromTerminal = () => {
             }
 
             // alert the webworker
-            console.log("alerting the webworker!");
             Atomics.store(window.waitArr, 0, 1);
             Atomics.notify(window.waitArr, 0);
         }
