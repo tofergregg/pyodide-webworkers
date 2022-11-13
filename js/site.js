@@ -24,6 +24,12 @@ const init_main = () => {
     window.lastMouse = [0, 0];
     const canvas = document.getElementById('theCanvas');
     canvas.addEventListener("mousemove", mouseMove, false)
+
+    // set up for mouse button
+    window.lastMouseClick = [0, 0];
+    const canvas = document.getElementById('theCanvas');
+    canvas.addEventListener("mousedown", mouseDown, false)
+
     setupWorker();
 }
 
@@ -41,6 +47,21 @@ const mouseMove = (event) => {
         y = 0;
     }
     window.lastMouse = {x: x, y: y};
+}
+
+const mouseDown = (event) => {
+    const canvas = document.getElementById('theCanvas');
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.round((event.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
+    if (x > canvas.width + 1) {
+        x = 0;
+    }
+    const y = Math.round((event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
+    if (y > canvas.height + 1) {
+        y = 0;
+    }
+    window.lastMouseClick = {x: x, y: y};
+    console.log("clicked mouse at " + x + ", " + y);
 }
 
 async function python_runner(script, context) {
