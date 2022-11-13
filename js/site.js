@@ -329,9 +329,7 @@ def play(ball):
 if __name__ == "__main__":
     main()
 `,
-        `import random
-import sys
-import time
+        `import time
 
 NUM_TO_CONNECT = 4
 NUM_COLS = 7 
@@ -694,10 +692,6 @@ def main():
     # the following player turns produces a tie:
     # player_turns = [3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 4, 4, 5, 5, 5, 5, 6, 6]
     canvas = Canvas()
-    # seed = random.randrange(sys.maxsize)
-    # seed = 5205063475235326885
-    # random.seed(seed)
-    # print(f"Seed: {seed}")
     board = []
     # Even though it is harder to drop a piece through a column
     # we'll stick with the traditional board with rows 
