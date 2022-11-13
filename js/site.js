@@ -470,6 +470,27 @@ def check_for_diag_up_win(board, row_num, col_num, num_to_connect):
 
     return populate_winner(row_num, col_num, 'diag_up', color)
 
+def find_open_spots(board, no_drop_columns, color):
+    """
+    Here, we see if there are any rows that have a space between two opposing player
+    tokens
+    """
+    # start from the top row
+    for row in range(len(board)):
+        # no need to check last two columns
+        for col in range(len(board[0]) - 2):
+            if col not in no_drop_columns and board[row][col] == color:
+                # check the row below, and one column over
+                # if there is a token, this is a possible play
+                if (row == len(board) - 1 or board[row + 1][col + 1] is not None):
+                    # check the second column for a blank
+                    if board[row][col + 1] is None:
+                        # check the third column over
+                        if board[row][col + 2] == color:
+                            # we found one!
+                            return col + 1
+    return None
+                
 def populate_winner(row_num, col_num, direction, winner):
     return {
             'start_row': row_num, 
@@ -536,14 +557,20 @@ def ai_turn(board, color, other_color):
         else:
             no_drop_columns.append(our_col)
 
+    # if there are any open spots between two opposing player tokens, go there
+    col = find_open_spots(board, no_drop_columns, other_color)
+    if col is not None:
+        drop_piece(board, col, color)
+        return col 
+
     # if there are two in a row (for 4-win) with space on both sides, 
     # block to avoid easy three-in-a-row situation
     # we only have to check one side
+    # this function still needs work
     for row_num in range(len(board)):
         for col_num in range(len(board[0])):
             row_check = check_for_row_win(board, row_num, col_num, 
                                           NUM_TO_CONNECT - 2)
-            # this function still needs work
             if row_check:
                 if (row_check['start_col'] != 0 and 
                     board[row_check['start_row']]
@@ -660,7 +687,8 @@ def click_in_col(canvas):
 def main():
     player_turns = []
     # the following are wins for the player: 
-    # player_turns = [3,2,1,2,1,2,3,4,4,5,5,1,1,2,2,6,4] # for debugging
+    # player_turns = [3, 2, 5, 3, 4, 1, 1, 6, 0, 0, 4, 2, 2]
+    # player_turns = [3, 2, 1, 2, 1, 2, 3, 4, 4, 5, 5, 1, 1, 2, 2, 6, 4]
     # player_turns = [1, 2, 4, 3, 2, 1, 4, 5, 1, 1, 1, 5, 5, 4, 2]
     canvas = Canvas()
     # seed = random.randrange(sys.maxsize)
@@ -689,6 +717,7 @@ def main():
                 drop_piece(board, col, color)
             else:
                 # col = play_turn(board, color)
+                print_board(board)
                 print("Click in a column to play...")
                 while True:
                     col = click_in_col(canvas)
