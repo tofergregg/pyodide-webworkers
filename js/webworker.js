@@ -122,6 +122,14 @@ function getMousePos(x_or_y) {
     }
 }
 
+function getMouseDown(x_or_y) {
+    Atomics.store(self.sharedArr, 0, 0);
+    self.postMessage({cmd: 'getMouseDownPos'});
+
+    Atomics.wait(self.waitArr, 0, 0);
+        return [Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256, Atomics.load(self.sharedArr, 3) + Atomics.load(self.sharedArr, 4) * 256];
+}
+
 function clearTerminal() {
     self.postMessage({cmd: 'clearTerminal'});
 }

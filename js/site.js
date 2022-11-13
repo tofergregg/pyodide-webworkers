@@ -193,8 +193,8 @@ def main():
     canvas = Canvas()
     # Move your mouse around the white canvas!
     while True:
-        mouseX = canvas.getMouseX()
-        mouseY = canvas.getMouseY()
+        mouseX = canvas.get_mouse_x()
+        mouseY = canvas.get_mouse_y()
         canvas.fill_circle(mouseX, mouseY, 20, "blue")
         time.sleep(0.2)
 
@@ -318,7 +318,7 @@ def play(ball):
     while True:
         canvas.erase()
         draw_ball(ball)
-        last_mouse_y = canvas.getMouseY()
+        last_mouse_y = canvas.get_mouse_y()
         draw_paddles(last_mouse_y, ball['y'])
         bounce_off_paddles(ball, last_mouse_y, ball['y'])
         score_str = f"{score[0]} | {score[1]}" 

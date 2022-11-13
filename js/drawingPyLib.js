@@ -1,5 +1,6 @@
 const drawingLib = `from js import passDrawShape
 from js import getMousePos 
+from js import getMouseDown
 from js import clearTerminal 
 class Canvas:
     def __init__(self, width=285, height=244):
@@ -33,11 +34,14 @@ class Canvas:
     def erase(self):
         passDrawShape(['erase'])
 
-    def getMouseX(self):
+    def get_mouse_x(self):
         return getMousePos('x') 
     
-    def getMouseY(self):
+    def get_mouse_y(self):
         return getMousePos('y') 
+
+    def get_mouse_down(self):
+        return getMouseDown()
 
 def clear_terminal():
     clearTerminal()
