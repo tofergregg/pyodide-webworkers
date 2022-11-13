@@ -27,7 +27,6 @@ const init_main = () => {
 
     // set up for mouse button
     window.lastMouseClick = [0, 0];
-    const canvas = document.getElementById('theCanvas');
     canvas.addEventListener("mousedown", mouseDown, false)
 
     setupWorker();
