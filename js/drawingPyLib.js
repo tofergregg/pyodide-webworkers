@@ -41,7 +41,10 @@ class Canvas:
         return getMousePos('y') 
 
     def get_mouse_down(self):
-        return getMouseDown()
+        x, y = getMouseDown()
+        if x == 65535: x = -1
+        if y == 65535: y = -1
+        return (x, y)
 
 def clear_terminal():
     clearTerminal()
