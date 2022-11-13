@@ -21,12 +21,12 @@ const init_main = () => {
         }
     }
     // set up for mouse movement
-    window.lastMouse = [0, 0];
+    window.lastMouse = {x: 0, y: 0};
     const canvas = document.getElementById('theCanvas');
     canvas.addEventListener("mousemove", mouseMove, false)
 
     // set up for mouse button
-    window.lastMouseClick = [0, 0];
+    window.lastMouseDown = {x: 0, y: 0};
     canvas.addEventListener("mousedown", mouseDown, false)
 
     setupWorker();
@@ -59,8 +59,8 @@ const mouseDown = (event) => {
     if (y > canvas.height + 1) {
         y = 0;
     }
-    window.lastMouseClick = {x: x, y: y};
-    console.log("clicked mouse at " + x + ", " + y);
+    window.lastMouseDown = {x: x, y: y};
+    console.log("mouse down at " + x + ", " + y);
 }
 
 async function python_runner(script, context) {
