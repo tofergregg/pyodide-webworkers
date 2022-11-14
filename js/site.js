@@ -477,7 +477,7 @@ def find_open_spots(board, no_drop_columns, color):
     for row in range(len(board)):
         # no need to check last two columns
         for col in range(len(board[0]) - 2):
-            if col not in no_drop_columns and board[row][col] == color:
+            if col + 1 not in no_drop_columns and board[row][col] == color:
                 # check the row below, and one column over
                 # if there is a token, this is a possible play
                 if (row == len(board) - 1 or board[row + 1][col + 1] is not None):
