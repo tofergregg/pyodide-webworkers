@@ -592,7 +592,6 @@ def ai_turn(board, color, other_color):
     while True:
         if col not in no_drop_columns and drop_piece(board, col, color):
             return col
-        print(col)
         col = (col + 1) % len(board[0])
 
 def col_to_win(board, color):
