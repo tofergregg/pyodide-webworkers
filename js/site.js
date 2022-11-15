@@ -20,9 +20,11 @@ const init_main = () => {
             }
         }
     }
+    const canvas = document.getElementById('theCanvas');
+    // add objects array
+    canvas._objects = [];
     // set up for mouse movement
     window.lastMouse = {x: 0, y: 0};
-    const canvas = document.getElementById('theCanvas');
     canvas.addEventListener("mousemove", mouseMove, false)
 
     // set up for mouse button
