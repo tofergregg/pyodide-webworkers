@@ -99,4 +99,4 @@ const drawShapeInAnimation = (shape, a, b, c, d, color, stroke, fill) => {
         }
 }
 
-export { drawShape };
+export { updateCanvas };
