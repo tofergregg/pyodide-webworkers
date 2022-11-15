@@ -207,81 +207,101 @@ import random
 import math
 
 canvas = Canvas()
-PLAY_DIFFICULTY = 5 # (0-10) lower is easier
+PLAY_DIFFICULTY = 5 # (0-10) lower is easier 
                     # decrease PLAY_DIFFICULTY for a slower ball
 PADDLE_WIDTH = 10
 PADDLE_HEIGHT = 40
 PADDLE_MARGIN = 10
-LEFT_PADDLE_X = PADDLE_MARGIN
+LEFT_PADDLE_X = PADDLE_MARGIN 
 RIGHT_PADDLE_X = canvas.width - PADDLE_MARGIN
 PADDLE_COLOR = 'green'
-BALL_RADIUS = 10
+BALL_RADIUS = 5
 BALL_COLOR = 'blue'
 BALL_VELOCITY = 10
 
 def main():
     print("Move the mouse up and down")
     print("inside the white box to play!")
-    ball = setup_game()
-    play(ball)
+    ball, paddles = setup_game()
+    play(ball, paddles)
 
 def setup_game():
-    draw_paddles(canvas.height / 2, canvas.height / 2)
+    paddles = {}
+    leftY = canvas.height / 2
+    rightY = canvas.height / 2
+    paddles['left'] = canvas.create_rectangle(LEFT_PADDLE_X, 
+                       leftY - PADDLE_HEIGHT / 2, 
+                       LEFT_PADDLE_X + PADDLE_WIDTH, 
+                       leftY - PADDLE_HEIGHT / 2 + PADDLE_HEIGHT,
+                       color=PADDLE_COLOR,
+                       fill=PADDLE_COLOR)
+    
+    paddles['right'] = canvas.create_rectangle(RIGHT_PADDLE_X - PADDLE_WIDTH, 
+                       rightY - PADDLE_HEIGHT / 2, 
+                       RIGHT_PADDLE_X, 
+                       rightY - PADDLE_HEIGHT / 2 + PADDLE_HEIGHT,
+                       color=PADDLE_COLOR,
+                       fill=PADDLE_COLOR)
+
     ball = {}
-    ball['x'] = canvas.width / 2
-    ball['y'] = canvas.height / 2
+    ball_x1 = canvas.width / 2 - BALL_RADIUS
+    ball_y1 = canvas.height / 2 - BALL_RADIUS
+    ball_x2 = ball_x1 + 2 * BALL_RADIUS
+    ball_y2 = ball_y1 + 2 * BALL_RADIUS
+    
+    ball['obj'] = canvas.create_oval(ball_x1, ball_y1, ball_x2, ball_y2,
+                    fill=BALL_COLOR, color=BALL_COLOR)
+
     ball['dx'] = random.randint(5, 9)
     if random.randint(0, 1) % 2 == 0: ball['dx'] *= -1
 
-    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2)
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
     if random.randint(0, 1) % 2 == 0: ball['dy'] *= -1
 
-    draw_ball(ball)
+    return ball, paddles
+    
 
-    return ball
-
-
-def draw_paddles(leftY, rightY):
-    canvas.fill_rect(LEFT_PADDLE_X,
-                       leftY - PADDLE_HEIGHT / 2,
-                       PADDLE_WIDTH,
-                       PADDLE_HEIGHT,
-                       PADDLE_COLOR)
-
-    canvas.fill_rect(RIGHT_PADDLE_X - PADDLE_WIDTH,
-                       rightY - PADDLE_HEIGHT / 2,
-                       PADDLE_WIDTH,
-                       PADDLE_HEIGHT,
-                       PADDLE_COLOR)
-
-def draw_ball(ball):
-    canvas.fill_circle(ball['x'] - BALL_RADIUS, ball['y'] - BALL_RADIUS,
-                       BALL_RADIUS, BALL_COLOR)
+def draw_paddles(paddles, leftY, rightY):
+    canvas.coords(paddles['left'], 
+                LEFT_PADDLE_X, 
+                       leftY - PADDLE_HEIGHT / 2, 
+                       LEFT_PADDLE_X + PADDLE_WIDTH, 
+                       leftY - PADDLE_HEIGHT / 2 + PADDLE_HEIGHT)
+    
+    canvas.coords(paddles['right'],
+                RIGHT_PADDLE_X - PADDLE_WIDTH, 
+                       rightY - PADDLE_HEIGHT / 2, 
+                       RIGHT_PADDLE_X, 
+                       rightY - PADDLE_HEIGHT / 2 + PADDLE_HEIGHT)
 
 def move_ball(ball):
-    ball['x'] += ball['dx']
-    ball['y'] += ball['dy']
+    canvas.move(ball['obj'], ball['dx'], ball['dy'])
+
     # bounce at ceiling and floor
-    if ball['y'] < BALL_RADIUS:
+    x1, y1, x2, y2 = canvas.coords(ball['obj'])
+
+    if y1 < 0:
         ball['dy'] = abs(ball['dy'])
-    if ball['y'] > canvas.height:
+    if y2 > canvas.height:
         ball['dy'] = -abs(ball['dy'])
 
-def bounce_off_paddles(ball, left_y, right_y):
+def bounce_off_paddles(ball, paddles):
     # if any part of the ball is touching the paddle, bounce
+    ball_x1, ball_y1, ball_x2, ball_y2 = canvas.coords(ball['obj'])
+    lpad_x1, lpad_y1, lpad_x2, lpad_y2 = canvas.coords(paddles['left'])
+    rpad_x1, rpad_y1, rpad_x2, rpad_y2 = canvas.coords(paddles['right'])
+
     # left
-    if (LEFT_PADDLE_X <= ball['x'] - BALL_RADIUS
-                     <= LEFT_PADDLE_X + PADDLE_WIDTH and
-        left_y - PADDLE_HEIGHT <= ball['y'] - BALL_RADIUS <= left_y + PADDLE_HEIGHT):
+    if lpad_x2 >= ball_x1 and ball_y2 >= lpad_y1 and ball_y1 <= lpad_y2:
         bounce_and_fuzz(ball, 1)
 
     # right
-    if RIGHT_PADDLE_X - PADDLE_WIDTH <= ball['x'] <= RIGHT_PADDLE_X:
+    if rpad_x1 <= ball_x2 and ball_y2 >= rpad_y1 and ball_y1 <= rpad_y2:
         bounce_and_fuzz(ball, -1)
 
 def bounce_and_fuzz(ball, final_direction):
-    if final_direction == -1:
-        ball['dx'] = -abs(ball['dx'])
+    if final_direction == -1: 
+        ball['dx'] = -abs(ball['dx']) 
     else:
         ball['dx'] = abs(ball['dx'])
     if ball['dx'] < 0:
@@ -293,41 +313,49 @@ def bounce_and_fuzz(ball, final_direction):
 def fix_speed(ball):
     # change dy to match dx
     dy_neg = ball['dy'] < 0
-    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2)
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
     if dy_neg:
         ball['dy'] *= -1
 
-def score_and_reset(ball, score):
+def score_and_reset(ball, paddles, score, score_obj):
     # if the ball is outside the bounds of the canvas,
     # someone scored
-    if ball['x'] < 0:
+    x1, y1, x2, y2 = canvas.coords(ball['obj'])
+    if x1 < 0:
         # score for right player
         score[1] += 1
-        canvas.erase()
-        ball = setup_game()
-    elif ball['x'] > canvas.width:
+        canvas.delete(ball['obj'])
+        canvas.delete(paddles['left'])
+        canvas.delete(paddles['right'])
+        score_str = f"{score[0]} | {score[1]}" 
+        canvas.itemconfigure(score_obj, score_str)
+        ball, paddles = setup_game()
+    elif x2 > canvas.width:
         # score for left player
         score[0] += 1
-        canvas.erase()
-        ball = setup_game()
+        canvas.delete(ball['obj'])
+        canvas.delete(paddles['left'])
+        canvas.delete(paddles['right'])
+        score_str = f"{score[0]} | {score[1]}" 
+        canvas.itemconfigure(score_obj, score_str)
+        # canvas.erase()
+        ball, paddles = setup_game()
 
-    return ball
+    return ball, paddles
 
 
 
-def play(ball):
+def play(ball, paddles):
     score = [0, 0]
+    score_str = f"{score[0]} | {score[1]}" 
+    score_obj = canvas.create_text(canvas.width / 2 - 20, 20, score_str, fill='black', color='black')
     while True:
-        canvas.erase()
-        draw_ball(ball)
         last_mouse_y = canvas.get_mouse_y()
-        draw_paddles(last_mouse_y, ball['y'])
-        bounce_off_paddles(ball, last_mouse_y, ball['y'])
-        score_str = f"{score[0]} | {score[1]}"
-        canvas.draw_string(canvas.width / 2 - 20, 20, score_str, 'black')
+        draw_paddles(paddles, last_mouse_y, canvas.coords(ball['obj'])[1])
+        bounce_off_paddles(ball, paddles)
         time.sleep((11 - PLAY_DIFFICULTY) * 0.005)
         move_ball(ball)
-        ball = score_and_reset(ball, score)
+        ball, paddles = score_and_reset(ball, paddles, score, score_obj)
 
 if __name__ == "__main__":
     main()
