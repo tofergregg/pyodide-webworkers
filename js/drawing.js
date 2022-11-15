@@ -41,7 +41,7 @@ const animateShape = (shape, a, b, c, d, color='black', stroke=true, fill=false)
             ctx.strokeStyle = color;
             ctx.stroke();
         }
-    }
+    });
 }
 
 export { drawShape };
