@@ -9,7 +9,7 @@ class Canvas:
         self.height = height
         self.objects = []
 
-    def move(obj, x_amount, y_amount):
+    def move(self, obj, x_amount, y_amount):
         self.objects[obj]['coords'][0] += x_amount
         self.objects[obj]['coords'][1] += y_amount
         self.objects[obj]['coords'][2] += x_amount
@@ -17,11 +17,11 @@ class Canvas:
         updateCanvas(['move', {'obj': obj, 'x_amount': x_amount, 'y_amount': y_amount}])
         return self.objects[obj]['coords']
 
-    def delete(obj):
+    def delete(self, obj):
         self.objects.pop(obj)
         updateCanvas(['delete', {'obj': obj}])
 
-    def coords(obj, x1=None, y1=None, x2=None, y2=None):
+    def coords(self, obj, x1=None, y1=None, x2=None, y2=None):
         """
         Sets the new coordinates. If x1, etc. are not given,
         returns the coordinates as a 4-tuple
