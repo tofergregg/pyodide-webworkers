@@ -187,6 +187,7 @@ def main():
             dy *= -1
         print(f"x: {x}, y: {y}")
         time.sleep(0.01)
+        clear_terminal()
 
 if __name__ == "__main__":
     main()
