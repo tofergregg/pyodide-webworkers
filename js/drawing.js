@@ -57,8 +57,8 @@ const drawAllObjects = () => {
                 ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
             } else if (obj.obj == 'rectangle') {
                 // translate x2, y2 to width, height
-                const width = x2 - x1;
-                const height = y2 - y1;
+                const width = obj.coords[2] - obj.coords[0];
+                const height = obj.coords[3] - obj.coords[1];
                 ctx.rect(obj.coords[0], obj.coords[1], width, height);
             }
             if (obj.fill != '') {
