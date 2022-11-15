@@ -47,7 +47,9 @@ const setupWorker = () => {
             return;
         }
         if (event.data.cmd === 'updateCanvas') {
-            console.log(event.data.canvasCmd);
+            if (event.data.canvasCmd.startsWith('i')) {
+                console.log(event.data.canvasCmd);
+            }
             updateCanvas(event.data.canvasCmd, event.data.dict);
             return;
         }
