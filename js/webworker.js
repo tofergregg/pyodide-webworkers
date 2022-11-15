@@ -106,8 +106,8 @@ const fixTimeImport = (code) => {
     return code;
 }
 
-function passDrawShape(argArray) {
-    self.postMessage({cmd: 'drawShape', shapeArgs: argArray.toJs()});
+function updateCanvas(cmd, dict) {
+    self.postMessage({cmd: 'updateCanvas', 'canvasCmd': cmd, 'dict': dict.toJs()});
 }
 
 function getMousePos(x_or_y) {

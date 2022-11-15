@@ -1,4 +1,4 @@
-import { drawShape } from "./drawing.js";
+import { updateCanvas } from "./drawing.js";
 
 let pyodideWorker;
 let interruptBuffer;
@@ -46,8 +46,8 @@ const setupWorker = () => {
             }
             return;
         }
-        if (event.data.cmd === 'drawShape') {
-            drawShape(...event.data.shapeArgs);
+        if (event.data.cmd === 'updateCanvas') {
+            drawShape(event.data.canvasCmd, event.data.dict);
             return;
         }
 
