@@ -47,7 +47,7 @@ const setupWorker = () => {
             return;
         }
         if (event.data.cmd === 'updateCanvas') {
-            drawShape(event.data.canvasCmd, event.data.dict);
+            updateCanvas(event.data.canvasCmd, event.data.dict);
             return;
         }
 
