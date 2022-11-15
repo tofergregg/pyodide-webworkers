@@ -119,6 +119,7 @@ window.reset_console = () => {
     }
     document.getElementById('console-output').value = '';
     const canvas = document.getElementById('theCanvas');
+    canvas._objects = [];
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
