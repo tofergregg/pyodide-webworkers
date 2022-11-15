@@ -360,12 +360,14 @@ def play(ball, paddles):
 if __name__ == "__main__":
     main()
 `,
-        `import time
+        `import random
+import sys
+import time
 
 NUM_TO_CONNECT = 4
-NUM_COLS = 7
-NUM_ROWS = 6
-COLOR1 = "red"
+NUM_COLS = 7 
+NUM_ROWS = 6 
+COLOR1 = "red" 
 COLOR2 = "yellow"
 
 # graphics
@@ -389,7 +391,7 @@ def print_board(board):
                 ch = piece[0].upper()
             print(f"|{ch}", end='')
         print('|')
-    # bottom
+    # bottom 
     print(f"-" * (len(board[0]) * 2 + 1))
     print(f"|{' ' * (len(board[0]) * 2 - 1)}|")
 
@@ -406,7 +408,7 @@ def drop_piece(board, col, color):
     if row > 0 and board[row - 1][col] is None:
         board[row - 1][col] = color
         return True
-    return False # full column, could not place piece
+    return False # full column, could not place piece 
 
 def remove_piece(board, col):
     """
@@ -429,7 +431,7 @@ def we_have_a_winner(board, num_to_connect):
     """
     for row_num in range(len(board)):
         for col_num in range(len(board[0])):
-            for fn in [check_for_row_win, check_for_col_win,
+            for fn in [check_for_row_win, check_for_col_win, 
                        check_for_diag_down_win, check_for_diag_up_win]:
                 winner = fn(board, row_num, col_num, num_to_connect)
                 if winner:
@@ -470,8 +472,8 @@ def check_for_diag_down_win(board, row_num, col_num, num_to_connect):
     color = row[col_num]
     # if there aren't four more in the row or col, or there isn't a piece,
     # we don't have a winner
-    if (row_num > len(board) - num_to_connect or
-          col_num > len(row) - num_to_connect or
+    if (row_num > len(board) - num_to_connect or 
+          col_num > len(row) - num_to_connect or 
           color is None):
         return None
 
@@ -487,8 +489,8 @@ def check_for_diag_up_win(board, row_num, col_num, num_to_connect):
     color = row[col_num]
     # if there aren't four more in the row or col, or there isn't a piece,
     # we don't have a winner
-    if (row_num < num_to_connect - 1 or
-          col_num > len(row) - num_to_connect or
+    if (row_num < num_to_connect - 1 or 
+          col_num > len(row) - num_to_connect or 
           color is None):
         return None
 
@@ -519,12 +521,12 @@ def find_open_spots(board, no_drop_columns, color):
                             # we found one!
                             return col + 1
     return None
-
+                
 def populate_winner(row_num, col_num, direction, winner):
     return {
-            'start_row': row_num,
-            'start_col': col_num,
-            'direction': direction,
+            'start_row': row_num, 
+            'start_col': col_num, 
+            'direction': direction, 
             'winner': winner,
             }
 
@@ -557,14 +559,14 @@ def ai_turn(board, color, other_color):
     if col is not None:
         drop_piece(board, col, color)
         return col
-
-    # we must block our opponent from a win
+    
+    # we must block our opponent from a win 
     col = col_to_win(board, other_color)
     if col is not None:
         drop_piece(board, col, color)
         return col
 
-    # find columns that would lead
+    # find columns that would lead 
     # to an immediate win if we dropped there
     no_drop_columns = []
     for our_col in range(len(board[0])):
@@ -590,25 +592,25 @@ def ai_turn(board, color, other_color):
     col = find_open_spots(board, no_drop_columns, other_color)
     if col is not None:
         drop_piece(board, col, color)
-        return col
+        return col 
 
-    # if there are two in a row (for 4-win) with space on both sides,
+    # if there are two in a row (for 4-win) with space on both sides, 
     # block to avoid easy three-in-a-row situation
     # we only have to check one side
     # this function still needs work
     for row_num in range(len(board)):
         for col_num in range(len(board[0])):
-            row_check = check_for_row_win(board, row_num, col_num,
+            row_check = check_for_row_win(board, row_num, col_num, 
                                           NUM_TO_CONNECT - 2)
             if row_check:
-                if (row_check['start_col'] != 0 and
+                if (row_check['start_col'] != 0 and 
                     board[row_check['start_row']]
                     [row_check['start_col'] - 1] is None):
                     col = row_check['start_col'] - 1
                     if col not in no_drop_columns:
                         drop_piece(board, col, color)
-                        return col
-
+                        return col 
+            
     # we can't find a good spot, so we'll just start from
     # the center and place one where we can, but not
     # in a no_drop column
@@ -655,26 +657,32 @@ def get_circle_coords(canvas, row, col):
             radius)
 
 def draw_board(canvas, board):
-    canvas.fill_rect(0, 0, canvas.width, canvas.height, BACKGROUND_COLOR)
+    canvas.create_rectangle(0, 0, canvas.width, canvas.height, 
+                       color=BACKGROUND_COLOR, fill=BACKGROUND_COLOR)
     width = canvas.width - 2 * START_X
     height = canvas.height - 2 * START_Y
-    canvas.fill_rect(START_X, START_Y, width, height, BOARD_COLOR)
+    canvas.create_rectangle(START_X, START_Y, 
+                       START_X + width, START_Y + height, 
+                       color=BOARD_COLOR, fill=BOARD_COLOR)
     block_height = height / NUM_ROWS
     block_width = width / NUM_COLS
     for row in range(NUM_ROWS + 1):
-        canvas.draw_line(START_X, START_Y + block_height * row,
-                         START_X + width, START_Y + block_height * row, "black")
+        canvas.create_line(START_X, START_Y + block_height * row,
+                         START_X + width, START_Y + block_height * row, 
+                         color="black")
     for col in range(NUM_COLS + 1):
-        canvas.draw_line(START_X + block_width * col, START_Y,
-                         START_X + block_width * col, START_Y + height, "black")
+        canvas.create_line(START_X + block_width * col, START_Y,
+                         START_X + block_width * col, START_Y + height, 
+                         color="black")
     for row in range(NUM_ROWS):
         for col in range(NUM_COLS):
             x, y, radius = get_circle_coords(canvas, row, col)
             if board[row][col] is None:
                 circle_color = "white"
             else:
-                circle_color = board[row][col]
-            canvas.fill_circle(x, y, radius, circle_color)
+                circle_color = board[row][col] 
+            canvas.create_oval(x, y, x + radius, y + radius,
+                               color=circle_color, fill=circle_color)
 
 def draw_drop(canvas, board, col, color):
     # remove the last piece from the board
@@ -685,15 +693,16 @@ def draw_drop(canvas, board, col, color):
     if row > 0 and board[row - 1][col] is None:
         x, last_y, radius = get_circle_coords(canvas, row - 1, col)
         start_y = last_y % DROP_RATE
-        while start_y <= last_y:
-            draw_board(canvas, board)
-            canvas.fill_circle(x, start_y, radius, color)
+        token = canvas.create_oval(x, start_y, x + radius, start_y + radius,
+                           color=color, fill=color)
+        while start_y < last_y:
+            canvas.move(token, 0, DROP_RATE)
             time.sleep(0.01)
             start_y += DROP_RATE
         drop_piece(board, col, color)
         return True
     drop_piece(board, col, color)
-    return False
+    return False 
 
 def click_in_col(canvas):
     x = canvas.get_mouse_down()[0]
@@ -702,7 +711,7 @@ def click_in_col(canvas):
         height = canvas.height - 2 * START_Y
         block_height = height / NUM_ROWS
         block_width = width / NUM_COLS
-
+        
         for col in range(NUM_COLS):
             left_x = START_X + block_width * col
             right_x = START_X + block_width * (col + 1)
@@ -714,17 +723,22 @@ def click_in_col(canvas):
 
 def main():
     player_turns = []
-    # the following are wins for the player:
+    # the following are wins for the player: 
     # player_turns = [3, 2, 5, 3, 4, 1, 1, 6, 0, 0, 4, 2, 2]
     # player_turns = [3, 2, 1, 2, 1, 2, 3, 4, 4, 5, 5, 1, 1, 2, 2, 6, 4]
     # player_turns = [1, 2, 4, 3, 2, 1, 4, 5, 1, 1, 1, 5, 5, 4, 2]
+    # player_turns = [3, 2, 2, 3, 1, 1, 5, 6, 5, 2, 2, 5, 6, 6, 6, 1, 2, 4]
 
-    # the following player turns produces a tie:
+    # the following player moves produces a tie:
     # player_turns = [3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 4, 4, 5, 5, 5, 5, 6, 6]
     canvas = Canvas()
+    # seed = random.randrange(sys.maxsize)
+    # seed = 5205063475235326885
+    # random.seed(seed)
+    # print(f"Seed: {seed}")
     board = []
     # Even though it is harder to drop a piece through a column
-    # we'll stick with the traditional board with rows
+    # we'll stick with the traditional board with rows 
     for row in range(NUM_ROWS):
         new_row = []
         for col in range(NUM_COLS):
@@ -734,13 +748,13 @@ def main():
     turn_number = 1
     player1_turns = []
     player2_turns = []
+    draw_board(canvas, board)
     while turn_number < NUM_COLS * NUM_ROWS + 1:
-        draw_board(canvas, board)
         print(f"Turn {turn_number}. ", end='')
         if turn_number % 2 == 1:
             color = COLOR1
             if len(player_turns) > 0:
-                col = player_turns.pop(0)
+                col = player_turns.pop(0) 
                 drop_piece(board, col, color)
             else:
                 # col = play_turn(board, color)
@@ -769,21 +783,21 @@ def main():
             print("Winner!")
             print(winner)
             print_report(player1_turns, player2_turns, turn_number)
-            draw_board(canvas, board)
             player_won = turn_number % 2 == 0
             if player_won:
-                canvas.draw_string(10, 15, "Game over! You beat the AI!")
+                canvas.create_text(10, 15, "Game over! You beat the AI!",
+                                   fill='black') 
             else:
-                canvas.draw_string(10, 15, "Game over! You got beat by an AI!")
+                canvas.create_text(10, 15, "Game over! You got beat by an AI!", fill='black') 
 
             print_board(board)
-            break
+            break 
 
         if None not in board[0]:
             print("The board is full and you tied!")
             print_report(player1_turns, player2_turns, turn_number)
-            draw_board(canvas, board)
-            canvas.draw_string(10, 15, "Game over! You tied the AI!")
+            canvas.create_text(10, 15, "Game over! You tied the AI!",
+                               fill='black') 
             print_board(board)
             break
 
