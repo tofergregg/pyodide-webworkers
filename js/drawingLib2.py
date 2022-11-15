@@ -44,7 +44,7 @@ class Canvas:
         return len(self.objects - 1)
 
     def create_text(self, x, y, text='', color='black', fill=''):
-        self.objects.append({'obj': 'text', 'coords': [x, y, x, y], 'text'=text, 'color': color, 'fill': fill})
+        self.objects.append({'obj': 'text', 'coords': [x, y, x, y], 'text': text, 'color': color, 'fill': fill})
         updateCanvas('create', self.objects[len(self.objects) - 1])
         return len(self.objects - 1)
 
