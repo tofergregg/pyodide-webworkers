@@ -169,27 +169,28 @@ if __name__ == "__main__":
 
 def main():
     canvas = Canvas()
-    radius = 10
+    radius = 20
     color = 'purple'
     x = canvas.width / 2 - radius
     y = canvas.height / 2 - radius
     dx = 3
     dy = 2
+    ball = canvas.create_oval(x, y, x + radius, y + radius,
+                              color=color, fill=color)
     while True:
-        canvas.erase()
-        canvas.fill_circle(x, y, radius * 2, color)
+        canvas.move(ball, dx, dy)
         x += dx
         y += dy
-        if x > canvas.width - radius * 2 or x < 0:
+        if x > canvas.width - radius or x < 0:
             dx *= -1
-        if y > canvas.height - radius * 2 or y < 0:
+        if y > canvas.height - radius or y < 0:
             dy *= -1
         print(f"x: {x}, y: {y}")
         time.sleep(0.01)
-        clear_terminal()
 
 if __name__ == "__main__":
-    main()`,
+    main()
+    `,
         `import time
 def main():
     canvas = Canvas()
