@@ -40,17 +40,17 @@ class Canvas:
 
     def create_rectangle(self, x1, y1, x2, y2, color='black', fill=''):
         self.objects.append({'obj': 'rectangle', 'coords': [x1, y1, x2, y2], 'color': color, 'fill': fill})
-        updateCanvas('create', self.objects[len(self.objects) - 1];
+        updateCanvas('create', self.objects[len(self.objects) - 1])
         return len(self.objects - 1)
 
     def create_oval(self, x1, y1, x2, y2, color='black', fill=''):
         self.objects.append({'obj': 'oval', 'coords': [x1, y1, x2, y2], 'color': color, 'fill': fill})
-        updateCanvas('create', self.objects[len(self.objects) - 1];
+        updateCanvas('create', self.objects[len(self.objects) - 1])
         return len(self.objects - 1)
 
     def create_text(self, x, y, text='', color='black', fill=''):
         self.objects.append({'obj': 'text', 'coords': [x, y, x, y], 'text'=text, 'color': color, 'fill': fill})
-        updateCanvas('create', self.objects[len(self.objects) - 1];
+        updateCanvas('create', self.objects[len(self.objects) - 1])
         return len(self.objects - 1)
 
     def erase(self):
