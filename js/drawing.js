@@ -1,5 +1,10 @@
 const drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) => {
-    window.requestAnimationFrame((shape, a, b, c, d, color, stroke, fill) => {
+    window.requestAnimationFrame(() => {
+        drawShapeInAnimation(shape, a, b, c, d, color, stroke, fill);
+    });
+}
+
+const drawShapeInAnimation(shape, a, b, c, d, color, stroke, fill) {
         const canvas = document.getElementById('theCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -41,7 +46,6 @@ const drawShape = (shape, a, b, c, d, color='black', stroke=true, fill=false) =>
             ctx.strokeStyle = color;
             ctx.stroke();
         }
-    });
 }
 
 export { drawShape };
