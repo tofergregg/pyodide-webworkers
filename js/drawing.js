@@ -7,10 +7,16 @@ const updateCanvas = (cmd, dict) => {
 
     if (cmd == 'move') {
         const obj = canvas._objects[dict.obj];
-        obj.coords[0] += dict.x_amount;
-        obj.coords[1] += dict.y_amount;
-        obj.coords[2] += dict.x_amount;
-        obj.coords[3] += dict.y_amount;
+        if (obj.obj == 'rectangle') {
+            // width/height instead of x2, y2
+            obj.coords[0] += dict.x_amount;
+            obj.coords[1] += dict.y_amount;
+        } else {
+            obj.coords[0] += dict.x_amount;
+            obj.coords[1] += dict.y_amount;
+            obj.coords[2] += dict.x_amount;
+            obj.coords[3] += dict.y_amount;
+        }
     }
 
     if (cmd == 'coords') {
@@ -50,9 +56,10 @@ const drawAllObjects = () => {
                 const radiusY = (y2 - y1) / 2;
                 ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
             } else if (obj.obj == 'rectangle') {
-                console.log('coords:');
-                console.log(obj.coords);
-                ctx.rect(obj.coords[0], obj.coords[1], obj.coords[2], obj.coords[3]);
+                // translate x2, y2 to width, height
+                const width = x2 - x1;
+                const height = y2 - y1;
+                ctx.rect(obj.coords[0], obj.coords[1], width, height);
             }
             if (obj.fill != '') {
                 ctx.fillStyle = obj.fill;
