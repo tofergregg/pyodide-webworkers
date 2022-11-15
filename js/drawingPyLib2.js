@@ -55,8 +55,8 @@ class Canvas:
     
     # only handle text for now
     def itemconfigure(self, obj, text=''):
-        if obj.obj == 'text':
-            obj.text = text
+        self.objects[obj] == 'text': 
+            self.objects[obj]['text'] = text
             updateCanvas('itemconfigure', self.objects[obj])
 
     def erase(self):
