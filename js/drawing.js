@@ -29,6 +29,12 @@ const updateCanvas = (cmd, dict) => {
         obj.obj = 'deleted';
     }
 
+    if (cmd == 'itemconfigure') {
+        const obj = canvas._objects[dict.obj];
+        obj.text = dict.text;
+    }
+
+
     window.requestAnimationFrame(drawAllObjects);
 }
 

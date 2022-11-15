@@ -48,5 +48,11 @@ class Canvas:
         updateCanvas('create', self.objects[len(self.objects) - 1])
         return len(self.objects) - 1
 
+    # only handle text for now
+    def item_configure(self, obj, text=''):
+        if obj.obj == 'text':
+            obj.text = text
+            updateCanvas('itemconfigure', self.objects[obj])
+
     def erase(self):
         updateCanvas(['erase'])
