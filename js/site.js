@@ -166,6 +166,29 @@ def nextFunc():
 if __name__ == "__main__":
     main()`,
         `import time
+
+def main():
+    canvas = Canvas()
+    radius = 10
+    color = 'purple'
+    x = canvas.width / 2 - radius
+    y = canvas.height / 2 - radius
+    dx = 3
+    dy = 2
+    while True:
+        canvas.erase()
+        canvas.fill_circle(x, y, radius * 2, color)
+        x += dx
+        y += dy
+        if x > canvas.width - radius * 2 or x < 0:
+            dx *= -1
+        if y > canvas.height - radius * 2 or y < 0:
+            dy *= -1
+        print(f"x: {x}, y: {y}")
+        time.sleep(0.01)
+        clear_terminal()
+
+if __name__ == "__main__":
     main()`,
         `import time
 def main():
@@ -174,22 +197,22 @@ def main():
     while True:
         mouseX = canvas.get_mouse_x()
         mouseY = canvas.get_mouse_y()
-        canvas.create_oval(mouseX, mouseY, mouseX + 20, mouseY + 20, fill="blue", color="blue")
+        canvas.fill_circle(mouseX, mouseY, 20, "blue")
         time.sleep(0.2)
 
 if __name__ == "__main__":
-    main()` ,
+    main()`,
         `import time
 import random
 import math
 
 canvas = Canvas()
-PLAY_DIFFICULTY = 5 # (0-10) lower is easier 
+PLAY_DIFFICULTY = 5 # (0-10) lower is easier
                     # decrease PLAY_DIFFICULTY for a slower ball
 PADDLE_WIDTH = 10
 PADDLE_HEIGHT = 40
 PADDLE_MARGIN = 10
-LEFT_PADDLE_X = PADDLE_MARGIN 
+LEFT_PADDLE_X = PADDLE_MARGIN
 RIGHT_PADDLE_X = canvas.width - PADDLE_MARGIN
 PADDLE_COLOR = 'green'
 BALL_RADIUS = 10
@@ -210,29 +233,29 @@ def setup_game():
     ball['dx'] = random.randint(5, 9)
     if random.randint(0, 1) % 2 == 0: ball['dx'] *= -1
 
-    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2)
     if random.randint(0, 1) % 2 == 0: ball['dy'] *= -1
 
     draw_ball(ball)
 
     return ball
-    
+
 
 def draw_paddles(leftY, rightY):
-    canvas.fill_rect(LEFT_PADDLE_X, 
-                       leftY - PADDLE_HEIGHT / 2, 
-                       PADDLE_WIDTH, 
+    canvas.fill_rect(LEFT_PADDLE_X,
+                       leftY - PADDLE_HEIGHT / 2,
+                       PADDLE_WIDTH,
                        PADDLE_HEIGHT,
                        PADDLE_COLOR)
-    
-    canvas.fill_rect(RIGHT_PADDLE_X - PADDLE_WIDTH, 
-                       rightY - PADDLE_HEIGHT / 2, 
-                       PADDLE_WIDTH, 
+
+    canvas.fill_rect(RIGHT_PADDLE_X - PADDLE_WIDTH,
+                       rightY - PADDLE_HEIGHT / 2,
+                       PADDLE_WIDTH,
                        PADDLE_HEIGHT,
                        PADDLE_COLOR)
 
 def draw_ball(ball):
-    canvas.fill_circle(ball['x'] - BALL_RADIUS, ball['y'] - BALL_RADIUS, 
+    canvas.fill_circle(ball['x'] - BALL_RADIUS, ball['y'] - BALL_RADIUS,
                        BALL_RADIUS, BALL_COLOR)
 
 def move_ball(ball):
@@ -247,7 +270,7 @@ def move_ball(ball):
 def bounce_off_paddles(ball, left_y, right_y):
     # if any part of the ball is touching the paddle, bounce
     # left
-    if (LEFT_PADDLE_X <= ball['x'] - BALL_RADIUS 
+    if (LEFT_PADDLE_X <= ball['x'] - BALL_RADIUS
                      <= LEFT_PADDLE_X + PADDLE_WIDTH and
         left_y - PADDLE_HEIGHT <= ball['y'] - BALL_RADIUS <= left_y + PADDLE_HEIGHT):
         bounce_and_fuzz(ball, 1)
@@ -257,8 +280,8 @@ def bounce_off_paddles(ball, left_y, right_y):
         bounce_and_fuzz(ball, -1)
 
 def bounce_and_fuzz(ball, final_direction):
-    if final_direction == -1: 
-        ball['dx'] = -abs(ball['dx']) 
+    if final_direction == -1:
+        ball['dx'] = -abs(ball['dx'])
     else:
         ball['dx'] = abs(ball['dx'])
     if ball['dx'] < 0:
@@ -270,7 +293,7 @@ def bounce_and_fuzz(ball, final_direction):
 def fix_speed(ball):
     # change dy to match dx
     dy_neg = ball['dy'] < 0
-    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2)
     if dy_neg:
         ball['dy'] *= -1
 
@@ -300,7 +323,7 @@ def play(ball):
         last_mouse_y = canvas.get_mouse_y()
         draw_paddles(last_mouse_y, ball['y'])
         bounce_off_paddles(ball, last_mouse_y, ball['y'])
-        score_str = f"{score[0]} | {score[1]}" 
+        score_str = f"{score[0]} | {score[1]}"
         canvas.draw_string(canvas.width / 2 - 20, 20, score_str, 'black')
         time.sleep((11 - PLAY_DIFFICULTY) * 0.005)
         move_ball(ball)
@@ -312,9 +335,9 @@ if __name__ == "__main__":
         `import time
 
 NUM_TO_CONNECT = 4
-NUM_COLS = 7 
-NUM_ROWS = 6 
-COLOR1 = "red" 
+NUM_COLS = 7
+NUM_ROWS = 6
+COLOR1 = "red"
 COLOR2 = "yellow"
 
 # graphics
@@ -338,7 +361,7 @@ def print_board(board):
                 ch = piece[0].upper()
             print(f"|{ch}", end='')
         print('|')
-    # bottom 
+    # bottom
     print(f"-" * (len(board[0]) * 2 + 1))
     print(f"|{' ' * (len(board[0]) * 2 - 1)}|")
 
@@ -355,7 +378,7 @@ def drop_piece(board, col, color):
     if row > 0 and board[row - 1][col] is None:
         board[row - 1][col] = color
         return True
-    return False # full column, could not place piece 
+    return False # full column, could not place piece
 
 def remove_piece(board, col):
     """
@@ -378,7 +401,7 @@ def we_have_a_winner(board, num_to_connect):
     """
     for row_num in range(len(board)):
         for col_num in range(len(board[0])):
-            for fn in [check_for_row_win, check_for_col_win, 
+            for fn in [check_for_row_win, check_for_col_win,
                        check_for_diag_down_win, check_for_diag_up_win]:
                 winner = fn(board, row_num, col_num, num_to_connect)
                 if winner:
@@ -419,8 +442,8 @@ def check_for_diag_down_win(board, row_num, col_num, num_to_connect):
     color = row[col_num]
     # if there aren't four more in the row or col, or there isn't a piece,
     # we don't have a winner
-    if (row_num > len(board) - num_to_connect or 
-          col_num > len(row) - num_to_connect or 
+    if (row_num > len(board) - num_to_connect or
+          col_num > len(row) - num_to_connect or
           color is None):
         return None
 
@@ -436,8 +459,8 @@ def check_for_diag_up_win(board, row_num, col_num, num_to_connect):
     color = row[col_num]
     # if there aren't four more in the row or col, or there isn't a piece,
     # we don't have a winner
-    if (row_num < num_to_connect - 1 or 
-          col_num > len(row) - num_to_connect or 
+    if (row_num < num_to_connect - 1 or
+          col_num > len(row) - num_to_connect or
           color is None):
         return None
 
@@ -468,12 +491,12 @@ def find_open_spots(board, no_drop_columns, color):
                             # we found one!
                             return col + 1
     return None
-                
+
 def populate_winner(row_num, col_num, direction, winner):
     return {
-            'start_row': row_num, 
-            'start_col': col_num, 
-            'direction': direction, 
+            'start_row': row_num,
+            'start_col': col_num,
+            'direction': direction,
             'winner': winner,
             }
 
@@ -506,14 +529,14 @@ def ai_turn(board, color, other_color):
     if col is not None:
         drop_piece(board, col, color)
         return col
-    
-    # we must block our opponent from a win 
+
+    # we must block our opponent from a win
     col = col_to_win(board, other_color)
     if col is not None:
         drop_piece(board, col, color)
         return col
 
-    # find columns that would lead 
+    # find columns that would lead
     # to an immediate win if we dropped there
     no_drop_columns = []
     for our_col in range(len(board[0])):
@@ -539,25 +562,25 @@ def ai_turn(board, color, other_color):
     col = find_open_spots(board, no_drop_columns, other_color)
     if col is not None:
         drop_piece(board, col, color)
-        return col 
+        return col
 
-    # if there are two in a row (for 4-win) with space on both sides, 
+    # if there are two in a row (for 4-win) with space on both sides,
     # block to avoid easy three-in-a-row situation
     # we only have to check one side
     # this function still needs work
     for row_num in range(len(board)):
         for col_num in range(len(board[0])):
-            row_check = check_for_row_win(board, row_num, col_num, 
+            row_check = check_for_row_win(board, row_num, col_num,
                                           NUM_TO_CONNECT - 2)
             if row_check:
-                if (row_check['start_col'] != 0 and 
+                if (row_check['start_col'] != 0 and
                     board[row_check['start_row']]
                     [row_check['start_col'] - 1] is None):
                     col = row_check['start_col'] - 1
                     if col not in no_drop_columns:
                         drop_piece(board, col, color)
-                        return col 
-            
+                        return col
+
     # we can't find a good spot, so we'll just start from
     # the center and place one where we can, but not
     # in a no_drop column
@@ -622,7 +645,7 @@ def draw_board(canvas, board):
             if board[row][col] is None:
                 circle_color = "white"
             else:
-                circle_color = board[row][col] 
+                circle_color = board[row][col]
             canvas.fill_circle(x, y, radius, circle_color)
 
 def draw_drop(canvas, board, col, color):
@@ -642,7 +665,7 @@ def draw_drop(canvas, board, col, color):
         drop_piece(board, col, color)
         return True
     drop_piece(board, col, color)
-    return False 
+    return False
 
 def click_in_col(canvas):
     x = canvas.get_mouse_down()[0]
@@ -651,7 +674,7 @@ def click_in_col(canvas):
         height = canvas.height - 2 * START_Y
         block_height = height / NUM_ROWS
         block_width = width / NUM_COLS
-        
+
         for col in range(NUM_COLS):
             left_x = START_X + block_width * col
             right_x = START_X + block_width * (col + 1)
@@ -663,7 +686,7 @@ def click_in_col(canvas):
 
 def main():
     player_turns = []
-    # the following are wins for the player: 
+    # the following are wins for the player:
     # player_turns = [3, 2, 5, 3, 4, 1, 1, 6, 0, 0, 4, 2, 2]
     # player_turns = [3, 2, 1, 2, 1, 2, 3, 4, 4, 5, 5, 1, 1, 2, 2, 6, 4]
     # player_turns = [1, 2, 4, 3, 2, 1, 4, 5, 1, 1, 1, 5, 5, 4, 2]
@@ -673,7 +696,7 @@ def main():
     canvas = Canvas()
     board = []
     # Even though it is harder to drop a piece through a column
-    # we'll stick with the traditional board with rows 
+    # we'll stick with the traditional board with rows
     for row in range(NUM_ROWS):
         new_row = []
         for col in range(NUM_COLS):
@@ -689,7 +712,7 @@ def main():
         if turn_number % 2 == 1:
             color = COLOR1
             if len(player_turns) > 0:
-                col = player_turns.pop(0) 
+                col = player_turns.pop(0)
                 drop_piece(board, col, color)
             else:
                 # col = play_turn(board, color)
@@ -721,18 +744,18 @@ def main():
             draw_board(canvas, board)
             player_won = turn_number % 2 == 0
             if player_won:
-                canvas.draw_string(10, 15, "Game over! You beat the AI!") 
+                canvas.draw_string(10, 15, "Game over! You beat the AI!")
             else:
-                canvas.draw_string(10, 15, "Game over! You got beat by an AI!") 
+                canvas.draw_string(10, 15, "Game over! You got beat by an AI!")
 
             print_board(board)
-            break 
+            break
 
         if None not in board[0]:
             print("The board is full and you tied!")
             print_report(player1_turns, player2_turns, turn_number)
             draw_board(canvas, board)
-            canvas.draw_string(10, 15, "Game over! You tied the AI!") 
+            canvas.draw_string(10, 15, "Game over! You tied the AI!")
             print_board(board)
             break
 
@@ -740,7 +763,6 @@ if __name__ == "__main__":
     main()
 `,
     ]
-
     const value = document.getElementById('examples').value;
     const console = document.getElementById('code');
     console.value = snippets[value]; 
