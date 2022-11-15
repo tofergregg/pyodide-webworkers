@@ -49,7 +49,7 @@ class Canvas:
         return len(self.objects) - 1
 
     # only handle text for now
-    def item_configure(self, obj, text=''):
+    def itemconfigure(self, obj, text=''):
         if obj.obj == 'text':
             obj.text = text
             updateCanvas('itemconfigure', self.objects[obj])
