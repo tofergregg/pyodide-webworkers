@@ -37,6 +37,10 @@ const drawAllObjects = () => {
                 ctx.moveTo(obj.coords[0], obj.coords[1]);
                 ctx.lineTo(obj.coords[2], obj.coords[3]);
             } else if (obj.obj == 'oval') {
+                const x1 = obj.coords[0];
+                const y1 = obj.coords[1];
+                const x2 = obj.coords[2];
+                const x3 = obj.coords[3];
                 // we need to translate from (x1, y1, x2, y2) to:
                 // ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise)
                 // For ellipse, x, y are center coordinates
