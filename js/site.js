@@ -197,11 +197,11 @@ def main():
     while True:
         mouseX = canvas.get_mouse_x()
         mouseY = canvas.get_mouse_y()
-        canvas.fill_circle(mouseX, mouseY, 20, "blue")
+        canvas.create_oval(mouseX, mouseY, mouseX + 20, mouseY + 20, fill="blue", color="blue")
         time.sleep(0.2)
 
 if __name__ == "__main__":
-    main()`,
+    main()` ,
         `import time
 import random
 import math
