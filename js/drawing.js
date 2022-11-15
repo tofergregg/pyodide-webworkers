@@ -1,4 +1,5 @@
 const updateCanvas = (cmd, dict) => {
+    dict = Object.fromEntries(dict); // was a Map
     const canvas = document.getElementById('theCanvas');
     if (cmd == 'create') {
         canvas._objects.push(dict);
