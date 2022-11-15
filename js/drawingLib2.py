@@ -53,7 +53,7 @@ class Canvas:
         print(obj)
         if self.objects[obj]['obj'] == 'text': 
             self.objects[obj]['text'] = text
-            updateCanvas('itemconfigure', self.objects[obj])
+            updateCanvas('itemconfigure', {'obj': obj, 'text': text})
 
     def erase(self):
         updateCanvas(['erase'])
