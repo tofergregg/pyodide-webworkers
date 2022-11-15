@@ -40,7 +40,7 @@ const drawAllObjects = () => {
                 const x1 = obj.coords[0];
                 const y1 = obj.coords[1];
                 const x2 = obj.coords[2];
-                const x3 = obj.coords[3];
+                const y2 = obj.coords[3];
                 // we need to translate from (x1, y1, x2, y2) to:
                 // ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise)
                 // For ellipse, x, y are center coordinates
