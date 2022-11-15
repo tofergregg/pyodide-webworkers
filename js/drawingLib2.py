@@ -30,7 +30,7 @@ class Canvas:
 
     def create_line(self, x1, y1, x2, y2, color='black'):
         self.objects.append({'obj': 'line', 'coords': [x1, y1, x2, y2], 'color': color, 'fill': ''})
-        updateCanvas('create', self.objects[len(self.objects) - 1];
+        updateCanvas('create', self.objects[len(self.objects) - 1])
         return len(self.objects - 1)
 
     def create_rectangle(self, x1, y1, x2, y2, color='black', fill=''):
