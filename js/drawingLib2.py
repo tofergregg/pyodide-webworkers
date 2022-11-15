@@ -13,7 +13,7 @@ class Canvas:
         return self.objects[obj]['coords']
 
     def delete(self, obj):
-        self.objects.pop(obj)
+        self.objects[obj][obj] = 'deleted'
         updateCanvas('delete', {'obj': obj})
 
     def coords(self, obj, x1=None, y1=None, x2=None, y2=None):
