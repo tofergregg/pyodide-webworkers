@@ -16,7 +16,6 @@ const updateCanvas = (cmd, dict) => {
     if (cmd == 'coords') {
         const obj = canvas._objects[dict.obj];
         obj.coords = dict.coords;
-        console.log(obj.coords);
     }
 
     window.requestAnimationFrame(drawAllObjects);
@@ -51,6 +50,8 @@ const drawAllObjects = () => {
                 const radiusY = (y2 - y1) / 2;
                 ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
             } else if (obj.obj == 'rectangle') {
+                console.log('coords:');
+                console.log(obj.coords);
                 ctx.rect(obj.coords[0], obj.coords[1], obj.coords[2], obj.coords[3]);
             }
             if (obj.fill != '') {
