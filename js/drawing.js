@@ -16,6 +16,7 @@ const updateCanvas = (cmd, dict) => {
     if (cmd == 'coords') {
         const obj = canvas._objects[dict.obj];
         obj.coords = dict.coords;
+        console.log(obj.coords);
     }
 
     window.requestAnimationFrame(drawAllObjects);
