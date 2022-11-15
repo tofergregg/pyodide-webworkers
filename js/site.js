@@ -788,7 +788,7 @@ def main():
                 canvas.create_text(10, 15, "Game over! You beat the AI!",
                                    fill='black') 
             else:
-                canvas.create_text(10, 15, "Game over! You got beat by an AI!", fill='black') 
+                canvas.create_text(10, 15, "Game over! You got beaten by an AI!", fill='black') 
 
             print_board(board)
             break 
