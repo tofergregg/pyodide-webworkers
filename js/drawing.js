@@ -46,7 +46,7 @@ const drawAllObjects = () => {
                 // For ellipse, x, y are center coordinates
                 const centerX = (x1 + x2) / 2;
                 const centerY = (y1 + y2) / 2;
-                const radiusX = (x2 - x1 / 2;
+                const radiusX = (x2 - x1) / 2;
                 const radiusY = (y2 - y1) / 2;
                 ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
             } else if (obj.obj == 'rectangle') {
