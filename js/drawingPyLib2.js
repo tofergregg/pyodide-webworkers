@@ -14,12 +14,12 @@ class Canvas:
         self.objects[obj]['coords'][1] += y_amount
         self.objects[obj]['coords'][2] += x_amount
         self.objects[obj]['coords'][3] += y_amount
-        updateCanvas(['move', {'obj': obj, 'x_amount': x_amount, 'y_amount': y_amount}])
+        updateCanvas('move', {'obj': obj, 'x_amount': x_amount, 'y_amount': y_amount})
         return self.objects[obj]['coords']
 
     def delete(self, obj):
         self.objects.pop(obj)
-        updateCanvas(['delete', {'obj': obj}])
+        updateCanvas('delete', {'obj': obj})
 
     def coords(self, obj, x1=None, y1=None, x2=None, y2=None):
         """
@@ -30,7 +30,7 @@ class Canvas:
             # all four must be present
             return self.objects[obj]['coords']
         self.objects[obj]['coords'] = [x1, y1, x2, y2]
-        updateCanvas(['coords', {'obj': obj, 'coords': [x1, y1, x2, y2]}])
+        updateCanvas('coords', {'obj': obj, 'coords': [x1, y1, x2, y2]})
         return self.objects[obj]['coords']
 
     def create_line(self, x1, y1, x2, y2, color='black'):
