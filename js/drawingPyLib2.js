@@ -55,7 +55,7 @@ class Canvas:
     
     # only handle text for now
     def itemconfigure(self, obj, text=''):
-        self.objects[obj] == 'text': 
+        if self.objects[obj] == 'text': 
             self.objects[obj]['text'] = text
             updateCanvas('itemconfigure', self.objects[obj])
 
