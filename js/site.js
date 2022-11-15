@@ -324,6 +324,148 @@ if __name__ == "__main__":
     main()
 `,
         `import time
+def main():
+    canvas = Canvas()
+    # Move your mouse around the white canvas!
+    while True:
+        mouseX = canvas.get_mouse_x()
+        mouseY = canvas.get_mouse_y()
+        canvas.create_oval(mouseX, mouseY, mouseX + 20, mouseY + 20, fill="blue", color="blue")
+        time.sleep(0.2)
+
+if __name__ == "__main__":
+    main()` ,
+        `import time
+import random
+import math
+
+canvas = Canvas()
+PLAY_DIFFICULTY = 5 # (0-10) lower is easier 
+                    # decrease PLAY_DIFFICULTY for a slower ball
+PADDLE_WIDTH = 10
+PADDLE_HEIGHT = 40
+PADDLE_MARGIN = 10
+LEFT_PADDLE_X = PADDLE_MARGIN 
+RIGHT_PADDLE_X = canvas.width - PADDLE_MARGIN
+PADDLE_COLOR = 'green'
+BALL_RADIUS = 10
+BALL_COLOR = 'blue'
+BALL_VELOCITY = 10
+
+def main():
+    print("Move the mouse up and down")
+    print("inside the white box to play!")
+    ball = setup_game()
+    play(ball)
+
+def setup_game():
+    draw_paddles(canvas.height / 2, canvas.height / 2)
+    ball = {}
+    ball['x'] = canvas.width / 2
+    ball['y'] = canvas.height / 2
+    ball['dx'] = random.randint(5, 9)
+    if random.randint(0, 1) % 2 == 0: ball['dx'] *= -1
+
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
+    if random.randint(0, 1) % 2 == 0: ball['dy'] *= -1
+
+    draw_ball(ball)
+
+    return ball
+    
+
+def draw_paddles(leftY, rightY):
+    canvas.fill_rect(LEFT_PADDLE_X, 
+                       leftY - PADDLE_HEIGHT / 2, 
+                       PADDLE_WIDTH, 
+                       PADDLE_HEIGHT,
+                       PADDLE_COLOR)
+    
+    canvas.fill_rect(RIGHT_PADDLE_X - PADDLE_WIDTH, 
+                       rightY - PADDLE_HEIGHT / 2, 
+                       PADDLE_WIDTH, 
+                       PADDLE_HEIGHT,
+                       PADDLE_COLOR)
+
+def draw_ball(ball):
+    canvas.fill_circle(ball['x'] - BALL_RADIUS, ball['y'] - BALL_RADIUS, 
+                       BALL_RADIUS, BALL_COLOR)
+
+def move_ball(ball):
+    ball['x'] += ball['dx']
+    ball['y'] += ball['dy']
+    # bounce at ceiling and floor
+    if ball['y'] < BALL_RADIUS:
+        ball['dy'] = abs(ball['dy'])
+    if ball['y'] > canvas.height:
+        ball['dy'] = -abs(ball['dy'])
+
+def bounce_off_paddles(ball, left_y, right_y):
+    # if any part of the ball is touching the paddle, bounce
+    # left
+    if (LEFT_PADDLE_X <= ball['x'] - BALL_RADIUS 
+                     <= LEFT_PADDLE_X + PADDLE_WIDTH and
+        left_y - PADDLE_HEIGHT <= ball['y'] - BALL_RADIUS <= left_y + PADDLE_HEIGHT):
+        bounce_and_fuzz(ball, 1)
+
+    # right
+    if RIGHT_PADDLE_X - PADDLE_WIDTH <= ball['x'] <= RIGHT_PADDLE_X:
+        bounce_and_fuzz(ball, -1)
+
+def bounce_and_fuzz(ball, final_direction):
+    if final_direction == -1: 
+        ball['dx'] = -abs(ball['dx']) 
+    else:
+        ball['dx'] = abs(ball['dx'])
+    if ball['dx'] < 0:
+        ball['dx'] = max(-9, min(-4, ball['dx'] + random.randint(-3, 3)))
+    else:
+        ball['dx'] = max(4, min(4, ball['dx'] + random.randint(-3, 3)))
+    fix_speed(ball)
+
+def fix_speed(ball):
+    # change dy to match dx
+    dy_neg = ball['dy'] < 0
+    ball['dy'] = math.sqrt(BALL_VELOCITY ** 2 - ball['dx'] ** 2) 
+    if dy_neg:
+        ball['dy'] *= -1
+
+def score_and_reset(ball, score):
+    # if the ball is outside the bounds of the canvas,
+    # someone scored
+    if ball['x'] < 0:
+        # score for right player
+        score[1] += 1
+        canvas.erase()
+        ball = setup_game()
+    elif ball['x'] > canvas.width:
+        # score for left player
+        score[0] += 1
+        canvas.erase()
+        ball = setup_game()
+
+    return ball
+
+
+
+def play(ball):
+    score = [0, 0]
+    while True:
+        canvas.erase()
+        draw_ball(ball)
+        last_mouse_y = canvas.get_mouse_y()
+        draw_paddles(last_mouse_y, ball['y'])
+        bounce_off_paddles(ball, last_mouse_y, ball['y'])
+        score_str = f"{score[0]} | {score[1]}" 
+        canvas.draw_string(canvas.width / 2 - 20, 20, score_str, 'black')
+        time.sleep((11 - PLAY_DIFFICULTY) * 0.005)
+        move_ball(ball)
+        ball = score_and_reset(ball, score)
+
+if __name__ == "__main__":
+    main()
+`,
+        `import time
 
 NUM_TO_CONNECT = 4
 NUM_COLS = 7 
