@@ -1075,6 +1075,7 @@ def play_game():
         print()
         play_again = input("Would you like to play again? (Y/n): ").lower()
         if play_again != "" and play_again[0] == 'n':
+            print("Thank you for playing Yahtzee!")
             break
         print()
          
