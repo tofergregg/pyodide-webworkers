@@ -807,6 +807,285 @@ def main():
 if __name__ == "__main__":
     main()
 `,
+        `import random
+import sys
+
+def count_matching_dice(d1, d2, d3, d4, d5, num):
+    """
+    counts the total number of dice that num
+    returns the total
+    """
+    total = 0
+    if d1 == num:
+        total += 1
+    if d2 == num:
+        total += 1
+    if d3 == num:
+        total += 1
+    if d4 == num:
+        total += 1
+    if d5 == num:
+        total += 1
+    return total
+
+def score_matching_dice(d1, d2, d3, d4, d5, num):
+    """
+    The score is determined by the count of that num times num
+    Returns the score for dice matching num.
+    """
+    return count_matching_dice(d1, d2, d3, d4, d5, num) * num
+
+def score_three_or_four_of_a_kind_or_yahtzee(d1, d2, d3, d4, d5, kind_type):
+    """
+    dice_num will be either 3, 4, or 5.
+    Returns the score for a three-of-a-kind (3) 
+    or a four-of-a-kind (4), or yahtzee (5)
+    where at least three dice are the same number for a three-of-a-kind,
+    and at least four dice are the same number for four-of-a-kind, 
+    and all five dice are the same number for yahtzee.
+    The score is the sum of all the dice for 
+    three-of-a-kind and four-of-a-kind
+    and the score is 50 for yahtzee.
+    If there isn't a match, returns 0
+    """
+    total = d1 + d2 + d3 + d4 + d5
+    dice_num = 1
+    while (dice_num <= 6):
+        count = count_matching_dice(d1, d2, d3, d4, d5, dice_num)
+        if count >= kind_type:
+            if kind_type == 5:
+                return 50
+            else:
+                return total 
+        dice_num += 1
+    return 0
+
+def score_full_house(d1, d2, d3, d4, d5):
+    # a full house has exactly 3 of one number dice
+    # and two of another
+    # A full house scores 25 points
+    count1s = count_matching_dice(d1, d2, d3, d4, d5, 1)
+    count2s = count_matching_dice(d1, d2, d3, d4, d5, 2)
+    count3s = count_matching_dice(d1, d2, d3, d4, d5, 3)
+    count4s = count_matching_dice(d1, d2, d3, d4, d5, 4)
+    count5s = count_matching_dice(d1, d2, d3, d4, d5, 5)
+    count6s = count_matching_dice(d1, d2, d3, d4, d5, 6)
+    
+    if count1s == 3:
+        if count2s == 2 or count3s == 2 or count4s == 2 or count5s == 2 or count6s == 2:
+            return 25
+    if count2s == 3:
+        if count1s == 2 or count3s == 2 or count4s == 2 or count5s == 2 or count6s == 2:
+            return 25
+    if count3s == 3:
+        if count1s == 2 or count2s == 2 or count4s == 2 or count5s == 2 or count6s == 2:
+            return 25
+    if count4s == 3:
+        if count1s == 2 or count2s == 2 or count3s == 2 or count5s == 2 or count6s == 2:
+            return 25
+    if count5s == 3:
+        if count1s == 2 or count2s == 2 or count3s == 2 or count4s == 2 or count6s == 2:
+            return 25
+    if count6s == 3:
+        if count1s == 2 or count2s == 2 or count3s == 2 or count4s == 2 or count5s == 2:
+            return 25
+    return 0
+
+
+def score_straight(d1, d2, d3, d4, d5, straight_type):
+    """
+    Scores a small or large straight. 
+    A small straight must be four
+    in a row (1-2-3-4, 2-3-4-5, or 3-4-5-6) and scores 30.
+    A large straight is five in a row (1-2-3-4-5, or 2-3-4-5-6)
+    and scores 40.
+    If there isn't a straight of straight_type, returns 0
+    """
+    count1s = count_matching_dice(d1, d2, d3, d4, d5, 1)
+    count2s = count_matching_dice(d1, d2, d3, d4, d5, 2)
+    count3s = count_matching_dice(d1, d2, d3, d4, d5, 3)
+    count4s = count_matching_dice(d1, d2, d3, d4, d5, 4)
+    count5s = count_matching_dice(d1, d2, d3, d4, d5, 5)
+    count6s = count_matching_dice(d1, d2, d3, d4, d5, 6)
+
+    if straight_type == 4:
+        # count small straights
+        if count1s >= 1 and count2s >= 1 and count3s >= 1 and count4s >= 1:
+            return 30
+        if count2s >= 1 and count3s >= 1 and count4s >= 1 and count5s >= 1:
+            return 30
+        if count3s >= 1 and count4s >= 1 and count5s >= 1 and count6s >= 1:
+            return 30
+        # none found
+        return 0
+
+    if straight_type == 5:
+        # count large straights
+        if count1s >= 1 and count2s >= 1 and count3s >= 1 and count4s >= 1 and count5s >= 1:
+            return 40
+        if count2s >= 1 and count3s >= 1 and count4s >= 1 and count5s >= 1 and count6s >= 1:
+            return 40
+        return 0
+
+def roll_die():
+    """
+    returns the result of a single die roll (1-6)
+    """
+    return random.randint(1, 6)
+
+# tests
+def test_matches(d1, d2, d3, d4, d5):
+    """
+    test the score for matching dice: 1s, 2s, ..., 6s
+    """
+    total = d1 + d2 + d3 + d4 + d5
+    sums_total = 0
+    num = 1
+    while num <= 6:
+        score = score_matching_dice(d1, d2, d3, d4, d5, num)
+        print(f"{num}s sum: {score} ") 
+        sums_total += score
+        num += 1
+    # if sums_total == total:
+    #     print("Total sums match.")
+    # else:
+    #     print("Total sums do not match!")
+    
+def test_X_of_a_kinds(d1, d2, d3, d4, d5):
+    kind_type = 3
+    while kind_type <= 5:
+        score = score_three_or_four_of_a_kind_or_yahtzee(d1, d2, d3, d4, d5, kind_type)
+        if score > 0:
+            if kind_type == 5:
+                print(f"Yahtzee! Score: {score}")
+            else:
+                print(f"{kind_type}-of-a-kind! Score: {score}")
+        else:
+            if kind_type == 5:
+                print(f"Not a yahtzee")
+            else:
+                print(f"Not a {kind_type}-of-a-kind")
+        kind_type += 1
+
+def test_full_house(d1, d2, d3, d4, d5):
+    score = score_full_house(d1, d2, d3, d4, d5)
+    if score > 0:
+        print(f"Full house! Score: {score}")
+    else:
+        print(f"Not a full house")
+
+def test_straights(d1, d2, d3, d4, d5):
+    small_straight_score = score_straight(d1, d2, d3, d4, d5, 4)
+    if small_straight_score > 0:
+        print(f"Small straight! Score: {small_straight_score}")
+    else:
+        print(f"Not a small straight")
+    
+    large_straight_score = score_straight(d1, d2, d3, d4, d5, 5)
+    if large_straight_score > 0:
+        print(f"Large straight! Score: {large_straight_score}")
+    else:
+        print(f"Not a large straight")
+
+def run_tests():
+    # to test for yahtzee fast:
+    # bash: while [ 1 ]; do python3 yahtzee.py | egrep "seed|5-"; done
+    # full house seed: 3124296115595568993
+    # three-of-a-kind seed: 7015785909153204237 
+    # four-of-a-kind seeds: 3906350539248440928, 4228015625983181528
+    # yahtzee seed: 8610573526024559617 
+    # small straight seed: 7545246043489357022
+    # large straight seed: 7966523343836331803
+    seed = random.randrange(sys.maxsize)
+    random.seed(seed)
+    print(f"seed (for debugging): {seed}")
+    d1 = roll_die()    
+    d2 = roll_die()    
+    d3 = roll_die()    
+    d4 = roll_die()    
+    d5 = roll_die()    
+    print(f"Random Roll: {d1} {d2} {d3} {d4} {d5}")
+    test_matches(d1, d2, d3, d4, d5)
+    test_X_of_a_kinds(d1, d2, d3, d4, d5)
+    test_full_house(d1, d2, d3, d4, d5)
+    test_straights(d1, d2, d3, d4, d5)
+ 
+    print()
+    print(f"Testing known dice rolls:")
+    known_inputs = [[1, 5, 2, 4, 4], # matches
+                    [4, 3, 4, 3, 3], # full house
+                    [1, 3, 4, 3, 3], # 3-of-a-kind
+                    [6, 6, 1, 6, 6], # 4-of-a-kind
+                    [2, 2, 2, 2, 2], # yahtzee!
+                    [2, 1, 3, 5, 4], # large straight
+                    [2, 1, 3, 3, 4], # small straight
+                    ]
+    for test_input in known_inputs:
+        print(f"Testing {test_input}:")
+        test_matches(*test_input)
+        test_full_house(*test_input)
+        test_X_of_a_kinds(*test_input)
+        test_straights(*test_input)
+        print(f"***********************")
+
+def print_roll(roll):
+    print(f"You rolled:")
+    print(f"A B C D E")
+    for d in roll:
+        print(f"{d} ", end='')
+    print()
+
+def roll_dice(num_to_roll):
+    dice = []
+    for i in range(num_to_roll):
+        dice.append(roll_die())
+    return dice
+
+def play_game():
+    print(f"Welcome to Yahtzee!")
+    while True:
+        input(f"Press the <return> key for your first roll...")
+        roll = roll_dice(5) 
+        print_roll(roll)
+        print()
+
+        keepers = input("What dice would you like to keep for your second roll? (e.g., A C D): ").upper()
+        second_roll = roll_dice(5) 
+        for idx, letter in enumerate("ABCDE"):
+            if letter in keepers:
+                second_roll.pop()
+                second_roll = [roll[idx]] + second_roll # push onto beginning
+        print_roll(second_roll)
+        print()
+        
+        keepers = input("What dice would you like to keep for your third roll? (e.g., A C D): ").upper()
+        third_roll = roll_dice(5) 
+        for idx, letter in enumerate("ABCDE"):
+            if letter in keepers:
+                third_roll.pop()
+                third_roll = [second_roll[idx]] + third_roll # push onto beginning
+        print_roll(third_roll)
+        print()
+        
+        test_matches(*third_roll)
+        test_full_house(*third_roll)
+        test_X_of_a_kinds(*third_roll)
+        test_straights(*third_roll)
+
+        print()
+        play_again = input("Would you like to play again? (Y/n): ").lower()
+        if play_again != "" and play_again[0] == 'n':
+            break
+        print()
+         
+
+def main():
+    # run_tests()
+    play_game()
+
+if __name__ == "__main__":
+    main()
+`,
     ]
     const value = document.getElementById('examples').value;
     const console = document.getElementById('code');
