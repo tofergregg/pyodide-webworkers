@@ -1368,7 +1368,7 @@ def col_to_win(board, color):
 def print_report(player1_turns, player2_turns, turn_number):
     print(f"Player 1 made the following turns: {player1_turns}")
     print(f"Player 2 made the following turns: {player2_turns}")
-    print(f"The game took {turn_number} of turns")
+    print(f"The game took {turn_number} turns")
 
 
 # Graphics routines
