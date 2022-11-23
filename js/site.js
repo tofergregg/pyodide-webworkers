@@ -1368,7 +1368,7 @@ def col_to_win(board, color):
 def print_report(player1_turns, player2_turns, turn_number):
     print(f"Player 1 made the following turns: {player1_turns}")
     print(f"Player 2 made the following turns: {player2_turns}")
-    print(f"The game took {turn_number} turns")
+    print(f"The game took {turn_number} of turns")
 
 
 # Graphics routines
@@ -1479,54 +1479,42 @@ def main():
     player2_turns = []
     draw_board(canvas, board)
     while turn_number < NUM_COLS * NUM_ROWS + 1:
+        print_board(board)
         print(f"Turn {turn_number}. ", end='')
         if turn_number % 2 == 1:
             color = COLOR1
+            print(f"It is {color}'s turn.")
             if len(player_turns) > 0:
                 col = player_turns.pop(0) 
                 drop_piece(board, col, color)
             else:
-                # col = play_turn(board, color)
                 print_board(board)
-                print("Click in a column to play...")
-                # while True:
-                #    col = click_in_col(canvas)
-                #    if col != -1:
-                #        drop_piece(board, col, color)
-                #        print(f"You played in column {col}.")
-                #        break
-                #    time.sleep(0.05)
             col = ai_turn(board, color, COLOR2)
             draw_drop(canvas, board, col, color)
             player1_turns.append(col)
-            print_board(board)
+            print(f"{color} played in column {col}.")
         else:
-            print(f"It is the AI's turn.")
             color = COLOR2
+            print(f"It is {color}'s turn.")
             col = ai_turn(board, color, COLOR1)
             draw_drop(canvas, board, col, color)
             player2_turns.append(col)
-            print(f"AI played in column {col}.")
+            print(f"{color} played in column {col}.")
         turn_number += 1
         winner = we_have_a_winner(board, NUM_TO_CONNECT)
         if winner:
             print("Winner!")
             print(winner)
             print_report(player1_turns, player2_turns, turn_number)
-            player_won = turn_number % 2 == 0
-            if player_won:
-                canvas.create_text(10, 15, "Game over! You beat the AI!",
-                                   fill='black') 
-            else:
-                canvas.create_text(10, 15, "Game over! You got beaten by an AI!", fill='black') 
+            canvas.create_text(10, 15, f'Game over! {winner["winner"].capitalize()} won!', fill='black')
 
             print_board(board)
             break 
 
         if None not in board[0]:
-            print("The board is full and you tied!")
+            print("The board is full and the players tied!")
             print_report(player1_turns, player2_turns, turn_number)
-            canvas.create_text(10, 15, "Game over! You tied the AI!",
+            canvas.create_text(10, 15, "Game over! The players tied!",
                                fill='black') 
             print_board(board)
             break
