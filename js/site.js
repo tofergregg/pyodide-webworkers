@@ -1365,9 +1365,9 @@ def col_to_win(board, color):
             return col
     return None
 
-def print_report(player1_turns, player2_turns, turn_number):
-    print(f"Player 1 made the following turns: {player1_turns}")
-    print(f"Player 2 made the following turns: {player2_turns}")
+def print_report(color1, color2, player1_turns, player2_turns, turn_number):
+    print(f"{color1} made the following turns: {player1_turns}")
+    print(f"{color2} made the following turns: {player2_turns}")
     print(f"The game took {turn_number} turns")
 
 
@@ -1481,6 +1481,7 @@ def main():
     while turn_number < NUM_COLS * NUM_ROWS + 1:
         print_board(board)
         print(f"Turn {turn_number}. ", end='')
+        print(f"{COLOR1} goes first.")
         if turn_number % 2 == 1:
             color = COLOR1
             print(f"It is {color}'s turn.")
@@ -1505,7 +1506,7 @@ def main():
         if winner:
             print("Winner!")
             print(winner)
-            print_report(player1_turns, player2_turns, turn_number)
+            print_report(COLOR1, COLOR2, player1_turns, player2_turns, turn_number)
             canvas.create_text(10, 15, f'Game over! {winner["winner"].capitalize()} won!', fill='black')
 
             print_board(board)
