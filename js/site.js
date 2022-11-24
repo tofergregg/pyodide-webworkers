@@ -1474,22 +1474,21 @@ def main():
             new_row.append(None)
         board.append(new_row)
 
-    turn_number = 1
+    turn_number = 0
     player1_turns = []
     player2_turns = []
     draw_board(canvas, board)
+    print(f"{COLOR1} goes first.")
     while turn_number < NUM_COLS * NUM_ROWS + 1:
+        turn_number += 1
         print_board(board)
         print(f"Turn {turn_number}. ", end='')
-        print(f"{COLOR1} goes first.")
         if turn_number % 2 == 1:
             color = COLOR1
             print(f"It is {color}'s turn.")
             if len(player_turns) > 0:
                 col = player_turns.pop(0) 
                 drop_piece(board, col, color)
-            else:
-                print_board(board)
             col = ai_turn(board, color, COLOR2)
             draw_drop(canvas, board, col, color)
             player1_turns.append(col)
@@ -1501,7 +1500,6 @@ def main():
             draw_drop(canvas, board, col, color)
             player2_turns.append(col)
             print(f"{color} played in column {col}.")
-        turn_number += 1
         winner = we_have_a_winner(board, NUM_TO_CONNECT)
         if winner:
             print("Winner!")
@@ -1514,7 +1512,7 @@ def main():
 
         if None not in board[0]:
             print("The board is full and the players tied!")
-            print_report(player1_turns, player2_turns, turn_number)
+            print_report(COLOR1, COLOR2, player1_turns, player2_turns, turn_number)
             canvas.create_text(10, 15, "Game over! The players tied!",
                                fill='black') 
             print_board(board)
