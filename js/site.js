@@ -16,7 +16,7 @@ const init_main = () => {
             to: endPosition,
             insert: "print('Hello, World!')\n" 
       }
-    );
+    });
     // set option if url has option
     const params = new URLSearchParams(window.location.search);
     const example = params.get('example');
