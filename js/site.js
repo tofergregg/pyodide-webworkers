@@ -1523,7 +1523,7 @@ if __name__ == "__main__":
 `,
     ]
 
-    const currentValue = cmEditor.state.doc.toString();
+    const currentValue = window.cmEditor.state.doc.toString();
     const endPosition = currentValue.length;
     window.cmEditor.dispatch({
       changes: {from: 0, 
