@@ -1,4 +1,4 @@
-// initial code from: https://gridbyexample.com/examples/
+/* initial code from: https://gridbyexample.com/examples/ */
 body {
     font-family: 'Raleway', serif;
 }
@@ -136,3 +136,13 @@ textarea {
   background-color: black;
   color: white;
 }
+
+/* CodeMirror */
+
+.editor-div {
+    width: 600px;
+    border: 1px solid black;
+}
+
+.cm-editor { height: 100% }
+.cm-scroller { overflow: auto }

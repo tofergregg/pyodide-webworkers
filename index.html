@@ -6,14 +6,13 @@
         <link rel="stylesheet"
               href="https://fonts.googleapis.com/css2?family=Raleway">
         <link rel="stylesheet" href="css/site.css">
-        <!--<script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>-->
-        <script type="module" src="js/site.js"></script>
     </head>
     <body onload="init_main()">
         <div class="main">
-            <textarea id='code' rows="15" cols="80" spellcheck="false">
-print('Hello, World!')
-</textarea><br>
+            <p>
+            <div id="editor" class="editor-div">
+            </div>
+            <p>
 <button type="button" id="click-button" onclick="get_input()">Run</button>
 <button type="button" id="click-button" onclick="window.interruptExecution()" style="margin-left: 10px">Stop</button>
 <button type="button" id="click-button" onclick="reset_console()" style="margin-left: 10px; margin-right: 10px">Reset</button>
@@ -36,5 +35,8 @@ Examples:
 </textarea>
 <canvas id="theCanvas" width="285" height="244" style="border:1px solid #000000;"></canvas>
         </div>
+        <script src="js/editor.bundle.js"></script>  
+        <!--<script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>-->
+        <script type="module" src="js/site.js"></script>
     </body>
 </html>

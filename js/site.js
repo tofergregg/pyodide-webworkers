@@ -1522,8 +1522,14 @@ if __name__ == "__main__":
     main()
 `,
     ]
-    const value = document.getElementById('examples').value;
-    const console = document.getElementById('code');
-    console.value = snippets[value]; 
+
+    const currentValue = cmEditor.state.doc.toString();
+    const endPosition = currentValue.length;
+    window.cmEditor.dispatch({
+      changes: {from: 0, 
+                to: endPosition,
+                insert: snippets[value]
+      }
+    });
 }
 
