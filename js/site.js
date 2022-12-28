@@ -1522,7 +1522,7 @@ if __name__ == "__main__":
     main()
 `,
     ]
-
+    const value = document.getElementById('examples').value;
     const currentValue = window.cmEditor.state.doc.toString();
     const endPosition = currentValue.length;
     window.cmEditor.dispatch({
