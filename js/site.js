@@ -7,6 +7,15 @@ import { setupWorker,
 } from "./py-worker.js";
 
 const init_main = () => {
+    // default hello world program
+    const currentValue = window.cmEditor.state.doc.toString();
+    const endPosition = currentValue.length;
+    window.cmEditor.dispatch({
+      changes: {
+            from: 0, 
+            to: endPosition,
+            insert: "print('Hello, World!')\n" 
+      }
     // set option if url has option
     const params = new URLSearchParams(window.location.search);
     const example = params.get('example');
@@ -1526,9 +1535,10 @@ if __name__ == "__main__":
     const currentValue = window.cmEditor.state.doc.toString();
     const endPosition = currentValue.length;
     window.cmEditor.dispatch({
-      changes: {from: 0, 
-                to: endPosition,
-                insert: snippets[value]
+      changes: {
+            from: 0, 
+            to: endPosition,
+            insert: snippets[value]
       }
     });
 }
