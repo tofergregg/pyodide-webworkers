@@ -188,8 +188,8 @@ const getInputFromTerminal = () => {
     // we need to configure the textarea so that we can control how the user
     // changes it. I.e., only allow text after the current text
     // get the current text in the textarea so we have it when there are changes
-    let window.originalText = terminal.value;
-    let window.userInput = '';
+    window.originalText = terminal.value;
+    window.userInput = '';
     terminal.addEventListener('input', consoleListener, false);
 }
 
