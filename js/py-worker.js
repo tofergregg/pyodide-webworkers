@@ -137,47 +137,48 @@ const asyncRun = ((script, context) => {
     };
 })();
 
-const getInputFromTerminal = () => {
-    const consoleListener = () => {
-        // first, check to see that the original text is still
-        // present (otherwise, change back)
-        const currentVal = terminal.value;
-        if (window.stopExecution) {
-            // in case we broke out of the program while listening
-            terminal.removeEventListener('input', consoleListener);
-            window.stopExecution = false;
-            return;
-        }
-        if (!currentVal.startsWith(originalText)) {
-            terminal.value = originalText + userInput;
-        } else if (currentVal.endsWith('\n')) {
-            terminal.removeEventListener('input', consoleListener);
-            // we need to populate the shared buffer with the input
-            // the first byte is going to be changed to 1 to indicate
-            // that we have input (do this last)
-            // The second and third bytes are going to be a little-endian
-            // 2-byte number that represents the length of the input
-            // The remaining bytes will represent the input characters
-            // We can hold up to 65536-3 = 65533 bytes of data
-            
-            const inputLen = Math.min(userInput.length, 65533);
-
-            // set the length
-            Atomics.store(window.sharedArr, 1, inputLen % 256); 
-            Atomics.store(window.sharedArr, 2, Math.floor(inputLen / 256)); 
-            // copy the data
-            for (let i = 0; i < inputLen; i++) {
-                Atomics.store(window.sharedArr, i + 3, userInput.charCodeAt(i));
-            }
-
-            // alert the webworker
-            Atomics.store(window.waitArr, 0, 1);
-            Atomics.notify(window.waitArr, 0);
-        }
-        else{
-            userInput = currentVal.substring(originalText.length);
-        }
+const consoleListener = () => {
+    // first, check to see that the original text is still
+    // present (otherwise, change back)
+    const currentVal = terminal.value;
+    if (window.stopExecution) {
+        // in case we broke out of the program while listening
+        terminal.removeEventListener('input', consoleListener);
+        window.stopExecution = false;
+        return;
     }
+    if (!currentVal.startsWith(originalText)) {
+        terminal.value = originalText + userInput;
+    } else if (currentVal.endsWith('\n')) {
+        terminal.removeEventListener('input', consoleListener);
+        // we need to populate the shared buffer with the input
+        // the first byte is going to be changed to 1 to indicate
+        // that we have input (do this last)
+        // The second and third bytes are going to be a little-endian
+        // 2-byte number that represents the length of the input
+        // The remaining bytes will represent the input characters
+        // We can hold up to 65536-3 = 65533 bytes of data
+        
+        const inputLen = Math.min(userInput.length, 65533);
+
+        // set the length
+        Atomics.store(window.sharedArr, 1, inputLen % 256); 
+        Atomics.store(window.sharedArr, 2, Math.floor(inputLen / 256)); 
+        // copy the data
+        for (let i = 0; i < inputLen; i++) {
+            Atomics.store(window.sharedArr, i + 3, userInput.charCodeAt(i));
+        }
+
+        // alert the webworker
+        Atomics.store(window.waitArr, 0, 1);
+        Atomics.notify(window.waitArr, 0);
+    }
+    else{
+        userInput = currentVal.substring(originalText.length);
+    }
+}
+
+const getInputFromTerminal = () => {
     const terminal = document.getElementById('console-output');
     const end = terminal.value.length;
 
