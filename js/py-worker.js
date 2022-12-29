@@ -143,12 +143,6 @@ const consoleListener = () => {
     // first, check to see that the original text is still
     // present (otherwise, change back)
     const currentVal = terminal.value;
-    if (window.stopExecution) {
-        // in case we broke out of the program while listening
-        terminal.removeEventListener('input', consoleListener);
-        window.stopExecution = false;
-        return;
-    }
     if (!currentVal.startsWith(window.originalText)) {
         terminal.value = window.originalText + window.userInput;
     } else if (currentVal.endsWith('\n')) {
