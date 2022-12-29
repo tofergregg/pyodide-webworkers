@@ -122,8 +122,7 @@ window.get_input = () => {
     const code = window.cmEditor.state.doc.toString();
     // only run python_runner if we've stopped execution
     const python_runner_fn = () => {
-        const interrupted = Atomics.load(window.interruptBuffer, 0);
-        if (interrupted == 2) {
+        if (window.codeRunning) {
             // not stopped yet
             setTimeout(python_runner_fn, 100);
         } else {
