@@ -138,6 +138,7 @@ const asyncRun = ((script, context) => {
 })();
 
 const consoleListener = () => {
+    const terminal = document.getElementById('console-output');
     // first, check to see that the original text is still
     // present (otherwise, change back)
     const currentVal = terminal.value;
