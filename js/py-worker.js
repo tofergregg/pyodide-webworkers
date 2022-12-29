@@ -18,6 +18,7 @@ const interruptExecution = () => {
             Atomics.store(window.waitArr, 0, 1);
             Atomics.notify(window.waitArr, 0);
             window.stopExecution = true;
+            Atomics.wait(window.interruptBuffer, 0, 0);
         }
     }, 10);
 }
