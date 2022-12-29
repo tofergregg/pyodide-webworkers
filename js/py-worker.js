@@ -15,6 +15,9 @@ const interruptExecution = () => {
             clearInterval(sendInterrupt);
         } else {
             Atomics.store(interruptBuffer, 0, 2);
+            Atomics.store(window.waitArr, 0, 1);
+            Atomics.notify(window.waitArr, 0);
+            window.stopExecution = true;
         }
     }, 10);
 }
@@ -138,6 +141,12 @@ const getInputFromTerminal = () => {
         // first, check to see that the original text is still
         // present (otherwise, change back)
         const currentVal = terminal.value;
+        if (window.stopExecution) {
+            // in case we broke out of the program while listening
+            terminal.removeEventListener('input', consoleListener);
+            window.stopExecution = false;
+            return;
+        }
         if (!currentVal.startsWith(originalText)) {
             terminal.value = originalText + userInput;
         } else if (currentVal.endsWith('\n')) {
