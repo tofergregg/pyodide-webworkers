@@ -18,6 +18,7 @@ const interruptExecution = () => {
             Atomics.store(window.waitArr, 0, 1);
             Atomics.notify(window.waitArr, 0);
             window.stopExecution = true;
+            const terminal = document.getElementById('console-output');
             terminal.removeEventListener('input', consoleListener);
         }
     }, 10);
