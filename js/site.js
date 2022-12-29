@@ -7,7 +7,7 @@ import { setupWorker,
 } from "./py-worker.js";
 
 const init_main = () => {
-    // default hello world program
+    window.stopExecution = false; // we aren't running
     const currentValue = window.cmEditor.state.doc.toString();
     const endPosition = currentValue.length;
     window.cmEditor.dispatch({
@@ -120,7 +120,16 @@ window.get_input = () => {
     const context = {}; // we might use this to pass parameters to a program,
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
     const code = window.cmEditor.state.doc.toString();
-    python_runner(code, context);
+    // only run python_runner if we've stopped execution
+    const python_runner_fn = () => {
+        if (window.stopExecution) {
+            // not stopped yet
+            setTimeout(python_runner_fn, 100);
+        } else {
+            python_runner(code, context);
+        }
+    }
+    setTimeout(python_runner_fn, 100);
 }
 
 window.reset_console = () => {
