@@ -148,8 +148,8 @@ const consoleListener = () => {
         window.stopExecution = false;
         return;
     }
-    if (!currentVal.startsWith(originalText)) {
-        terminal.value = originalText + userInput;
+    if (!currentVal.startsWith(window.originalText)) {
+        terminal.value = window.originalText + window.userInput;
     } else if (currentVal.endsWith('\n')) {
         terminal.removeEventListener('input', consoleListener);
         // we need to populate the shared buffer with the input
@@ -160,14 +160,14 @@ const consoleListener = () => {
         // The remaining bytes will represent the input characters
         // We can hold up to 65536-3 = 65533 bytes of data
         
-        const inputLen = Math.min(userInput.length, 65533);
+        const inputLen = Math.min(window.userInput.length, 65533);
 
         // set the length
         Atomics.store(window.sharedArr, 1, inputLen % 256); 
         Atomics.store(window.sharedArr, 2, Math.floor(inputLen / 256)); 
         // copy the data
         for (let i = 0; i < inputLen; i++) {
-            Atomics.store(window.sharedArr, i + 3, userInput.charCodeAt(i));
+            Atomics.store(window.sharedArr, i + 3, window.userInput.charCodeAt(i));
         }
 
         // alert the webworker
@@ -175,7 +175,7 @@ const consoleListener = () => {
         Atomics.notify(window.waitArr, 0);
     }
     else{
-        userInput = currentVal.substring(originalText.length);
+        window.userInput = currentVal.substring(window.originalText.length);
     }
 }
 
@@ -188,8 +188,8 @@ const getInputFromTerminal = () => {
     // we need to configure the textarea so that we can control how the user
     // changes it. I.e., only allow text after the current text
     // get the current text in the textarea so we have it when there are changes
-    let originalText = terminal.value;
-    let userInput = '';
+    let window.originalText = terminal.value;
+    let window.userInput = '';
     terminal.addEventListener('input', consoleListener, false);
 }
 
