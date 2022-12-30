@@ -127,6 +127,8 @@ window.get_input = () => {
             setTimeout(python_runner_fn, 100);
         } else {
             window.stopExecution = false;
+
+            document.getElementById('console-output').value = '';
             python_runner(code, context);
         }
     }
