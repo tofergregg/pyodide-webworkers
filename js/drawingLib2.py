@@ -57,3 +57,6 @@ class Canvas:
 
     def erase(self):
         updateCanvas(['erase'])
+
+    def clearall(self):
+        updateCanvas(['clearall'])

@@ -34,6 +34,9 @@ const updateCanvas = (cmd, dict) => {
         obj.text = dict.text;
     }
 
+    if (cmd == 'clearall') {
+        canvas._objects = []
+    }
 
     window.requestAnimationFrame(drawAllObjects);
 }
