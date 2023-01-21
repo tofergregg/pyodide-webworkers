@@ -63,7 +63,7 @@ class Canvas:
         updateCanvas(['erase'])
 
     def clearall(self):
-        updateCanvas(['clearall'])
+        updateCanvas('clearall', {})
 
     def get_mouse_x(self):
         return getMousePos('x') 
