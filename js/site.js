@@ -54,7 +54,6 @@ const mouseMove = (event) => {
     let x;
     let y;
     if (event.touches) {
-        alert("touched!");
         x = Math.round((event.touches[0].clientX - rect.left) / (rect.right - rect.left) * canvas.width);
         y = Math.round((event.touches[0].clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
     } else {
