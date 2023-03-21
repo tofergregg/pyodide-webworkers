@@ -53,7 +53,7 @@ const mouseMove = (event) => {
     const rect = canvas.getBoundingClientRect();
     let x;
     let y;
-    if (event.touches) {
+    if (true) {
         x = Math.round((event.touches[0].clientX - rect.left) / (rect.right - rect.left) * canvas.width);
         y = Math.round((event.touches[0]clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
     } else {
