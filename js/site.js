@@ -36,7 +36,7 @@ const init_main = () => {
     // set up for mouse movement
     window.lastMouse = {x: 0, y: 0};
     canvas.addEventListener("touchmove", mouseMove, false)
-    canvas.addEventListener("touchstart", mouseMove, false);
+    canvas.addEventListener("touchmove", mouseMove, false);
 
     // set up for mouse button
     window.lastMouseDown = {x: 0, y: 0};
