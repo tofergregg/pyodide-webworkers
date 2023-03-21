@@ -35,7 +35,7 @@ const init_main = () => {
     canvas._objects = [];
     // set up for mouse movement
     window.lastMouse = {x: 0, y: 0};
-    canvas.addEventListener("touchmove", mouseMove, false)
+    canvas.addEventListener("mousemove", mouseMove, false)
     canvas.addEventListener("touchmove", mouseMove, false);
 
     // set up for mouse button
@@ -51,11 +51,18 @@ window.init_main = init_main;
 const mouseMove = (event) => {
     const canvas = document.getElementById('theCanvas');
     const rect = canvas.getBoundingClientRect();
-    const x = Math.round((event.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
+    let x;
+    let y;
+    if ("ontouchstart" in document.documentElement) {
+        x = Math.round((event.touches[0].clientX - rect.left) / (rect.right - rect.left) * canvas.width);
+        y = Math.round((event.touches[0]clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
+    } else {
+        x = Math.round((event.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
+        y = Math.round((event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
+    }
     if (x > canvas.width + 1) {
         x = 0;
     }
-    const y = Math.round((event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
     if (y > canvas.height + 1) {
         y = 0;
     }
@@ -262,7 +269,7 @@ def setup_game():
                        leftY - PADDLE_HEIGHT / 2 + PADDLE_HEIGHT,
                        color=PADDLE_COLOR,
                        fill=PADDLE_COLOR)
-    
+
     paddles['right'] = canvas.create_rectangle(RIGHT_PADDLE_X - PADDLE_WIDTH, 
                        rightY - PADDLE_HEIGHT / 2, 
                        RIGHT_PADDLE_X, 
@@ -275,7 +282,7 @@ def setup_game():
     ball_y1 = canvas.height / 2 - BALL_RADIUS
     ball_x2 = ball_x1 + 2 * BALL_RADIUS
     ball_y2 = ball_y1 + 2 * BALL_RADIUS
-    
+
     ball['obj'] = canvas.create_oval(ball_x1, ball_y1, ball_x2, ball_y2,
                     fill=BALL_COLOR, color=BALL_COLOR)
 
@@ -286,7 +293,7 @@ def setup_game():
     if random.randint(0, 1) % 2 == 0: ball['dy'] *= -1
 
     return ball, paddles
-    
+
 
 def draw_paddles(paddles, leftY, rightY):
     canvas.coords(paddles['left'], 
@@ -294,7 +301,7 @@ def draw_paddles(paddles, leftY, rightY):
                        leftY - PADDLE_HEIGHT / 2, 
                        LEFT_PADDLE_X + PADDLE_WIDTH, 
                        leftY - PADDLE_HEIGHT / 2 + PADDLE_HEIGHT)
-    
+
     canvas.coords(paddles['right'],
                 RIGHT_PADDLE_X - PADDLE_WIDTH, 
                        rightY - PADDLE_HEIGHT / 2, 
@@ -548,7 +555,7 @@ def find_open_spots(board, no_drop_columns, color):
                             # we found one!
                             return col + 1
     return None
-                
+
 def populate_winner(row_num, col_num, direction, winner):
     return {
             'start_row': row_num, 
@@ -586,7 +593,7 @@ def ai_turn(board, color, other_color):
     if col is not None:
         drop_piece(board, col, color)
         return col
-    
+
     # we must block our opponent from a win 
     col = col_to_win(board, other_color)
     if col is not None:
@@ -637,7 +644,7 @@ def ai_turn(board, color, other_color):
                     if col not in no_drop_columns:
                         drop_piece(board, col, color)
                         return col 
-            
+
     # we can't find a good spot, so we'll just start from
     # the center and place one where we can, but not
     # in a no_drop column
@@ -738,7 +745,7 @@ def click_in_col(canvas):
         height = canvas.height - 2 * START_Y
         block_height = height / NUM_ROWS
         block_width = width / NUM_COLS
-        
+
         for col in range(NUM_COLS):
             left_x = START_X + block_width * col
             right_x = START_X + block_width * (col + 1)
@@ -894,7 +901,7 @@ def score_full_house(d1, d2, d3, d4, d5):
     count4s = count_matching_dice(d1, d2, d3, d4, d5, 4)
     count5s = count_matching_dice(d1, d2, d3, d4, d5, 5)
     count6s = count_matching_dice(d1, d2, d3, d4, d5, 6)
-    
+
     if count1s == 3:
         if count2s == 2 or count3s == 2 or count4s == 2 or count5s == 2 or count6s == 2:
             return 25
@@ -974,7 +981,7 @@ def test_matches(d1, d2, d3, d4, d5):
     #     print("Total sums match.")
     # else:
     #     print("Total sums do not match!")
-    
+
 def test_X_of_a_kinds(d1, d2, d3, d4, d5):
     kind_type = 3
     while kind_type <= 5:
@@ -1004,7 +1011,7 @@ def test_straights(d1, d2, d3, d4, d5):
         print(f"Small straight! Score: {small_straight_score}")
     else:
         print(f"Not a small straight")
-    
+
     large_straight_score = score_straight(d1, d2, d3, d4, d5, 5)
     if large_straight_score > 0:
         print(f"Large straight! Score: {large_straight_score}")
@@ -1033,7 +1040,7 @@ def run_tests():
     test_X_of_a_kinds(d1, d2, d3, d4, d5)
     test_full_house(d1, d2, d3, d4, d5)
     test_straights(d1, d2, d3, d4, d5)
- 
+
     print()
     print(f"Testing known dice rolls:")
     known_inputs = [[1, 5, 2, 4, 4], # matches
@@ -1081,7 +1088,7 @@ def play_game():
                 second_roll = [roll[idx]] + second_roll # push onto beginning
         print_roll(second_roll)
         print()
-        
+
         keepers = input("What dice would you like to keep for your third roll? (e.g., A C D): ").upper()
         third_roll = roll_dice(5) 
         for idx, letter in enumerate("ABCDE"):
@@ -1090,7 +1097,7 @@ def play_game():
                 third_roll = [second_roll[idx]] + third_roll # push onto beginning
         print_roll(third_roll)
         print()
-        
+
         test_matches(*third_roll)
         test_full_house(*third_roll)
         test_X_of_a_kinds(*third_roll)
@@ -1102,7 +1109,7 @@ def play_game():
             print("Thank you for playing Yahtzee!")
             break
         print()
-         
+
 
 def main():
     # run_tests()
@@ -1272,7 +1279,7 @@ def find_open_spots(board, no_drop_columns, color):
                             # we found one!
                             return col + 1
     return None
-                
+
 def populate_winner(row_num, col_num, direction, winner):
     return {
             'start_row': row_num, 
@@ -1310,7 +1317,7 @@ def ai_turn(board, color, other_color):
     if col is not None:
         drop_piece(board, col, color)
         return col
-    
+
     # we must block our opponent from a win 
     col = col_to_win(board, other_color)
     if col is not None:
@@ -1361,7 +1368,7 @@ def ai_turn(board, color, other_color):
                     if col not in no_drop_columns:
                         drop_piece(board, col, color)
                         return col 
-            
+
     # we can't find a good spot, so we'll just start from
     # the center and place one where we can, but not
     # in a no_drop column
@@ -1464,7 +1471,7 @@ def click_in_col(canvas):
         height = canvas.height - 2 * START_Y
         block_height = height / NUM_ROWS
         block_width = width / NUM_COLS
-        
+
         for col in range(NUM_COLS):
             left_x = START_X + block_width * col
             right_x = START_X + block_width * (col + 1)
@@ -1550,11 +1557,11 @@ if __name__ == "__main__":
     const currentValue = window.cmEditor.state.doc.toString();
     const endPosition = currentValue.length;
     window.cmEditor.dispatch({
-      changes: {
+        changes: {
             from: 0, 
             to: endPosition,
             insert: snippets[value]
-      }
+        }
     });
 }
 
