@@ -34,7 +34,7 @@ self.onmessage = async (event) => {
         return;
     }
     if (event.data.cmd === "input_result") {
-        window.inputResult = event.data.value;
+        input_fixed.inputResult = event.data.value;
     }
     if (event.data.control !== undefined) {
         console.log("Control event");
@@ -83,11 +83,11 @@ self.onmessage = async (event) => {
 function input_fixed(text, first) {
     console.log("input requested: " + text)
     if (first) {
-        window.inputResult = null;
+        input_fixed.inputResult = null;
         self.postMessage({outputText: text, getInput: true});
     } else {
         // check for result
-        if (window.inputResult !== null) {
+        if (input_fixed.inputResult !== null) {
             return pyodide.toPy({'done': true, 'result': inputResult});
         }
     }
