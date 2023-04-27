@@ -138,7 +138,7 @@ const wrap_code = (code) => {
     const prefix_code = `import sys
 
 def my_tracer(frame, event, arg = None):
-    print("--------inside tracer")
+    print(".", end='')
     return my_tracer
 
 def ___WRAPPER():
