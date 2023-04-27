@@ -81,7 +81,7 @@ function input_fixed(text) {
     const data = new Map();
     data.set('have_result', true);
     data.set('result', 4);
-    return proxy.toJs({'have_result': true, 'result': 4});
+    return pyodide.toPy({'have_result': true, 'result': 4});
 };
 
 function resolveAfter2Seconds() {
