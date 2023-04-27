@@ -94,7 +94,9 @@ function input_fixed(text, first) {
           x.timeout = 500;
           x.open('get', '/@sleep@/t.js?t='+500, false);
           x.setRequestHeader('cache-control', 'no-cache, no-store, max-age=0');
-      try{ x.send() }catch(e){}
+      try{ x.send() }catch(e){
+            console.log(e);
+      }
         if (input_fixed.inputResult !== null) {
             return pyodide.toPy({'done': true, 'result': inputResult});
         }
