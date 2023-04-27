@@ -88,6 +88,7 @@ function input_fixed(text, first) {
         input_fixed.inputResult = null;
         self.postMessage({outputText: text, getInput: true});
     } else {
+        console.log('.');
         // check for result
         if (input_fixed.inputResult !== null) {
             return pyodide.toPy({'done': true, 'result': inputResult});
