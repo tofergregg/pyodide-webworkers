@@ -33,6 +33,9 @@ self.onmessage = async (event) => {
         self.interruptBuffer = new Uint8Array(event.data.interruptBuffer);
         return;
     }
+    if (event.data.cmd === "input_result") {
+        window.inputResult = "4";
+    }
     if (event.data.control !== undefined) {
         console.log("Control event");
         self.jsMessage = event.data.message;
@@ -59,10 +62,12 @@ self.onmessage = async (event) => {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
         def input(prompt=None):
+            first = True
             while True:
-               result = input_fixed(prompt)
-               if result['done']:
-                   return result['result']
+               response = input_fixed(prompt, first)
+               first = False
+               if response['done']:
+                   return response['result']
         __builtins__.input = input
         `);
         await self.pyodide.runPythonAsync(drawingLib);
@@ -75,10 +80,18 @@ self.onmessage = async (event) => {
     }
 };
 
-function input_fixed(text) {
+function input_fixed(text, first) {
     console.log("input requested: " + text)
-    self.postMessage({outputText: text, getInput: true});
-    return pyodide.toPy({'done': true, 'result': 4});
+    if (first) {
+        window.inputResult = null;
+        self.postMessage({outputText: text, getInput: true});
+    } else {
+        // check for result
+        if (window.inputResult !== null) {
+            return pyodide.toPy({'done': true, 'result': inputResult});
+        }
+    }
+    return pyodide.toPy({'done': false, 'result': 0});
 };
 
 function resolveAfter2Seconds() {

@@ -144,27 +144,7 @@ const consoleListener = () => {
         terminal.value = window.originalText + window.userInput;
     } else if (currentVal.endsWith('\n')) {
         terminal.removeEventListener('input', consoleListener);
-        // we need to populate the shared buffer with the input
-        // the first byte is going to be changed to 1 to indicate
-        // that we have input (do this last)
-        // The second and third bytes are going to be a little-endian
-        // 2-byte number that represents the length of the input
-        // The remaining bytes will represent the input characters
-        // We can hold up to 65536-3 = 65533 bytes of data
-        
-        const inputLen = Math.min(window.userInput.length, 65533);
-
-        // set the length
-        Atomics.store(window.sharedArr, 1, inputLen % 256); 
-        Atomics.store(window.sharedArr, 2, Math.floor(inputLen / 256)); 
-        // copy the data
-        for (let i = 0; i < inputLen; i++) {
-            Atomics.store(window.sharedArr, i + 3, window.userInput.charCodeAt(i));
-        }
-
-        // alert the webworker
-        Atomics.store(window.waitArr, 0, 1);
-        Atomics.notify(window.waitArr, 0);
+        pyodideWorker.postMessage({'command': "input_result": currentVal.slice(0, -1)});
     }
     else{
         window.userInput = currentVal.substring(window.originalText.length);
