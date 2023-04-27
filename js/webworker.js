@@ -75,7 +75,7 @@ function input_fixed(text) {
     console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
 
-    data = 4
+    data = '4'
     return data;
 };
 
