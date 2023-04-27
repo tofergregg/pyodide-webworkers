@@ -144,9 +144,7 @@ const consoleListener = () => {
         terminal.value = window.originalText + window.userInput;
     } else if (currentVal.endsWith('\n')) {
         terminal.removeEventListener('input', consoleListener);
-        console.log("posting message: ");
-        console.log(currentVal);
-        pyodideWorker.postMessage({command: "input_result", value: currentVal.slice(0, -1)});
+        pyodideWorker.postMessage({cmd: "input_result", value: window.userInput});
     }
     else{
         window.userInput = currentVal.substring(window.originalText.length);
