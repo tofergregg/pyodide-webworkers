@@ -113,7 +113,8 @@ window.get_input = () => {
     window.reset_console();
     const context = {}; // we might use this to pass parameters to a program,
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
-    const code = window.cmEditor.state.doc.toString();
+    let code = window.cmEditor.state.doc.toString();
+    code = wrap_code(code);
     // only run python_runner if we've stopped execution
     const python_runner_fn = () => {
         if (window.codeRunning) {
@@ -127,6 +128,28 @@ window.get_input = () => {
         }
     }
     setTimeout(python_runner_fn, 100);
+}
+
+wrap_code = (code) => {
+    // indent everything by 4 spaces
+    code = code.replaceAll('\n', '\n    ')
+
+    // prepend function def and tracer code
+    const prefix_code = `import sys
+
+def my_tracer(frame, event, arg = None):
+    print("--------inside tracer")
+
+def __WRAPPER():
+`;
+    const suffix_code = `sys.settrace(my_tracer)
+___WRAPPER()
+sys.settrace(None)
+`;
+
+    code = prefix_code + code + suffix_code;
+    console.log(suffix_code);
+
 }
 
 window.reset_console = () => {
