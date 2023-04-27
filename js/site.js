@@ -150,6 +150,7 @@ def my_tracer(frame, event, arg = None):
 
     if func_name == 'input':
        print('I')
+    print(f"func_name: {func_name}")
 
     return my_tracer
 
