@@ -139,6 +139,18 @@ const wrap_code = (code) => {
 
 def my_tracer(frame, event, arg = None):
     print(".", end='')
+    # extracts frame code
+    code = frame.f_code
+  
+    # extracts calling function name
+    func_name = code.co_name
+  
+    # extracts the line number
+    line_no = frame.f_lineno
+
+    if func_name == 'input':
+       print('I')
+
     return my_tracer
 
 def ___WRAPPER():
