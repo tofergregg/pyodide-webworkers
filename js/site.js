@@ -141,7 +141,7 @@ def my_tracer(frame, event, arg = None):
     print("--------inside tracer")
 
 def __WRAPPER():
-`;
+    `;
     const suffix_code = `sys.settrace(my_tracer)
 ___WRAPPER()
 sys.settrace(None)
