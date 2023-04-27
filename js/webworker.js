@@ -78,8 +78,10 @@ self.onmessage = async (event) => {
 function input_fixed(text) {
     console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
-    data = {have_result: true, result: '4'}
-    return data;
+    const data = new Map();
+    data.set('have_result', true);
+    data.set('result', 4);
+    return proxy.toJs({'have_result': true, 'result': 4});
 };
 
 function resolveAfter2Seconds() {
