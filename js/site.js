@@ -148,7 +148,7 @@ sys.settrace(None)
 `;
 
     code = prefix_code + code + suffix_code;
-    console.log(suffix_code);
+    console.log(code);
 
 }
 
