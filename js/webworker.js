@@ -22,7 +22,7 @@ async function loadPyodideAndPackages() {
             self.postMessage({outputText: text + '\n'});
         }
     });
-    await self.pyodide.loadPackage(["numpy", "pytz"]);
+    // await self.pyodide.loadPackage(["numpy", "pytz"]);
 }
 let pyodideReadyPromise = loadPyodideAndPackages();
 
