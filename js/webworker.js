@@ -87,7 +87,7 @@ function input_fixed(text, first) {
         input_fixed.inputResult = null;
         self.postMessage({outputText: text, getInput: true});
     } else {
-        console.log('.');
+        // console.log('.');
         // check for result
         // see if we can force the message to be read
         checkForMessage();
