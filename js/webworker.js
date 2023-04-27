@@ -34,6 +34,7 @@ self.onmessage = async (event) => {
         return;
     }
     if (event.data.cmd === "input_result") {
+        console.log("got input!");
         input_fixed.inputResult = event.data.value;
     }
     if (event.data.control !== undefined) {
@@ -81,8 +82,8 @@ self.onmessage = async (event) => {
 };
 
 function input_fixed(text, first) {
-    console.log("input requested: " + text)
     if (first) {
+        console.log("input requested: " + text)
         input_fixed.inputResult = null;
         self.postMessage({outputText: text, getInput: true});
     } else {
