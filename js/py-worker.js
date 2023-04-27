@@ -110,7 +110,9 @@ const setupWorker = () => {
 const sendMessageToWorker = (message) => {
     // console.log("Sending ");
     // console.log({'control': true, "message": message}); 
-    pyodideWorker.postMessage({'control': true, "message": message});
+    queueMicrotask(() => {
+        pyodideWorker.postMessage({'control': true, "message": message});
+    });
 };
 
 const passSharedBuffer = (buf, waitBuf) => {
