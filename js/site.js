@@ -138,7 +138,7 @@ const wrap_code = (code) => {
     const prefix_code = `import sys
 
 def my_tracer(frame, event, arg = None):
-    print(".", end='')
+    #print(".", end='')
     # extracts frame code
     code = frame.f_code
   
