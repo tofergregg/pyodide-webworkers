@@ -139,6 +139,7 @@ const wrap_code = (code) => {
 
 def my_tracer(frame, event, arg = None):
     print("--------inside tracer")
+    return my_tracer
 
 def ___WRAPPER():
     `;
