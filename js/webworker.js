@@ -34,7 +34,7 @@ self.onmessage = async (event) => {
         return;
     }
     if (event.data.cmd === "input_result") {
-        window.inputResult = "4";
+        window.inputResult = event.data.value;
     }
     if (event.data.control !== undefined) {
         console.log("Control event");
