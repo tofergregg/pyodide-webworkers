@@ -99,11 +99,13 @@ function input_fixed(text, first) {
 };
 
 async function checkForMessage() {
+    console.log('yielding');
     await yieldToMacrotasks();
 }
 
 function yieldToMacrotasks() {
-  return new Promise((resolve) => setTimeout(resolve));
+    console.log('more yielding');
+    return new Promise((resolve) => setTimeout(resolve));
 }
 
 function resolveAfter2Seconds() {
