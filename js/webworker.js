@@ -29,7 +29,6 @@ let pyodideReadyPromise = loadPyodideAndPackages();
 self.jsMessage = null; 
 
 self.onmessage = async (event) => {
-    console.log("got a message from py-worker");
     if (event.data.cmd === "setInterruptBuffer") {
         self.interruptBuffer = new Uint8Array(event.data.interruptBuffer);
         return;
@@ -90,13 +89,22 @@ function input_fixed(text, first) {
     } else {
         console.log('.');
         // check for result
-        return pyodide.toPy({done: true, result: "4"});
+        // see if we can force the message to be read
+        checkForMessage();
         if (input_fixed.inputResult !== null) {
             return pyodide.toPy({'done': true, 'result': inputResult});
         }
     }
     return pyodide.toPy({'done': false, 'result': 0});
 };
+
+async function checkForMessage() {
+    await yieldToMacrotasks();
+}
+
+function yieldToMacrotasks() {
+  return new Promise((resolve) => setTimeout(resolve));
+}
 
 function resolveAfter2Seconds() {
   return new Promise(resolve => {
