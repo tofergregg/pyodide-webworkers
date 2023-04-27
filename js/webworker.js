@@ -74,7 +74,7 @@ self.onmessage = async (event) => {
 async function input_fixed(text) {
     console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
-    await resolveAfter2Sections();
+    await resolveAfter2Seconds();
     data = '4'
     return data;
 };
