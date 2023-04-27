@@ -29,6 +29,7 @@ let pyodideReadyPromise = loadPyodideAndPackages();
 self.jsMessage = null; 
 
 self.onmessage = async (event) => {
+    console.log("got a message from py-worker");
     if (event.data.cmd === "setInterruptBuffer") {
         self.interruptBuffer = new Uint8Array(event.data.interruptBuffer);
         return;
