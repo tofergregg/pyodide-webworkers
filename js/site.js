@@ -150,7 +150,8 @@ def my_tracer(frame, event, arg = None):
 
     if func_name == 'input':
        print('I')
-    print(f"func_name: {func_name}")
+    print(f"A {event} encountered in \
+    {func_name}() at line number {line_no} ")
 
     return my_tracer
 
