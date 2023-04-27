@@ -1,7 +1,7 @@
 import { updateCanvas } from "./drawing.js";
 
 let pyodideWorker;
-let interruptBuffer;
+// remove: let interruptBuffer;
 window.codeRunning = false;
 const callbacks = {};
 
@@ -14,9 +14,9 @@ const interruptExecution = () => {
         if (!window.codeRunning) {
             clearInterval(sendInterrupt);
         } else {
-            Atomics.store(interruptBuffer, 0, 2);
-            Atomics.store(window.waitArr, 0, 1);
-            Atomics.notify(window.waitArr, 0);
+            // remove: Atomics.store(interruptBuffer, 0, 2);
+            // remove: Atomics.store(window.waitArr, 0, 1);
+            // remove: Atomics.notify(window.waitArr, 0);
             window.stopExecution = true;
             const terminal = document.getElementById('console-output');
             terminal.removeEventListener('input', consoleListener);
@@ -24,17 +24,13 @@ const interruptExecution = () => {
     }, 10);
 }
 
-const clearInterruptBuffer = () => {
-    Atomics.store(interruptBuffer, 0, 0);
-}
-
 const setupWorker = () => {
     pyodideWorker = new Worker("./js/webworker.js");
-    const interruptBufferRaw = new SharedArrayBuffer(1);
-    interruptBuffer = new Uint8Array(interruptBufferRaw);
-    window.interruptBuffer = interruptBuffer;
-    pyodideWorker.postMessage({cmd: "setInterruptBuffer", interruptBuffer: interruptBufferRaw});
-    clearInterruptBuffer();
+    // remove: const interruptBufferRaw = new SharedArrayBuffer(1);
+    // remove: interruptBuffer = new Uint8Array(interruptBufferRaw);
+    // remove: window.interruptBuffer = interruptBuffer;
+    // remove: pyodideWorker.postMessage({cmd: "setInterruptBuffer", interruptBuffer: interruptBufferRaw});
+    // remove: clearInterruptBuffer();
 
     window.pyodideWorker = pyodideWorker;
 
@@ -124,7 +120,7 @@ const passSharedBuffer = (buf, waitBuf) => {
 const asyncRun = ((script, context) => {
     let id = 0; // identify a Promise
     return (script, context) => {
-        clearInterruptBuffer();
+        // remove: clearInterruptBuffer();
         // the id could be generated more carefully
         id = (id + 1) % Number.MAX_SAFE_INTEGER;
         window.codeRunning = true;
@@ -189,4 +185,4 @@ const getInputFromTerminal = () => {
     terminal.addEventListener('input', consoleListener, false);
 }
 
-export { setupWorker, asyncRun, sendMessageToWorker, passSharedBuffer, interruptExecution, clearInterruptBuffer  };
+export { setupWorker, asyncRun, sendMessageToWorker, interruptExecution  };
