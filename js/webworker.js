@@ -58,8 +58,12 @@ self.onmessage = async (event) => {
     try {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
-        input = input_fixed
-        __builtins__.input = input_fixed
+        def input(prompt=None):
+            while True:
+               result = input_fixed(prompt)
+               if result['have_answer']:
+                   return result['answer']
+        __builtins__.input = input
         `);
         await self.pyodide.runPythonAsync(drawingLib);
         await self.pyodide.loadPackagesFromImports(python);
@@ -71,11 +75,10 @@ self.onmessage = async (event) => {
     }
 };
 
-async function input_fixed(text) {
+function input_fixed(text) {
     console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
-    await resolveAfter2Seconds();
-    data = '4'
+    data = {have_result: true, result: '4'}
     return data;
 };
 
