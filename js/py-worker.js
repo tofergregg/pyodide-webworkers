@@ -145,7 +145,7 @@ const consoleListener = () => {
     } else if (currentVal.endsWith('\n')) {
         terminal.removeEventListener('input', consoleListener);
         console.log("posting message: ");
-        console.log(currentVal.slice(0, -1));
+        console.log(currentVal);
         pyodideWorker.postMessage({command: "input_result", value: currentVal.slice(0, -1)});
     }
     else{
