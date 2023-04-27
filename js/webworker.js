@@ -61,8 +61,8 @@ self.onmessage = async (event) => {
         def input(prompt=None):
             while True:
                result = input_fixed(prompt)
-               if result['have_answer']:
-                   return result['answer']
+               if result['done']:
+                   return result['result']
         __builtins__.input = input
         `);
         await self.pyodide.runPythonAsync(drawingLib);
@@ -78,10 +78,7 @@ self.onmessage = async (event) => {
 function input_fixed(text) {
     console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
-    const data = new Map();
-    data.set('have_result', true);
-    data.set('result', 4);
-    return pyodide.toPy({'have_result': true, 'result': 4});
+    return pyodide.toPy({'done': true, 'result': 4});
 };
 
 function resolveAfter2Seconds() {
