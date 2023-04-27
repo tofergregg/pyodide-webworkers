@@ -130,7 +130,7 @@ window.get_input = () => {
     setTimeout(python_runner_fn, 100);
 }
 
-wrap_code = (code) => {
+const wrap_code = (code) => {
     // indent everything by 4 spaces
     code = code.replaceAll('\n', '\n    ')
 
