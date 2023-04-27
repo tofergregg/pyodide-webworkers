@@ -105,7 +105,9 @@ async function checkForMessage() {
 
 function yieldToMacrotasks() {
     console.log('more yielding');
-    return new Promise((resolve) => setTimeout(resolve));
+    return new Promise((resolve) => {
+        setTimeout(resolve));
+    }
 }
 
 function resolveAfter2Seconds() {
