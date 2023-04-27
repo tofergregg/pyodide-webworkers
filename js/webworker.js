@@ -74,9 +74,18 @@ self.onmessage = async (event) => {
 async function input_fixed(text) {
     console.log("input requested: " + text)
     self.postMessage({outputText: text, getInput: true});
+    await resolveAfter2Sections();
     data = '4'
     return data;
 };
+
+function resolveAfter2Seconds() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 2000);
+  });
+}
 
 function sleep_fixed(t) {
     // console.log("Requested " + t + " seconds of sleep");

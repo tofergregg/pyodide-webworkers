@@ -148,10 +148,8 @@ def my_tracer(frame, event, arg = None):
     # extracts the line number
     line_no = frame.f_lineno
 
-    if func_name == 'input':
-       print('I')
-    print(f"A {event} encountered in \
-    {code}() at line number {line_no} ")
+    # print(f"A {event} encountered in \
+    #{code}() at line number {line_no} ")
 
     return my_tracer
 
