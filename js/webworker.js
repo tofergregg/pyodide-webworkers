@@ -90,7 +90,7 @@ function input_fixed(text, first) {
     } else {
         console.log('.');
         // check for result
-        return pyodie.toPy({done: true, result: "4");
+        return pyodie.toPy({done: true, result: "4"});
         if (input_fixed.inputResult !== null) {
             return pyodide.toPy({'done': true, 'result': inputResult});
         }
