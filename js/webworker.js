@@ -90,7 +90,11 @@ function input_fixed(text, first) {
         // console.log('.');
         // check for result
         // see if we can force the message to be read
-        checkForMessage();
+          var x = new XMLHttpRequest();
+          x.timeout = t;
+          x.open('get', '/@sleep@/t.js?t='+t, false);
+          x.setRequestHeader('cache-control', 'no-cache, no-store, max-age=0');
+      try{ x.send() }catch(e){}
         if (input_fixed.inputResult !== null) {
             return pyodide.toPy({'done': true, 'result': inputResult});
         }
