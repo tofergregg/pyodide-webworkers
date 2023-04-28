@@ -3,7 +3,7 @@
 // Setup your project to serve `py-worker.js`. You should also serve
 // `pyodide.js`, and all its associated `.asm.js`, `.data`, `.json`,
 // and `.wasm` files as well:
-importScripts("https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js");
+importScripts("https://cdn.jsdelivr.net/pyodide/v0.23.1/full/pyodide.js");
 importScripts("./drawingPyLib2.js");
 
 async function loadPyodideAndPackages() {
@@ -66,7 +66,7 @@ self.onmessage = async (event) => {
         def input(prompt=None):
             loop = asyncio.get_event_loop()
             coroutine = async_func()
-            # loop.run_until_complete(coroutine)
+            loop.run_until_complete(coroutine)
             print("after run until complete")
             first = True
             while True:
