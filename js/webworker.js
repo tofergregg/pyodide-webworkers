@@ -99,13 +99,7 @@ function input_fixed(text, first) {
         // console.log('.');
         // check for result
         // see if we can force the message to be read
-          var x = new XMLHttpRequest();
-          x.timeout = 500;
-          x.open('get', '/@sleep@/t.js?t='+500, false);
-          x.setRequestHeader('cache-control', 'no-cache, no-store, max-age=0');
-      try{ x.send() }catch(e){
-            console.log(e);
-      }
+        return pyodide.toPy({'done': true, 'result': "5"});
         if (input_fixed.inputResult !== null) {
             return pyodide.toPy({'done': true, 'result': inputResult});
         }
