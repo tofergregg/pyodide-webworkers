@@ -63,6 +63,7 @@ self.onmessage = async (event) => {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
         import asyncio
+        import pyodide
         def input(prompt=None):
             loop = pyodide.webloop()
             coroutine = async_func()
