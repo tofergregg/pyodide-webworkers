@@ -60,7 +60,7 @@ self.onmessage = async (event) => {
     }
     // Now is the easy part, the one that is similar to working in the main thread:
 
-    pyodide.globals.input = async function () {
+    pyodide.globals['input'] = async function () {
         return new Promise((r) => setTimeout((_) => r('async_input')))
     }
     try {
