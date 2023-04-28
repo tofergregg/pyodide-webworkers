@@ -64,7 +64,7 @@ self.onmessage = async (event) => {
         from js import input_fixed
         import asyncio
         def input(prompt=None):
-            loop = asyncio.get_event_loop()
+            loop = pyodide.webloop()
             coroutine = async_func()
             loop.run_until_complete(coroutine)
             print("after run until complete")
