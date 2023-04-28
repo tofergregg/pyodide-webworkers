@@ -79,11 +79,8 @@ self.onmessage = async (event) => {
                 first = False
                 if response['done']:
                     return response['result']
-            """
+        """
         __builtins__.input = input_fixed
-        async def async_func():
-            await asyncio.sleep(5)
-            print("done sleeping")
         `);
         await self.pyodide.runPythonAsync(drawingLib);
         await self.pyodide.loadPackagesFromImports(python);
@@ -99,14 +96,18 @@ const waitForInput = (r) => {
     if (input_fixed.inputResult !== null) {
         return r(input_fixed.inputResult);
     }
-    setTimeout(waitForInput(r), 100);
+    setTimeout(() => {
+        waitForInput(r);
+    }, 100);
 }
 
 async function input_fixed(text, first) {
     console.log("input requested: " + text)
     input_fixed.inputResult = null;
     self.postMessage({outputText: text, getInput: true});
-    return new Promise((r) => setTimeout(waitForInput(r)));
+    return new Promise((r) => setTimeout(() => {
+        waitForInput(r);
+    }));
 
     if (first) {
         console.log("input requested: " + text)
