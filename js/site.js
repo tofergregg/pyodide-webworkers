@@ -137,7 +137,7 @@ const wrap_code = (code) => {
     // prepend function def and tracer code
     const prefix_code = `import sys
 
-async def my_tracer(frame, event, arg = None):
+def my_tracer(frame, event, arg = None):
     #print(".", end='')
     # extracts frame code
     code = frame.f_code
