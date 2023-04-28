@@ -127,7 +127,6 @@ class TransformCall(ast.NodeTransformer):
     global ___parse_functions
     def visit_Call(self, node):
         self.generic_visit(node)
-        return node
         if node.func.id in ___parse_functions:
             return ast.Await(node)
         else:
@@ -153,6 +152,7 @@ window.get_input = () => {
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
     let code = window.cmEditor.state.doc.toString();
     transform_code_for_async(code);
+    return;
     code = wrap_code(code);
     // only run python_runner if we've stopped execution
     const python_runner_fn = () => {
