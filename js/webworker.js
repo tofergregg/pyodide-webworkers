@@ -36,6 +36,7 @@ self.onmessage = async (event) => {
     if (event.data.cmd === "input_result") {
         console.log("got input!");
         input_fixed.inputResult = event.data.value;
+        return;
     }
     if (event.data.control !== undefined) {
         console.log("Control event");
