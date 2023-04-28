@@ -147,13 +147,12 @@ transform_to_async(the_code)
     console.log(transformed_code);
 }
 
-window.get_input = () => {
+async window.get_input = () => {
     window.reset_console();
     const context = {}; // we might use this to pass parameters to a program,
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
     let code = window.cmEditor.state.doc.toString();
-    transform_code_for_async(code);
-    return;
+    code = await transform_code_for_async(code);
     code = wrap_code(code);
     // only run python_runner if we've stopped execution
     const python_runner_fn = () => {
