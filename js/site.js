@@ -112,7 +112,7 @@ async function python_runner(script, context) {
 async function transform_code_for_async(code) {
     let pyodide = await loadPyodide();
     pyodide.globals.set('the_code', code);
-    transform_code = `import ast
+    const transform_code = `import ast
 
 ___parse_functions = ['input']
 class TransformFunc(ast.NodeTransformer):
