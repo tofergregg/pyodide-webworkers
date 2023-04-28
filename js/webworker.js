@@ -66,6 +66,8 @@ self.onmessage = async (event) => {
         import pyodide
         def input(prompt=None):
             loop = pyodide.webloop
+            print(dir(loop))
+            return "5"
             coroutine = async_func()
             loop.run_until_complete(coroutine)
             print("after run until complete")
