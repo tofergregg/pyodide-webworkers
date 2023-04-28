@@ -66,7 +66,7 @@ self.onmessage = async (event) => {
         def input(prompt=None):
             first = True
             while True:
-               asyncio.sleep(1)
+               await asyncio.sleep(1)
                response = input_fixed(prompt, first)
                first = False
                if response['done']:
