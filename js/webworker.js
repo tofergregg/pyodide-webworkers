@@ -62,9 +62,11 @@ self.onmessage = async (event) => {
     try {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
+        import asyncio
         def input(prompt=None):
             first = True
             while True:
+               asyncio.sleep(1)
                response = input_fixed(prompt, first)
                first = False
                if response['done']:
