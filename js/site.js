@@ -111,7 +111,39 @@ async function python_runner(script, context) {
 
 async function transform_code_for_async(code) {
     let pyodide = await loadPyodide();
-    console.log(pyodide.runPython(code));
+    pyodide.globals.the_code = code;
+    transform_code = `import ast
+
+___parse_functions = ['input']
+class TransformFunc(ast.NodeTransformer):
+    global ___parse_functions
+    def visit_FunctionDef(self, node):
+        self.generic_visit(node)
+        ___parse_functions.append(node.name)
+        return ast.AsyncFunctionDef(node.name, node.args, node.body, node.decorator_list,
+                                    node.returns, node.type_comment)
+
+class TransformCall(ast.NodeTransformer):
+    global ___parse_functions
+    def visit_Call(self, node):
+        self.generic_visit(node)
+        if node.func.id in ___parse_functions:
+            return ast.Await(node)
+        else:
+            return node
+
+def transform_to_async(code):
+    global transformed_code
+    tree = ast.parse(code)
+    ast.fix_missing_locations(TransformFunc().visit(tree))
+    ast.fix_missing_locations(TransformCall().visit(tree))
+    transformed_code = ast.unparse(tree)
+
+transform_to_async(the_code)
+`
+    pyodide.runPython(code);
+    console.log(pyodide.globals.transformed_code);
+
 }
 
 window.get_input = () => {
