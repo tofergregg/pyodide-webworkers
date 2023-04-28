@@ -66,7 +66,7 @@ self.onmessage = async (event) => {
         def input(prompt=None):
             loop = asyncio.get_event_loop()
             coroutine = async_func()
-            loop.run_until_complete(coroutine)
+            # loop.run_until_complete(coroutine)
             print("after run until complete")
             first = True
             while True:
