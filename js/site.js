@@ -153,11 +153,11 @@ def my_tracer(frame, event, arg = None):
 
     return my_tracer
 
-def ___WRAPPER():
+async def ___WRAPPER():
     `;
     const suffix_code = `
 sys.settrace(my_tracer)
-___WRAPPER()
+await ___WRAPPER()
 sys.settrace(None)
 `;
 
