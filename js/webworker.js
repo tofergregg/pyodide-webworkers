@@ -77,7 +77,7 @@ self.onmessage = async (event) => {
         __builtins__.input = input
 
         async def async_func():
-            await asyncio.sleep(1)
+            await asyncio.sleep(5)
             print("done sleeping")
         `);
         await self.pyodide.runPythonAsync(drawingLib);
