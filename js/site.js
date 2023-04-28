@@ -147,7 +147,7 @@ transform_to_async(the_code)
     console.log(transformed_code);
 }
 
-async window.get_input = () => {
+window.get_input = async () => {
     window.reset_console();
     const context = {}; // we might use this to pass parameters to a program,
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
