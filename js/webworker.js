@@ -65,7 +65,7 @@ self.onmessage = async (event) => {
         import asyncio
         import pyodide
         def input(prompt=None):
-            loop = pyodide.webloop
+            loop = pyodide.webloop.WebLoop
             print(dir(loop))
             return "5"
             coroutine = async_func()
