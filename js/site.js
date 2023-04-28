@@ -111,7 +111,7 @@ async function python_runner(script, context) {
 
 async function transform_code_for_async(code) {
     let pyodide = await loadPyodide();
-    pyodide.globals.set(the_code, code);
+    pyodide.globals.set('the_code', code);
     transform_code = `import ast
 
 ___parse_functions = ['input']
@@ -142,7 +142,7 @@ def transform_to_async(code):
 transform_to_async(the_code)
 `
     pyodide.runPython(code);
-    console.log(pyodide.globals.get(transformed_code));
+    console.log(pyodide.globals.get('transformed_code'));
 
 }
 
