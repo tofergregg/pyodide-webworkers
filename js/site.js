@@ -114,7 +114,8 @@ async function transform_code_for_async(code) {
     pyodide.globals.set('the_code', code);
     const transform_code = `import ast
 
-global ___parse_functions = ['input']
+global ___parse_functions
+___parse_functions = ['input']
 class TransformFunc(ast.NodeTransformer):
     global ___parse_functions
     def visit_FunctionDef(self, node):
