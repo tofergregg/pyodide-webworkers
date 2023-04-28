@@ -63,16 +63,22 @@ self.onmessage = async (event) => {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
         import asyncio
-        async def input(prompt=None):
+        def input(prompt=None):
+            loop = asyncio.get_event_loop()
+            coroutine = async_func()
+            loop.run_until_complete(coroutine)
+            print("after run until complete")
             first = True
             while True:
-                await asyncio.sleep(1)
-                print("+")
                 response = input_fixed(prompt, first)
                 first = False
                 if response['done']:
                     return response['result']
         __builtins__.input = input
+
+        async def async_func():
+            await asyncio.sleep(1)
+            print("done sleeping")
         `);
         await self.pyodide.runPythonAsync(drawingLib);
         await self.pyodide.loadPackagesFromImports(python);
