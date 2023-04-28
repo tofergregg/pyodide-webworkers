@@ -96,7 +96,10 @@ self.onmessage = async (event) => {
 };
 
 const waitForInput = (r) => {
-    return r("42");
+    if (input_fixed.inputResult !== null) {
+        return r(input_fixed.inputResult);
+    }
+    setTimeout(waitForInput(r), 100);
 }
 
 async function input_fixed(text, first) {
