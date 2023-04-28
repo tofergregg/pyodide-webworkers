@@ -59,9 +59,14 @@ self.onmessage = async (event) => {
         self[key] = context[key];
     }
     // Now is the easy part, the one that is similar to working in the main thread:
+
+    pyodide.globals.input = async function () {
+        return new Promise((r) => setTimeout((_) => r('async_input')))
+    }
     try {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
+        """
         import asyncio
         import pyodide
         def input(prompt=None):
@@ -78,7 +83,7 @@ self.onmessage = async (event) => {
                 if response['done']:
                     return response['result']
         __builtins__.input = input
-
+        """
         async def async_func():
             await asyncio.sleep(5)
             print("done sleeping")
@@ -121,11 +126,11 @@ function yieldToMacrotasks() {
 }
 
 function resolveAfter2Seconds() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve('resolved');
-    }, 2000);
-  });
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('resolved');
+        }, 2000);
+    });
 }
 
 function sleep_fixed(t) {
@@ -168,7 +173,7 @@ function getMouseDown(x_or_y) {
     self.postMessage({cmd: 'getMouseDownPos'});
 
     Atomics.wait(self.waitArr, 0, 0);
-        return [Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256, Atomics.load(self.sharedArr, 3) + Atomics.load(self.sharedArr, 4) * 256];
+    return [Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256, Atomics.load(self.sharedArr, 3) + Atomics.load(self.sharedArr, 4) * 256];
 }
 
 function clearTerminal() {
