@@ -96,7 +96,7 @@ self.onmessage = async (event) => {
 };
 
 async function input_fixed(text, first) {
-    return new Promise((r) => setTimeout((_) => r('async_input')))
+    return new Promise((r) => setTimeout((_) => r('5')))
 
     if (first) {
         console.log("input requested: " + text)
