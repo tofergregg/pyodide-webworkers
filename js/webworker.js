@@ -95,15 +95,15 @@ self.onmessage = async (event) => {
     }
 };
 
-const waitForInput = () => {
-    return "42";
+const waitForInput = (r) => {
+    return r("42");
 }
 
 async function input_fixed(text, first) {
     console.log("input requested: " + text)
     input_fixed.inputResult = null;
     self.postMessage({outputText: text, getInput: true});
-    return new Promise((r) => setTimeout(waitForInput));
+    return new Promise((r) => setTimeout(waitForInput(r)));
 
     if (first) {
         console.log("input requested: " + text)
