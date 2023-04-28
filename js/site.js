@@ -5,6 +5,7 @@ import { setupWorker,
 } from "./py-worker.js";
 
 const init_main = () => {
+    window.pyodide = await loadPyodide();
     window.stopExecution = false; // we aren't running
     const currentValue = window.cmEditor.state.doc.toString();
     const endPosition = currentValue.length;
@@ -110,8 +111,7 @@ async function python_runner(script, context) {
 ///// 
 
 async function transform_code_for_async(code) {
-    let pyodide = await loadPyodide();
-    pyodide.globals.set('the_code', code);
+    window.pyodide.globals.set('the_code', code);
     const transform_code = `import ast
 
 class TransformFunc(ast.NodeTransformer):
@@ -142,8 +142,8 @@ def transform_to_async(code):
 
 transform_to_async(the_code)
 `
-    pyodide.runPython(transform_code);
-    const transformed_code = pyodide.globals.get('transformed_code');
+    window.pyodide.runPython(transform_code);
+    const transformed_code = window.pyodide.globals.get('transformed_code');
     // console.log(transformed_code);
     return transformed_code;
 }
