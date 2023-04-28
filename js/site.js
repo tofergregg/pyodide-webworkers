@@ -115,25 +115,25 @@ async function transform_code_for_async(code) {
     const transform_code = `import ast
 
 class TransformFunc(ast.NodeTransformer):
-    global ___parse_functions
+    global parse_functions_list
     def visit_FunctionDef(self, node):
         self.generic_visit(node)
-        ___parse_functions.append(node.name)
+        parse_functions_list.append(node.name)
         return ast.AsyncFunctionDef(node.name, node.args, node.body, node.decorator_list,
                                     node.returns, node.type_comment)
 
 class TransformCall(ast.NodeTransformer):
-    global ___parse_functions
+    global parse_functions_list
     def visit_Call(self, node):
         self.generic_visit(node)
-        if node.func.id in ___parse_functions:
+        if node.func.id in parse_functions_list:
             return ast.Await(node)
         else:
             return node
 
 def transform_to_async(code):
-    global ___parse_functions
-    ___parse_functions = ['input']
+    global parse_functions_list
+    parse_functions_list = ['input']
     global transformed_code
     tree = ast.parse(code)
     ast.fix_missing_locations(TransformFunc().visit(tree))
