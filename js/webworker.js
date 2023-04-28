@@ -60,15 +60,12 @@ self.onmessage = async (event) => {
     }
     // Now is the easy part, the one that is similar to working in the main thread:
 
-    pyodide.globals['input'] = async function () {
-        return new Promise((r) => setTimeout((_) => r('async_input')))
-    }
     try {
         await self.pyodide.runPythonAsync(`
         from js import input_fixed
-        """
         import asyncio
         import pyodide
+        """
         def input(prompt=None):
             loop = pyodide.webloop.WebLoop
             print(help(loop.run_until_complete))
@@ -82,8 +79,8 @@ self.onmessage = async (event) => {
                 first = False
                 if response['done']:
                     return response['result']
-        __builtins__.input = input
-        """
+            """
+        __builtins__.input = input_fixed
         async def async_func():
             await asyncio.sleep(5)
             print("done sleeping")
@@ -98,7 +95,9 @@ self.onmessage = async (event) => {
     }
 };
 
-function input_fixed(text, first) {
+async function input_fixed(text, first) {
+    return new Promise((r) => setTimeout((_) => r('async_input')))
+
     if (first) {
         console.log("input requested: " + text)
         input_fixed.inputResult = null;
