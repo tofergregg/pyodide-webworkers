@@ -143,7 +143,7 @@ def transform_to_async(code):
 transform_to_async(the_code)
 `
     pyodide.runPython(transform_code);
-    transformed_code = pyodide.globals.get('transformed_code');
+    const transformed_code = pyodide.globals.get('transformed_code');
     console.log(transformed_code);
 }
 
