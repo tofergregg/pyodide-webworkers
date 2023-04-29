@@ -126,7 +126,6 @@ class TransformCall(ast.NodeTransformer):
     global parse_functions_list
     def visit_Call(self, node):
         self.generic_visit(node)
-        print(node.func)
         if hasattr(node.func, 'id') and node.func.id in parse_functions_list:
             return ast.Await(node)
         else:
