@@ -5,7 +5,7 @@ import { setupWorker,
 } from "./py-worker.js";
 
 const init_main = () => {
-    window.pyodide = await loadPyodide();
+    window.pyodide = loadPyodide();
     window.stopExecution = false; // we aren't running
     const currentValue = window.cmEditor.state.doc.toString();
     const endPosition = currentValue.length;
