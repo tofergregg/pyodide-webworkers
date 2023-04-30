@@ -146,8 +146,15 @@ function resolveAfter2Seconds() {
 
 function sleep_fixed(t) {
     // console.log("Requested " + t + " seconds of sleep");
-    let start = Date.now();
-    while (Date.now() - start < t * 1000) { }
+    if (t < 0.004) { // minimum sleep 
+        return;
+    }
+    settimeout({
+        sleep_fixed(t - 0.004);
+    }, 0.004);
+
+    // let start = Date.now();
+    // while (Date.now() - start < t * 1000) { }
     // console.log("after sleeping");
 }
 
