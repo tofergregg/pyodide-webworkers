@@ -145,21 +145,7 @@ function resolveAfter2Seconds() {
 }
 
 function sleep_fixed(t_sec) {
-    sleep_loop(t_sec * 1000);
-}
-
-function sleep_loop(t_msec) {
-    // console.log("Requested " + t + " seconds of sleep");
-    if (t_msec < 0.004) { // minimum sleep 
-        return;
-    }
-    setTimeout(function(){
-        sleep_fixed(t_msec - 0.004);
-    }, 0.004);
-
-    // let start = Date.now();
-    // while (Date.now() - start < t * 1000) { }
-    // console.log("after sleeping");
+    return new Promise(resolve => setTimeout(resolve, t_sec * 1000));
 }
 
 const fixTimeImport = (code) => {
