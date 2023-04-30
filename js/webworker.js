@@ -144,7 +144,11 @@ function resolveAfter2Seconds() {
     });
 }
 
-function sleep_fixed(t) {
+function sleep_fixed(t_sec) {
+    sleep_loop(t_sec * 1000);
+}
+
+function sleep_loop(t_msec) {
     // console.log("Requested " + t + " seconds of sleep");
     if (t < 0.004) { // minimum sleep 
         return;
