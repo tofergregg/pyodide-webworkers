@@ -150,11 +150,11 @@ function sleep_fixed(t_sec) {
 
 function sleep_loop(t_msec) {
     // console.log("Requested " + t + " seconds of sleep");
-    if (t < 0.004) { // minimum sleep 
+    if (t_msec < 0.004) { // minimum sleep 
         return;
     }
     setTimeout(function(){
-        sleep_fixed(t - 0.004);
+        sleep_fixed(t_msec - 0.004);
     }, 0.004);
 
     // let start = Date.now();
