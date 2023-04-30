@@ -149,7 +149,7 @@ function sleep_fixed(t) {
     if (t < 0.004) { // minimum sleep 
         return;
     }
-    settimeout({
+    settimeout(function(){
         sleep_fixed(t - 0.004);
     }, 0.004);
 
