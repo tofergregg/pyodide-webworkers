@@ -133,7 +133,7 @@ class TransformCall(ast.NodeTransformer):
 
 def transform_to_async(code):
     global parse_functions_list
-    parse_functions_list = ['input']
+    parse_functions_list = ['input', 'sleep']
     global transformed_code
     tree = ast.parse(code)
     ast.fix_missing_locations(TransformFunc().visit(tree))
