@@ -119,7 +119,7 @@ def make_await(node):
     if hasattr(node.func, 'id') and node.func.id in parse_functions.keys():
         # top-level
         return True
-    if hasattr(node.func, 'value') and node.func.value.id in parse_functions.keys():
+    if hasattr(node.func, 'value') and hasattr(node.func.value, 'id') and node.func.value.id in parse_functions.keys():
         if node.func.attr in parse_functions[node.func.value.id]:
             return True
     return False
