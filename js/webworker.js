@@ -41,6 +41,7 @@ self.onmessage = async (event) => {
     if (event.data.cmd === "mouse_pos") {
         getMousePos.x = event.data.x;
         getMousePos.y = event.data.y;
+        return;
     }
     if (event.data.control !== undefined) {
         console.log("Control event");
@@ -148,7 +149,7 @@ const waitForMousePos = (r) => {
 async function getMousePos(x_or_y) {
     console.log("got mouse request");
     getMousePos.result = null;
-    // self.postMessage({cmd: 'getMousePos'});
+    self.postMessage({cmd: 'getMousePos'});
     return new Promise((r) => setTimeout(() => {
         waitForMousePos(r);
     }));
