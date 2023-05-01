@@ -169,7 +169,8 @@ const waitForMouseDown = (r) => {
 }
 
 function getMouseDown(x_or_y) {
-    getMouseDown.result = null;
+    getMouseDown.x = null;
+    getMouseDown.y = null;
     self.postMessage({cmd: 'getMouseDown'});
     return new Promise((r) => setTimeout(() => {
         waitForMouseDown(r);
