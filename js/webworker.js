@@ -181,6 +181,6 @@ function clearTerminal() {
     self.postMessage({cmd: 'clearTerminal'});
 }
 
-async const stop_code = () => {
+const stop_code = async () => {
      
 }
