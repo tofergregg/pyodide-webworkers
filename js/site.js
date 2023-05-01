@@ -196,6 +196,7 @@ from js import stop_code
 def my_tracer(frame, event, arg = None):
     print(".", end='')
     if stop_code():
+        print("stopping")
         raise KeyboardInterrupt
     # extracts frame code
     code = frame.f_code
