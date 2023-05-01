@@ -66,11 +66,11 @@ class Canvas:
         updateCanvas('clearall', {})
 
     async def get_mouse_x(self):
-        return await getMousePos('x')['x']
+        result = await getMousePos('x')
+        return result['x'] 
     
     async def get_mouse_y(self):
-        result = await getMousePos('y')
-        return result['x']
+        await getMousePos('y')
 
     async def get_mouse_down(self):
         x, y = getMouseDown()
