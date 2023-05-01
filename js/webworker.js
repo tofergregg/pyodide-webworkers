@@ -43,6 +43,11 @@ self.onmessage = async (event) => {
         getMousePos.y = event.data.y;
         return;
     }
+    if (event.data.cmd === "mouse_down") {
+        getMouseDown.x = event.data.x;
+        getMouseDown.y = event.data.y;
+        return;
+    }
     if (event.data.control !== undefined) {
         console.log("Control event");
         self.jsMessage = event.data.message;
@@ -154,12 +159,21 @@ async function getMousePos(x_or_y) {
     }));
 }
 
-function getMouseDown(x_or_y) {
-    Atomics.store(self.sharedArr, 0, 0);
-    self.postMessage({cmd: 'getMouseDownPos'});
+const waitForMouseDown = (r) => {
+    if (getMouseDown.x !== null && getMouseDown.y !== null) {
+        return r(pyodide.toPy({'x': getMouseDown.x, 'y': getMouseDown.y}));
+    }
+    setTimeout(() => {
+        waitForMouseDown(r);
+    }, 10);
+}
 
-    Atomics.wait(self.waitArr, 0, 0);
-    return [Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256, Atomics.load(self.sharedArr, 3) + Atomics.load(self.sharedArr, 4) * 256];
+function getMouseDown(x_or_y) {
+    getMouseDown.result = null;
+    self.postMessage({cmd: 'getMouseDown'});
+    return new Promise((r) => setTimeout(() => {
+        waitForMouseDown(r);
+    }));
 }
 
 function clearTerminal() {

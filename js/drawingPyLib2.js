@@ -74,7 +74,8 @@ class Canvas:
         return result['y']
 
     async def get_mouse_down(self):
-        x, y = getMouseDown()
+        result = await getMouseDown()
+        x, y = result['x'], result['y'] 
         if x == 65535: x = -1
         if y == 65535: y = -1
         return (x, y)

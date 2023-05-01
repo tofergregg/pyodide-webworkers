@@ -114,7 +114,7 @@ async function transform_code_for_async(code) {
     window.pyodide.globals.set('the_code', code);
     const transform_code = `import ast
 
-parse_functions = {'input': [], 'time': ["sleep"], 'canvas': ["get_mouse_x", "get_mouse_y"]}
+parse_functions = {'input': [], 'time': ["sleep"], 'canvas': ["get_mouse_x", "get_mouse_y", "get_mouse_down"]}
 def make_await(node):
     if hasattr(node.func, 'id') and node.func.id in parse_functions.keys():
         # top-level

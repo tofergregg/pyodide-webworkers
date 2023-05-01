@@ -54,8 +54,6 @@ const setupWorker = () => {
         }
 
         if (event.data.cmd === 'getMousePos') {
-            // need 2 bytes for each mouse x and y
-            // will store in little endian format
             const lastX = window.lastMouse.x;
             const lastY = window.lastMouse.y;
 
@@ -63,24 +61,14 @@ const setupWorker = () => {
             return;
         }
 
-        if (event.data.cmd === 'getMouseDownPos') {
-            // need 2 bytes for each mouse x and y
-            // will store in little endian format
+        if (event.data.cmd === 'getMouseDown') {
             const lastX = window.lastMouseDown.x;
             const lastY = window.lastMouseDown.y;
             // update so we indicate that we've read it
             window.lastMouseDown.x = -1;
             window.lastMouseDown.y = -1;
+            pyodideWorker.postMessage({cmd: "mouse_down", x: lastX, y: lastY});
 
-            Atomics.store(window.sharedArr, 1, lastX % 256);
-            Atomics.store(window.sharedArr, 2, Math.floor(lastX / 256));
-
-            Atomics.store(window.sharedArr, 3, lastY % 256);
-            Atomics.store(window.sharedArr, 4, Math.floor(lastY / 256));
-
-            // alert the webworker
-            Atomics.store(window.waitArr, 0, 1);
-            Atomics.notify(window.waitArr, 0);
             return;
         }
         if (event.data.cmd === 'clearTerminal') {
