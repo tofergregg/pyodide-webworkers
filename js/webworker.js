@@ -148,7 +148,7 @@ const waitForMousePos = (r) => {
     }
     setTimeout(() => {
         waitForMousePos(r);
-    }, 10);
+    });
 }
 
 async function getMousePos(x_or_y) {
