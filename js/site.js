@@ -213,9 +213,9 @@ async def my_tracer(frame, event, arg = None):
 async def ___WRAPPER():
     `;
     const suffix_code = `
-sys.settrace(my_tracer)
+threading.settrace(my_tracer)
 await ___WRAPPER()
-threading.settrace(None)
+sys.settrace(None)
 `;
 
     code = prefix_code + code + suffix_code;
