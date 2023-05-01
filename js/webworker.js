@@ -29,8 +29,8 @@ let pyodideReadyPromise = loadPyodideAndPackages();
 self.jsMessage = null; 
 
 self.onmessage = async (event) => {
-    if (event.data.cmd === "setInterruptBuffer") {
-        self.interruptBuffer = new Uint8Array(event.data.interruptBuffer);
+    if (event.data.cmd === "stopProgram") {
+        stop_code.stopped = true;
         return;
     }
     if (event.data.cmd === "input_result") {
@@ -69,6 +69,7 @@ self.onmessage = async (event) => {
     for (const key of Object.keys(context)) {
         self[key] = context[key];
     }
+    stop_code.stopped = false;
     // Now is the easy part, the one that is similar to working in the main thread:
 
     try {
@@ -183,4 +184,5 @@ function clearTerminal() {
 
 function stop_code() {
     console.log("checking for stop");
+    return stop_code.stopped;
 }

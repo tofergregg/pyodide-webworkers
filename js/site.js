@@ -195,7 +195,8 @@ const wrap_code = (code) => {
 from js import stop_code
 def my_tracer(frame, event, arg = None):
     print(".", end='')
-    stop_code()
+    if stop_code():
+        raise KeyboardInterrupt
     # extracts frame code
     code = frame.f_code
   

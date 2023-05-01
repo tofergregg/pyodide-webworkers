@@ -10,18 +10,9 @@ const interruptExecution = () => {
     // so, we'll just keep trying to interrupt until we 
     // get confirmation that the program has stopped
     // Basically, we'll keep hitting ctrl-c until we stop the program!
-    const sendInterrupt = setInterval(() => {
-        if (!window.codeRunning) {
-            clearInterval(sendInterrupt);
-        } else {
-            // remove: Atomics.store(interruptBuffer, 0, 2);
-            // remove: Atomics.store(window.waitArr, 0, 1);
-            // remove: Atomics.notify(window.waitArr, 0);
-            window.stopExecution = true;
-            const terminal = document.getElementById('console-output');
-            terminal.removeEventListener('input', consoleListener);
-        }
-    }, 10);
+    window.codeRunning = false;
+    pyodideWorker.postMessage({cmd: "stopProgram"});
+    
 }
 
 const setupWorker = () => {
