@@ -59,16 +59,7 @@ const setupWorker = () => {
             const lastX = window.lastMouse.x;
             const lastY = window.lastMouse.y;
 
-            Atomics.store(window.sharedArr, 1, lastX % 256);
-            Atomics.store(window.sharedArr, 2, Math.floor(lastX / 256));
-
-            Atomics.store(window.sharedArr, 3, lastY % 256);
-            Atomics.store(window.sharedArr, 4, Math.floor(lastY / 256));
-
-            // alert the webworker
-            Atomics.store(window.waitArr, 0, 1);
-            Atomics.notify(window.waitArr, 0);
-            return;
+            pyodideWorker.postMessage({cmd: "mouse_pos", x: lastX, y: lastY});
         }
 
         if (event.data.cmd === 'getMouseDownPos') {

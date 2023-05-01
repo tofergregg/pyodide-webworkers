@@ -38,6 +38,10 @@ self.onmessage = async (event) => {
         input_fixed.inputResult = event.data.value;
         return;
     }
+    if (event.data.cmd === "mouse_pos") {
+        getMousePos.x = event.data.x;
+        getMousePos.y = event.data.y;
+    }
     if (event.data.control !== undefined) {
         console.log("Control event");
         self.jsMessage = event.data.message;
@@ -66,21 +70,6 @@ self.onmessage = async (event) => {
         from js import input_fixed
         import asyncio
         import pyodide
-        """
-        def input(prompt=None):
-            loop = pyodide.webloop.WebLoop
-            print(help(loop.run_until_complete))
-            return "5"
-            coroutine = async_func()
-            loop.run_until_complete(coroutine)
-            print("after run until complete")
-            first = True
-            while True:
-                response = input_fixed(prompt, first)
-                first = False
-                if response['done']:
-                    return response['result']
-        """
         __builtins__.input = input_fixed
         `);
         await self.pyodide.runPythonAsync(drawingLib);
@@ -126,27 +115,10 @@ async function input_fixed(text, first) {
     return pyodide.toPy({'done': false, 'result': 0});
 };
 
-async function checkForMessage() {
-    await yieldToMacrotasks();
-}
-
-function yieldToMacrotasks() {
-    return new Promise((resolve) => {
-        setTimeout(resolve);
-    });
-}
-
-function resolveAfter2Seconds() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve('resolved');
-        }, 2000);
-    });
-}
-
 function sleep_fixed(t_sec) {
     return new Promise(resolve => setTimeout(resolve, t_sec * 1000));
 }
+
 
 const fixTimeImport = (code) => {
     // this function finds `import time` and on the next line
@@ -164,16 +136,21 @@ function updateCanvas(cmd, dict) {
     self.postMessage({cmd: 'updateCanvas', 'canvasCmd': cmd, 'dict': dict.toJs()});
 }
 
-function getMousePos(x_or_y) {
-    Atomics.store(self.sharedArr, 0, 0);
-    self.postMessage({cmd: 'getMousePos'});
-    // while (Atomics.load(self.sharedArr, 0) == 0) {}; // spin
-    Atomics.wait(self.waitArr, 0, 0);
-    if (x_or_y == 'x') {
-        return Atomics.load(self.sharedArr, 1) + Atomics.load(self.sharedArr, 2) * 256;
-    } else {
-        return Atomics.load(self.sharedArr, 3) + Atomics.load(self.sharedArr, 4) * 256;
+const waitForMousePos = (r) => {
+    if (getMousePos.x !== null && getMousePos.y !== null) {
+        return pyodide.toPy({'done': true, 'x': getMousePos.x, 'y': getMousePos.y})
     }
+    setTimeout(() => {
+        waitForMousePos(r);
+    }, 10);
+}
+
+async function getMousePos(x_or_y) {
+    getMousePos.result = null;
+    self.postMessage({cmd: 'getMousePos'});
+    return new Promise((r) => setTimeout(() => {
+        waitForMousePos(r);
+    }));
 }
 
 function getMouseDown(x_or_y) {
