@@ -35,7 +35,6 @@ const setupWorker = () => {
     window.pyodideWorker = pyodideWorker;
 
     pyodideWorker.onmessage = (event) => {
-        console.log(event);
         const { id, ...data } = event.data;
         if (event.data.outputText !== undefined) {
             // console.log(event.data.outputText);
