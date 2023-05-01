@@ -193,8 +193,11 @@ const wrap_code = (code) => {
     const prefix_code = `import sys
 
 from js import stop_code
+import asyncio
 def my_tracer(frame, event, arg = None):
     print(".", end='')
+    loop = asyncio.get_running_loop()
+    print(loop)
     if stop_code():
         print("stopping")
         raise KeyboardInterrupt
