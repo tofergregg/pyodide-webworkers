@@ -70,7 +70,8 @@ class Canvas:
         return result['x'] 
     
     async def get_mouse_y(self):
-        await getMousePos('y')
+        result = await getMousePos('y')
+        return result['y']
 
     async def get_mouse_down(self):
         x, y = getMouseDown()
