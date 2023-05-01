@@ -193,7 +193,7 @@ const wrap_code = (code) => {
     const prefix_code = `import sys
 
 from js import stop_code
-import threading
+import asyncio
 async def my_tracer(frame, event, arg = None):
     print(".", end='')
     # extracts frame code
@@ -213,7 +213,7 @@ async def my_tracer(frame, event, arg = None):
 async def ___WRAPPER():
     `;
     const suffix_code = `
-threading.settrace(my_tracer)
+sys.settrace(asyncio.run(my_tracer))
 await ___WRAPPER()
 sys.settrace(None)
 `;
