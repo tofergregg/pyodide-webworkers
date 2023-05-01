@@ -65,13 +65,13 @@ class Canvas:
     def clearall(self):
         updateCanvas('clearall', {})
 
-    def get_mouse_x(self):
+    async def get_mouse_x(self):
         return getMousePos('x') 
     
-    def get_mouse_y(self):
+    async def get_mouse_y(self):
         return getMousePos('y') 
 
-    def get_mouse_down(self):
+    async def get_mouse_down(self):
         x, y = getMouseDown()
         if x == 65535: x = -1
         if y == 65535: y = -1
