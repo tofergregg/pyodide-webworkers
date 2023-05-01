@@ -61,6 +61,7 @@ const setupWorker = () => {
             const lastY = window.lastMouse.y;
 
             pyodideWorker.postMessage({cmd: "mouse_pos", x: lastX, y: lastY});
+            return;
         }
 
         if (event.data.cmd === 'getMouseDownPos') {
