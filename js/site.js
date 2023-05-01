@@ -194,7 +194,7 @@ const wrap_code = (code) => {
 
 from js import stop_code
 import threading
-def my_tracer(frame, event, arg = None):
+async def my_tracer(frame, event, arg = None):
     print(".", end='')
     # extracts frame code
     code = frame.f_code
