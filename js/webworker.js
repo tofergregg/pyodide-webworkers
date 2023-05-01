@@ -183,6 +183,7 @@ function clearTerminal() {
 }
 
 function stop_code() {
-    console.log("checking for stop");
+    // console.log("checking for stop");
+    console.log(stop_code.stopped); 
     return stop_code.stopped;
 }
