@@ -165,7 +165,7 @@ const waitForMouseDown = (r) => {
     }
     setTimeout(() => {
         waitForMouseDown(r);
-    }, 10);
+    });
 }
 
 function getMouseDown(x_or_y) {
