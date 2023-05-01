@@ -34,10 +34,10 @@ class Canvas:
     def erase(self):
         passDrawShape(['erase'])
 
-    def get_mouse_x(self):
+    async def get_mouse_x(self):
         return getMousePos('x') 
     
-    def get_mouse_y(self):
+    async def get_mouse_y(self):
         return getMousePos('y') 
 
     def get_mouse_down(self):
