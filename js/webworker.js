@@ -182,5 +182,5 @@ function clearTerminal() {
 }
 
 function stop_code() {
-     
+    console.log("checking for stop");
 }
