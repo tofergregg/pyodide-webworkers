@@ -114,11 +114,21 @@ async function transform_code_for_async(code) {
     window.pyodide.globals.set('the_code', code);
     const transform_code = `import ast
 
+parse_functions = {'input': [], 'time': ["sleep"], 'canvas': ["get_mouse_x", "get_mouse_y"]}
+def make_await(node):
+    if hasattr(node.func, 'id') and node.func.id in parse_functions.keys():
+        # top-level
+        return True
+    if hasattr(node.func, 'value') and node.func.value.id in parse_functions.keys():
+        if node.func.attr in parse_functions[node.func.value.id]:
+            return True
+    return False
+
 class TransformFunc(ast.NodeTransformer):
-    global parse_functions_list
+    global parse_functions
     def visit_FunctionDef(self, node):
         self.generic_visit(node)
-        parse_functions_list.append(node.name)
+        parse_functions[node.name] = []
         return ast.AsyncFunctionDef(node.name, node.args, node.body, node.decorator_list,
                                     node.returns, node.type_comment)
 
@@ -126,15 +136,19 @@ class TransformCall(ast.NodeTransformer):
     global parse_functions_list
     def visit_Call(self, node):
         self.generic_visit(node)
-        if (hasattr(node.func, 'id') and node.func.id in parse_functions_list or
-            hasattr(node.func, 'value') and node.func.value.id in parse_functions_list):
+        # import pdb;pdb.set_trace()
+        """
+        if hasattr(node.func, 'id'):
+            print(node.func.id)
+        else:
+            print(node.func.value.id)
+        """
+        if make_await(node):
             return ast.Await(node)
         else:
             return node
 
 def transform_to_async(code):
-    global parse_functions_list
-    parse_functions_list = ['input', 'time']
     global transformed_code
     tree = ast.parse(code)
     ast.fix_missing_locations(TransformFunc().visit(tree))
