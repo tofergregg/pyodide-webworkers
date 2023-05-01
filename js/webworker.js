@@ -148,7 +148,7 @@ const waitForMousePos = (r) => {
 async function getMousePos(x_or_y) {
     console.log("got mouse request");
     getMousePos.result = null;
-    self.postMessage({cmd: 'getMousePos'});
+    // self.postMessage({cmd: 'getMousePos'});
     return new Promise((r) => setTimeout(() => {
         waitForMousePos(r);
     }));
