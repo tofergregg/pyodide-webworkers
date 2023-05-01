@@ -139,6 +139,7 @@ function updateCanvas(cmd, dict) {
 
 const waitForMousePos = (r) => {
     if (getMousePos.x !== null && getMousePos.y !== null) {
+        console.log("returning " + getMousePos.x + ", " + getMousePos.y);
         return pyodide.toPy({'done': true, 'x': getMousePos.x, 'y': getMousePos.y})
     }
     setTimeout(() => {
