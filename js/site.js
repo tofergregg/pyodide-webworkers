@@ -194,10 +194,10 @@ const wrap_code = (code) => {
 
 from js import stop_code
 import asyncio
-def my_tracer(frame, event, arg = None):
+async def my_tracer(frame, event, arg = None):
     print(".", end='')
-    loop = asyncio.get_running_loop()
-    print(loop)
+    # loop = asyncio.get_running_loop()
+    # print(loop)
     if stop_code():
         print("stopping")
         raise KeyboardInterrupt
