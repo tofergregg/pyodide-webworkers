@@ -219,7 +219,7 @@ async def ___WRAPPER():
     `;
     const suffix_code = `
 # key=lambda: (await my_tracer() for _ in '_').__anext__()
-sys.settrace(lambda: asyncio.run(my_tracer()))
+sys.settrace(lambda x, y, z: asyncio.run(my_tracer(x, y, z)))
 await ___WRAPPER()
 sys.settrace(None)
 `;
