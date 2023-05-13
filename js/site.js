@@ -194,7 +194,7 @@ const wrap_code = (code) => {
 
 from js import stop_code
 import asyncio
-async async_tracer():
+async def async_tracer():
     print(".", end='')
 
 def my_tracer(frame, event, arg = None):
