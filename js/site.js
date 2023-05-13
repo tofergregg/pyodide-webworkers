@@ -197,7 +197,7 @@ from js import stop_code
 import asyncio
 async def async_tracer():
     print(".", end='')
-    await sleep_fixed(1)
+    await sleep_fixed(5)
     print("done sleeping")
 
 def my_tracer(frame, event, arg = None):
