@@ -202,6 +202,7 @@ def my_tracer(frame, event, arg = None):
     if stop_code():
         print("stopping")
         raise KeyboardInterrupt
+        quit()
     # extracts frame code
     code = frame.f_code
   
