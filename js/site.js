@@ -192,15 +192,17 @@ const wrap_code = (code) => {
     // prepend function def and tracer code
     const prefix_code = `import sys
 
+from js import sleep_fixed
 from js import stop_code
 import asyncio
 async def async_tracer():
     print(".", end='')
+    sleep_fixed(1)
 
 def my_tracer(frame, event, arg = None):
-    # asyncio.ensure_future(async_tracer())
+    asyncio.ensure_future(async_tracer())
     if stop_code():
-        print("stopping")
+        print("stopping in python")
         raise KeyboardInterrupt
     # extracts frame code
     code = frame.f_code
