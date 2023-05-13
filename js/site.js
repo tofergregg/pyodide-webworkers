@@ -194,10 +194,10 @@ const wrap_code = (code) => {
 
 from js import stop_code
 import asyncio
-async def my_tracer(frame, event, arg = None):
+async async_tracer():
     print(".", end='')
-    # loop = asyncio.get_running_loop()
-    # print(loop)
+
+def my_tracer(frame, event, arg = None):
     if stop_code():
         print("stopping")
         raise KeyboardInterrupt
@@ -219,7 +219,7 @@ async def ___WRAPPER():
     `;
     const suffix_code = `
 # key=lambda: (await my_tracer() for _ in '_').__anext__()
-sys.settrace(lambda x, y, z: asyncio.run(my_tracer(x, y, z)))
+sys.settrace(my_tracer)
 await ___WRAPPER()
 sys.settrace(None)
 `;
