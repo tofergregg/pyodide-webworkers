@@ -198,6 +198,7 @@ import asyncio
 async def async_tracer():
     print(".", end='')
     sleep_fixed(1)
+    print("done sleeping")
 
 def my_tracer(frame, event, arg = None):
     asyncio.ensure_future(async_tracer())
