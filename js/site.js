@@ -198,6 +198,7 @@ async def async_tracer():
     print(".", end='')
 
 def my_tracer(frame, event, arg = None):
+    ensure_future(async_tracer, *, loop=None)
     if stop_code():
         print("stopping")
         raise KeyboardInterrupt
