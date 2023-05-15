@@ -1430,6 +1430,7 @@ def ai_turn(board, color, other_color):
         drop_piece(board, col, color)
         return col
 
+    print("finding cols")
     # find columns that would lead 
     # to an immediate win if we dropped there
     no_drop_columns = []
