@@ -172,7 +172,6 @@ def transform_to_async(code):
     ast.fix_missing_locations(TransformFor().visit(tree))
     ast.fix_missing_locations(TransformWhile().visit(tree))
     transformed_code = ast.unparse(tree)
-    print(transformed_code)
 
 transform_to_async(the_code)
 `
@@ -694,6 +693,7 @@ def copy_board(board):
 
 def ai_turn(board, color, other_color):
     print("in ai_turn")
+    return 0
     # go in a winning space if we can
     col = col_to_win(board, color)
     if col is not None:
