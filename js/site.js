@@ -148,11 +148,29 @@ class TransformCall(ast.NodeTransformer):
         else:
             return node
 
+class TransformFor(ast.NodeTransformer):
+    global functions
+    def visit_For(self, node):
+        self.generic_visit(node)
+        astSleepExpr = ast.Expr(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[]))
+        node.body.insert(0, astSleepExpr)
+        return node
+
+class TransformWhile(ast.NodeTransformer):
+    global functions
+    def visit_While(self, node):
+        self.generic_visit(node)
+        astSleepExpr = ast.Expr(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[]))
+        node.body.insert(0, astSleepExpr)
+        return node
+
 def transform_to_async(code):
     global transformed_code
     tree = ast.parse(code)
     ast.fix_missing_locations(TransformFunc().visit(tree))
     ast.fix_missing_locations(TransformCall().visit(tree))
+    ast.fix_missing_locations(TransformFor().visit(tree))
+    ast.fix_missing_locations(TransformWhile().visit(tree))
     transformed_code = ast.unparse(tree)
 
 transform_to_async(the_code)
@@ -194,11 +212,6 @@ const wrap_code = (code) => {
 
 from js import sleep_fixed
 from js import stop_code
-import asyncio
-async def async_tracer():
-    print(".", end='')
-    await sleep_fixed(5)
-    print("done sleeping")
 
 def my_tracer(frame, event, arg = None):
     asyncio.ensure_future(async_tracer())
@@ -223,9 +236,9 @@ async def ___WRAPPER():
     `;
     const suffix_code = `
 # key=lambda: (await my_tracer() for _ in '_').__anext__()
-sys.settrace(my_tracer)
+# sys.settrace(my_tracer)
 await ___WRAPPER()
-sys.settrace(None)
+# sys.settrace(None)
 `; 
 
     code = prefix_code + code + suffix_code;
