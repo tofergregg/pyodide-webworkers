@@ -184,6 +184,13 @@ function clearTerminal() {
 }
 
 function check_for_stop() {
-    console.log("in check_for_stop")
+    if (check_for_stop.count === undefined) {
+        check_for_stop.count = 0;
+    } else {
+        check_for_stop.count++;
+    }
+    if (check_for_stop.count % 1000 == 0) {
+        console.(check_for_stop.count);
+    }
     return new Promise(resolve => setTimeout(resolve, 1, check_for_stop.stopped));
 }
