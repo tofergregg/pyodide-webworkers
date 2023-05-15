@@ -152,7 +152,7 @@ class TransformFor(ast.NodeTransformer):
     global functions
     def visit_For(self, node):
         self.generic_visit(node)
-        astSleepExpr = ast.Expr(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[]))
+        astSleepExpr = ast.Expr(value=ast.Await(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[])))
         node.body.insert(0, astSleepExpr)
         return node
 
@@ -160,7 +160,7 @@ class TransformWhile(ast.NodeTransformer):
     global functions
     def visit_While(self, node):
         self.generic_visit(node)
-        astSleepExpr = ast.Expr(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[]))
+        astSleepExpr = ast.Expr(value=ast.Await(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[])))
         node.body.insert(0, astSleepExpr)
         return node
 
@@ -175,7 +175,7 @@ def transform_to_async(code):
 
 transform_to_async(the_code)
 `
-    window.pyodide.runPython(transform_code); 
+    window.pyodide.runPython(transform_code);
     const transformed_code = window.pyodide.globals.get('transformed_code');
     // console.log(transformed_code);
     return transformed_code;
