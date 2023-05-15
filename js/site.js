@@ -1496,6 +1496,7 @@ def ai_turn(board, color, other_color):
 
 def col_to_win(board, color):
     print("in col_to_win")
+    return 0
     for col in range(len(board[0])):
         print("still in col_to_win")
         test_board = copy_board(board)
