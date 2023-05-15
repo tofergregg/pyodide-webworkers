@@ -1419,6 +1419,7 @@ def copy_board(board):
 
 def ai_turn(board, color, other_color):
     # go in a winning space if we can
+    print("checking col_to_win")
     col = col_to_win(board, color)
     if col is not None:
         drop_piece(board, col, color)
@@ -1430,7 +1431,6 @@ def ai_turn(board, color, other_color):
         drop_piece(board, col, color)
         return col
 
-    print("finding cols")
     # find columns that would lead 
     # to an immediate win if we dropped there
     no_drop_columns = []
@@ -1495,7 +1495,9 @@ def ai_turn(board, color, other_color):
         col = random.randint(0, 6)
 
 def col_to_win(board, color):
+    print("in col_to_win")
     for col in range(len(board[0])):
+        print("still in col_to_win")
         test_board = copy_board(board)
         drop_piece(test_board, col, color)
         possible_winner = we_have_a_winner(test_board, NUM_TO_CONNECT)
