@@ -911,7 +911,9 @@ def main():
         else:
             print(f"It is the AI's turn.")
             color = COLOR2
+            print("before")
             col = ai_turn(board, color, COLOR1)
+            print("after")
             draw_drop(canvas, board, col, color)
             player2_turns.append(col)
             print(f"AI played in column {col}.")
@@ -1295,7 +1297,6 @@ def we_have_a_winner(board, num_to_connect):
         for col_num in range(len(board[0])):
             for fn in [check_for_row_win, check_for_col_win, 
                        check_for_diag_down_win, check_for_diag_up_win]:
-                print("here")
                 winner = await fn(board, row_num, col_num, num_to_connect)
                 if winner:
                     return winner
