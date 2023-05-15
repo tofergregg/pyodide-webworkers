@@ -184,5 +184,6 @@ function clearTerminal() {
 }
 
 function check_for_stop() {
+    console.log("in check_for_stop");
     return new Promise(resolve => setTimeout(resolve, 1, check_for_stop.stopped));
 }
