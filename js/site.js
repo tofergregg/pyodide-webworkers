@@ -152,7 +152,7 @@ class TransformFor(ast.NodeTransformer):
     global functions
     def visit_For(self, node):
         self.generic_visit(node)
-        astSleepExpr = ast.Expr(value=ast.Await(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[])))
+        astSleepExpr = ast.If(test=ast.Await(value=ast.Call(func=ast.Name(id='check_for_stop', ctx=ast.Load()), args=[],keywords=[])), body=[ast.Raise(exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))], orelse=[])
         node.body.insert(0, astSleepExpr)
         return node
 
@@ -160,7 +160,7 @@ class TransformWhile(ast.NodeTransformer):
     global functions
     def visit_While(self, node):
         self.generic_visit(node)
-        astSleepExpr = ast.Expr(value=ast.Await(value=ast.Call(func=ast.Name(id='sleep_fixed', ctx=ast.Load()), args=[ast.Constant(value=0.001)],keywords=[])))
+        astSleepExpr = ast.If(test=ast.Await(value=ast.Call(func=ast.Name(id='check_for_stop', ctx=ast.Load()), args=[],keywords=[])), body=[ast.Raise(exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))], orelse=[])
         node.body.insert(0, astSleepExpr)
         return node
 
@@ -211,7 +211,6 @@ const wrap_code = (code) => {
     const prefix_code = `import sys
 
 from js import sleep_fixed
-from js import stop_code
 
 def my_tracer(frame, event, arg = None):
     asyncio.ensure_future(async_tracer())

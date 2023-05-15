@@ -31,7 +31,7 @@ self.jsMessage = null;
 self.onmessage = async (event) => {
     if (event.data.cmd === "stopProgram") {
         console.log("got stopProgram message");
-        stop_code.stopped = true;
+        check_for_stop.stopped = true;
         return;
     }
     if (event.data.cmd === "input_result") {
@@ -70,7 +70,7 @@ self.onmessage = async (event) => {
     for (const key of Object.keys(context)) {
         self[key] = context[key];
     }
-    stop_code.stopped = false;
+    check_for_stop.stopped = false;
     // Now is the easy part, the one that is similar to working in the main thread:
 
     try {
@@ -183,8 +183,6 @@ function clearTerminal() {
     self.postMessage({cmd: 'clearTerminal'});
 }
 
-function stop_code() {
-    // console.log("checking for stop");
-    console.log(stop_code.stopped); 
-    return stop_code.stopped;
+function check_for_stop() {
+    return new Promise(resolve => setTimeout(resolve, 0.0001, check_for_stop.stopped));
 }
