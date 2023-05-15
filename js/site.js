@@ -211,6 +211,7 @@ const wrap_code = (code) => {
     const prefix_code = `import sys
 
 from js import sleep_fixed
+from js import check_for_stop
 
 def my_tracer(frame, event, arg = None):
     asyncio.ensure_future(async_tracer())
