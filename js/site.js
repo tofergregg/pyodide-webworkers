@@ -1295,8 +1295,8 @@ def we_have_a_winner(board, num_to_connect):
         for col_num in range(len(board[0])):
             for fn in [check_for_row_win, check_for_col_win, 
                        check_for_diag_down_win, check_for_diag_up_win]:
-                winner = await fn(board, row_num, col_num, num_to_connect)
                 print("here")
+                winner = await fn(board, row_num, col_num, num_to_connect)
                 if winner:
                     return winner
     return None
