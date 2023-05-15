@@ -190,7 +190,7 @@ function check_for_stop() {
         check_for_stop.count++;
     }
     if (check_for_stop.count % 1000 == 0) {
-        console.(check_for_stop.count);
+        console.log(check_for_stop.count);
     }
     return new Promise(resolve => setTimeout(resolve, 1, check_for_stop.stopped));
 }
