@@ -30,6 +30,7 @@ self.jsMessage = null;
 
 self.onmessage = async (event) => {
     if (event.data.cmd === "stopProgram") {
+        console.log("got stopProgram message");
         stop_code.stopped = true;
         return;
     }
