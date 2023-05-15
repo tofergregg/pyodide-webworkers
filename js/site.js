@@ -692,6 +692,8 @@ def copy_board(board):
     return new_board
 
 def ai_turn(board, color, other_color):
+    print("in ai_turn")
+    return 0
     # go in a winning space if we can
     col = col_to_win(board, color)
     if col is not None:
@@ -1496,7 +1498,6 @@ def ai_turn(board, color, other_color):
 
 def col_to_win(board, color):
     print("in col_to_win")
-    return 0
     for col in range(len(board[0])):
         print("still in col_to_win")
         test_board = copy_board(board)
