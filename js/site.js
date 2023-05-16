@@ -278,6 +278,7 @@ def my_tracer(frame, event, arg = None):
 
     return my_tracer
 
+_STOP_COUNTER_ = 0
 async def ___WRAPPER():
     `;
     const suffix_code = `

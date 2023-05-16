@@ -78,7 +78,6 @@ self.onmessage = async (event) => {
         from js import input_fixed
         import asyncio
         import pyodide
-        _STOP_COUNTER_ = 0
         __builtins__.input = input_fixed
         `);
         await self.pyodide.runPythonAsync(drawingLib);
