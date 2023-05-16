@@ -278,12 +278,13 @@ def my_tracer(frame, event, arg = None):
 
     return my_tracer
 
-_STOP_COUNTER_ = 0
 async def ___WRAPPER():
     `;
     const suffix_code = `
 # key=lambda: (await my_tracer() for _ in '_').__anext__()
 # sys.settrace(my_tracer)
+global _STOP_COUNTER_
+_STOP_COUNTER_ = 0
 await ___WRAPPER()
 # sys.settrace(None)
 `; 
