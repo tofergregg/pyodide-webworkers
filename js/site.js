@@ -152,9 +152,11 @@ class TransformFor(ast.NodeTransformer):
     global functions
     def visit_For(self, node):
         self.generic_visit(node)
+        setGlobal = ast.Global(names=['_STOP_COUNTER_'])
+        node.body.insert(0, setGlobal)
         astAssign = ast.AugAssign(target=ast.Name(id='_STOP_COUNTER_', ctx=ast.Store()),
                                   op=ast.Add(), value=ast.Constant(value=1))
-        node.body.insert(0, astAssign)
+        node.body.insert(1, astAssign)
         astSleepExpr = ast.If(test=ast.BoolOp(
              op=ast.And(),
              values=[
@@ -176,16 +178,18 @@ class TransformFor(ast.NodeTransformer):
                                    ast.Raise(
                                        exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))],
                                orelse=[])
-        node.body.insert(1, astSleepExpr)
+        node.body.insert(2, astSleepExpr)
         return node
 
 class TransformWhile(ast.NodeTransformer):
     global functions
     def visit_While(self, node):
         self.generic_visit(node)
+        setGlobal = ast.Global(names=['_STOP_COUNTER_'])
+        node.body.insert(0, setGlobal)
         astAssign = ast.AugAssign(target=ast.Name(id='_STOP_COUNTER_', ctx=ast.Store()),
                                   op=ast.Add(), value=ast.Constant(value=1))
-        node.body.insert(0, astAssign)
+        node.body.insert(1, astAssign)
         astSleepExpr = ast.If(test=ast.BoolOp(
              op=ast.And(),
              values=[
@@ -207,7 +211,7 @@ class TransformWhile(ast.NodeTransformer):
                                    ast.Raise(
                                        exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))],
                                orelse=[])
-        node.body.insert(1, astSleepExpr)
+        node.body.insert(2, astSleepExpr)
         return node
 
 def transform_to_async(code):
