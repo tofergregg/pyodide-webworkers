@@ -177,7 +177,7 @@ transform_to_async(the_code)
 `
     window.pyodide.runPython(transform_code);
     const transformed_code = window.pyodide.globals.get('transformed_code');
-    // console.log(transformed_code);
+    console.log(transformed_code);
     return transformed_code;
 }
 
