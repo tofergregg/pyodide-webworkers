@@ -152,16 +152,62 @@ class TransformFor(ast.NodeTransformer):
     global functions
     def visit_For(self, node):
         self.generic_visit(node)
-        astSleepExpr = ast.If(test=ast.Await(value=ast.Call(func=ast.Name(id='check_for_stop', ctx=ast.Load()), args=[],keywords=[])), body=[ast.Raise(exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))], orelse=[])
-        node.body.insert(0, astSleepExpr)
+        astAssign = ast.AugAssign(target=ast.Name(id='_STOP_COUNTER_', ctx=ast.Store()),
+                                  op=ast.Add(), value=ast.Constant(value=1))
+        node.body.insert(0, astAssign)
+        astSleepExpr = ast.If(test=ast.BoolOp(
+             op=ast.And(),
+             values=[
+                 ast.Compare(
+                     left=ast.BinOp(
+                         left=ast.Name(id='_STOP_COUNTER_', ctx=ast.Load()),
+                         op=ast.Mod(),
+                         right=ast.Constant(value=100)),
+                     ops=[
+                         ast.Eq()],
+                     comparators=[
+                         ast.Constant(value=0)]),
+                     ast.Await(
+                         value=ast.Call(
+                             func=ast.Name(id='check_for_stop', ctx=ast.Load()),
+                             args=[],
+                             keywords=[]))]),
+                               body=[
+                                   ast.Raise(
+                                       exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))],
+                               orelse=[])
+        node.body.insert(1, astSleepExpr)
         return node
 
 class TransformWhile(ast.NodeTransformer):
     global functions
     def visit_While(self, node):
         self.generic_visit(node)
-        astSleepExpr = ast.If(test=ast.Await(value=ast.Call(func=ast.Name(id='check_for_stop', ctx=ast.Load()), args=[],keywords=[])), body=[ast.Raise(exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))], orelse=[])
-        node.body.insert(0, astSleepExpr)
+        astAssign = ast.AugAssign(target=ast.Name(id='_STOP_COUNTER_', ctx=ast.Store()),
+                                  op=ast.Add(), value=ast.Constant(value=1))
+        node.body.insert(0, astAssign)
+        astSleepExpr = ast.If(test=ast.BoolOp(
+             op=ast.And(),
+             values=[
+                 ast.Compare(
+                     left=ast.BinOp(
+                         left=ast.Name(id='_STOP_COUNTER_', ctx=ast.Load()),
+                         op=ast.Mod(),
+                         right=ast.Constant(value=100)),
+                     ops=[
+                         ast.Eq()],
+                     comparators=[
+                         ast.Constant(value=0)]),
+                     ast.Await(
+                         value=ast.Call(
+                             func=ast.Name(id='check_for_stop', ctx=ast.Load()),
+                             args=[],
+                             keywords=[]))]),
+                               body=[
+                                   ast.Raise(
+                                       exc=ast.Name(id='KeyboardInterrupt', ctx=ast.Load()))],
+                               orelse=[])
+        node.body.insert(1, astSleepExpr)
         return node
 
 def transform_to_async(code):
@@ -169,8 +215,8 @@ def transform_to_async(code):
     tree = ast.parse(code)
     ast.fix_missing_locations(TransformFunc().visit(tree))
     ast.fix_missing_locations(TransformCall().visit(tree))
-    # ast.fix_missing_locations(TransformFor().visit(tree))
-    # ast.fix_missing_locations(TransformWhile().visit(tree))
+    ast.fix_missing_locations(TransformFor().visit(tree))
+    ast.fix_missing_locations(TransformWhile().visit(tree))
     transformed_code = ast.unparse(tree)
 
 transform_to_async(the_code)
