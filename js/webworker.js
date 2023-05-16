@@ -193,7 +193,5 @@ function check_for_stop() {
         console.log(check_for_stop.count);
     }
     // return new Promise(resolve => setTimeout(resolve, 0, check_for_stop.stopped));
-    return new Promise((resolve, reject) => {
-        return check_for_stop.stopped;
-    });
+    return Promise.resolve(check_for_stop.stopped);
 }
