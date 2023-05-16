@@ -164,7 +164,7 @@ class TransformFor(ast.NodeTransformer):
                      left=ast.BinOp(
                          left=ast.Name(id='_STOP_COUNTER_', ctx=ast.Load()),
                          op=ast.Mod(),
-                         right=ast.Constant(value=1)),
+                         right=ast.Constant(value=2)),
                      ops=[
                          ast.Eq()],
                      comparators=[
@@ -197,7 +197,7 @@ class TransformWhile(ast.NodeTransformer):
                      left=ast.BinOp(
                          left=ast.Name(id='_STOP_COUNTER_', ctx=ast.Load()),
                          op=ast.Mod(),
-                         right=ast.Constant(value=1)),
+                         right=ast.Constant(value=2)),
                      ops=[
                          ast.Eq()],
                      comparators=[
