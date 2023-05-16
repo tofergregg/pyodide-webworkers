@@ -169,8 +169,8 @@ def transform_to_async(code):
     tree = ast.parse(code)
     ast.fix_missing_locations(TransformFunc().visit(tree))
     ast.fix_missing_locations(TransformCall().visit(tree))
-    # ast.fix_missing_locations(TransformFor().visit(tree))
-    # ast.fix_missing_locations(TransformWhile().visit(tree))
+    ast.fix_missing_locations(TransformFor().visit(tree))
+    ast.fix_missing_locations(TransformWhile().visit(tree))
     transformed_code = ast.unparse(tree)
 
 transform_to_async(the_code)
