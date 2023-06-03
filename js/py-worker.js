@@ -13,7 +13,7 @@ const interruptExecution = () => {
     window.codeRunning = false;
     pyodideWorker.terminate();
     //pyodideWorker.postMessage({cmd: "stopProgram"});
-    
+    setupWorker();
 }
 
 const setupWorker = () => {
