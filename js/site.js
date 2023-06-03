@@ -473,7 +473,7 @@ def play(ball, paddles):
         last_mouse_y = canvas.get_mouse_y()
         draw_paddles(paddles, last_mouse_y, canvas.coords(ball['obj'])[1])
         bounce_off_paddles(ball, paddles)
-        time.sleep((11 - PLAY_DIFFICULTY) * 0.0001)
+        time.sleep((11 - PLAY_DIFFICULTY) * 0.001)
         move_ball(ball)
         ball, paddles = score_and_reset(ball, paddles, score, score_obj)
 
