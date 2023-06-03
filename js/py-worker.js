@@ -11,7 +11,8 @@ const interruptExecution = () => {
     // get confirmation that the program has stopped
     // Basically, we'll keep hitting ctrl-c until we stop the program!
     window.codeRunning = false;
-    pyodideWorker.postMessage({cmd: "stopProgram"});
+    pyodideWorker.terminate();
+    //pyodideWorker.postMessage({cmd: "stopProgram"});
     
 }
 
