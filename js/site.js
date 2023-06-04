@@ -244,6 +244,7 @@ window.reset_console = () => {
 window.interruptExecution = () => {
     interruptExecution();
     console.log("stopping program");
+    document.getElementById('console-output').value += '\n*** Program Stopped! ***\n';
 }
 
 window.update_terminal = () => {
