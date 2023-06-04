@@ -34,13 +34,13 @@ const init_main = () => {
     canvas._objects = [];
     // set up for mouse movement
     window.lastMouse = {x: 0, y: 0};
-    canvas.addEventListener("mousemove", mouseMove, false)
-    canvas.addEventListener("touchmove", mouseMove, false);
+    canvas.addEventListener("mousemove", mouseMove, {capture: false})
+    canvas.addEventListener("touchmove", mouseMove, {capture: false});
 
     // set up for mouse button
     window.lastMouseDown = {x: 0, y: 0};
-    canvas.addEventListener("mousedown", mouseDown, false)
-    canvas.addEventListener("touchstart", mouseDown, false)
+    canvas.addEventListener("mousedown", mouseDown, {capture: false})
+    canvas.addEventListener("touchstart", mouseDown,{capture: false})
 
     setupWorker();
 }
