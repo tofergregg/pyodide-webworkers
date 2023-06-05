@@ -1680,7 +1680,7 @@ if __name__ == "__main__":
     });
     const examplesSel = document.getElementById('examples');
     const search = examplesSel.options[examplesSel.selectedIndex].innerText;
-    const fullURL = window.location.origin + window.location.pathname + '?' + search;
+    const fullURL = window.location.origin + window.location.pathname + '?example=' + search;
     window.location = fullURL;
 }
 
