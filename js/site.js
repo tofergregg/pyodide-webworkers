@@ -157,7 +157,13 @@ def transform_to_async(code):
 
 transform_to_async(the_code)
 `
-    window.pyodide.runPython(transform_code);
+    try {
+        window.pyodide.runPython(transform_code);
+    }
+    catch(err) {
+        console.log("Error:" + err.message);
+        return;
+    }
     const transformed_code = window.pyodide.globals.get('transformed_code');
     // console.log(transformed_code);
     return transformed_code;
