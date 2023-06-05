@@ -1678,5 +1678,9 @@ if __name__ == "__main__":
             insert: snippets[value]
         }
     });
+    const examplesSel = document.getElementById('examples');
+    const search = examplesSel.options[examplesSel.selectedIndex].innerText;
+    const fullURL = window.location.origin + window.location.pathname + '?' + search;
+    window.location = fullURL;
 }
 
