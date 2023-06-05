@@ -284,26 +284,33 @@ def nextFunc():
 if __name__ == "__main__":
     main()`,
         `import time
+import random
+
+NUM_BALLS = 50
+RADIUS = 20
 
 def main():
     canvas = Canvas()
-    radius = 20
-    color = 'purple'
+    radius = RADIUS
     x = canvas.width / 2 - radius
     y = canvas.height / 2 - radius
-    dx = 3
-    dy = 2
-    ball = canvas.create_oval(x, y, x + radius, y + radius,
-                              color=color, fill=color)
+    
+    balls = []
+    for i in range(NUM_BALLS):
+        color = f"#{random.randrange(0x1000000):06x}"
+        dx = random.random() * 20 - 10
+        dy = random.random() * 20 - 10
+        balls.append({'ball': canvas.create_oval(x, y, x + radius, y + radius,
+                              color=color, fill=color), 'x': x, 'y': y, 'dx': dx, 'dy': dy})
     while True:
-        canvas.move(ball, dx, dy)
-        x += dx
-        y += dy
-        if x > canvas.width - radius or x < 0:
-            dx *= -1
-        if y > canvas.height - radius or y < 0:
-            dy *= -1
-        print(f"x: {x}, y: {y}")
+        for ball in balls:
+            canvas.move(ball['ball'], ball['dx'], ball['dy'])
+            ball['x'] += ball['dx']
+            ball['y'] += ball['dy']
+            if ball['x'] > canvas.width - radius or ball['x'] < 0:
+                ball['dx'] *= -1
+            if ball['y'] > canvas.height - radius or ball['y'] < 0:
+                ball['dy'] *= -1
         time.sleep(0.01)
         clear_terminal()
 
