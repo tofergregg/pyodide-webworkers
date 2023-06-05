@@ -164,8 +164,8 @@ transform_to_async(the_code)
         const file_txt = 'File "<unknown>", ';
         const line_idx = err.message.indexOf(file_txt) + file_txt.length;
         const error_msg = err.message.substr(line_idx);
-        console.log("Error: " + error_msg);
-        return;
+        document.getElementById('console-output').value = "Error: " + error_msg;
+        return "";
     }
     const transformed_code = window.pyodide.globals.get('transformed_code');
     // console.log(transformed_code);
@@ -178,6 +178,9 @@ window.get_input = async () => {
     // e.g. { name: "Chris", num: 5, arr: [1, 2, 3], }
     let code = window.cmEditor.state.doc.toString();
     code = await transform_code_for_async(code);
+    if (code == "") {
+        return;
+    }
     code = wrap_code(code);
     // only run python_runner if we've stopped execution
     const python_runner_fn = () => {
