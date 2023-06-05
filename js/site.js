@@ -163,7 +163,7 @@ transform_to_async(the_code)
     catch(err) {
         const file_txt = 'File "<unknown>", ';
         const line_idx = err.message.indexOf(file_txt) + file_txt.length;
-        const error_msg = err.message.substr(file_idx);
+        const error_msg = err.message.substr(line_idx);
         console.log("Error: " + error_msg);
         return;
     }
