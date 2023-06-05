@@ -161,7 +161,9 @@ transform_to_async(the_code)
         window.pyodide.runPython(transform_code);
     }
     catch(err) {
-        console.log("Error:" + err.message);
+        file_idx = err.message.indexOf('File "<unknown>"');
+        error_msg = err.message.substr(file_idx);
+        console.log("Error:" + error_msg);
         return;
     }
     const transformed_code = window.pyodide.globals.get('transformed_code');
