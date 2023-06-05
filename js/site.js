@@ -311,8 +311,8 @@ def main():
                 ball['dx'] *= -1
             if ball['y'] > canvas.height - radius or ball['y'] < 0:
                 ball['dy'] *= -1
-        print(f"first ball: x: {round(balls[0]['x'], 2)}, 
-                            y: {round(balls[0]['y'], 2)}")
+        print(f"first ball: x: {round(balls[0]['x'], 2)}, "
+                           "y: {round(balls[0]['y'], 2)}")
         time.sleep(0.01)
         clear_terminal()
 
